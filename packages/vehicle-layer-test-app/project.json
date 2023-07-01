@@ -1,0 +1,80 @@
+{
+  "name": "vehicle-layer-test-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vehicle-layer-test-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/vehicle-layer-test-app"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "vehicle-layer-test-app:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "vehicle-layer-test-app:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "vehicle-layer-test-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "vehicle-layer-test-app:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "vehicle-layer-test-app:build:development"
+        },
+        "production": {
+          "buildTarget": "vehicle-layer-test-app:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/packages/vehicle-layer-test-app"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/vehicle-layer-test-app"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/vehicle-layer-test-app/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "vehicle-layer-test-app:build"
+      }
+    }
+  },
+  "tags": ["test"]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "vehicle-layer-test-app-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vehicle-layer-test-app-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/vehicle-layer-test-app-e2e/cypress.config.ts",
+        "devServerTarget": "vehicle-layer-test-app:serve:development",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "vehicle-layer-test-app:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "vehicle-layer-test-app:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/vehicle-layer-test-app-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["vehicle-layer-test-app"]
+}

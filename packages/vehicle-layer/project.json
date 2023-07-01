@@ -1,0 +1,44 @@
+{
+  "name": "vehicle-layer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vehicle-layer/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/vehicle-layer",
+        "main": "packages/vehicle-layer/src/index.ts",
+        "tsConfig": "packages/vehicle-layer/tsconfig.lib.json",
+        "assets": ["packages/vehicle-layer/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs vehicle-layer {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/vehicle-layer/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/vehicle-layer/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["deck.gl"]
+}
