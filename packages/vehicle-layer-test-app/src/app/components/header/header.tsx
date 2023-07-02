@@ -15,19 +15,10 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-type BaseMapData = {
-  name: string;
-  id: string;
-};
+import { baseMapsProviders, selectMapProviderId } from '../../redux/slices/app.slice';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
-const navItems: BaseMapData[] = [
-  { name: 'MapLibre', id: 'maplibre' },
-  { name: 'Mapbox 2', id: 'mapbox2' },
-  { name: 'Google Maps', id: 'google-maps' },
-  { name: 'ArcGIS', id: 'arcgis' },
-];
 
 const StyledTypography = styled(Typography)<{ selected: boolean }>`
   ${({ selected }) => {
@@ -42,6 +33,7 @@ export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const baseMapProvider = useSelector(selectMapProviderId);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -54,7 +46,7 @@ export function Header(props: HeaderProps) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {baseMapsProviders.map((item) => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item.name} />
@@ -87,10 +79,10 @@ export function Header(props: HeaderProps) {
             VehicleLayer Testing
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {baseMapsProviders.map((item) => (
               <Link key={item.id} to={`/base-map/${item.id}`}>
                 <Button key={item.id} sx={{ color: '#fff' }}>
-                  <StyledTypography selected={item.id === 'maplibre'}>
+                  <StyledTypography selected={item.id === baseMapProvider.id}>
                     {' '}
                     {item.name}
                   </StyledTypography>
