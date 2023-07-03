@@ -1,8 +1,8 @@
-import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 import { appActions, baseMapsProviders } from '../../redux/slices/app.slice';
+import Deckgl from '../../components/deckgl/deckgl';
 
 /* eslint-disable-next-line */
 export interface HomeProps {}
@@ -18,7 +18,7 @@ export function Home(props: HomeProps) {
       dispatch(appActions.setMapProviderId(baseMapProvider));
     }
   }, [baseMapProviderId, dispatch]);
-  return <Typography>Show {baseMapProviderId}</Typography>;
+  return <Deckgl />;
 }
 
 export default Home;

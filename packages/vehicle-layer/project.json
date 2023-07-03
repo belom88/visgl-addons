@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/vehicle-layer",
         "main": "packages/vehicle-layer/src/index.ts",
         "tsConfig": "packages/vehicle-layer/tsconfig.lib.json",
-        "assets": ["packages/vehicle-layer/*.md"]
+        "assets": ["packages/vehicle-layer/*.md", "packages/vehicle-layer/models/**.*"]
       }
     },
     "publish": {
