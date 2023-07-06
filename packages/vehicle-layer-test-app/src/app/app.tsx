@@ -3,7 +3,14 @@ import Toolbar from '@mui/material/Toolbar';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from './components/header/header';
 import Home from './pages/home/home';
+import { useEffect } from 'react';
+import { useAppDispatch } from './redux/hooks';
+import { getRoutes } from './redux/slices/routes.slice';
 export function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getRoutes());
+  }, [dispatch]);
   return (
     <Box sx={{ display: 'flex' }}>
       <Header />

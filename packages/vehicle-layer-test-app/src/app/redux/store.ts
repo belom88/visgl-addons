@@ -1,8 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { appReducer } from './slices/app.slice';
+import { APP_FEATURE_KEY, appReducer } from './slices/app.slice';
+import { ROUTES_FEATURE_KEY, routesReducer } from './slices/routes.slice';
 
 export const store = configureStore({
-  reducer: { app: appReducer },
+  reducer: {
+    [ROUTES_FEATURE_KEY]: routesReducer,
+    [APP_FEATURE_KEY]: appReducer,
+  },
+  // Additional middleware can be passed to this array
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  devTools: process.env.NODE_ENV !== 'production',
+  // Optional Redux store enhancers
+  enhancers: [],
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
