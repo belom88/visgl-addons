@@ -1,6 +1,6 @@
 import { load } from '@loaders.gl/core';
 import { _GeoJSONLoader } from '@loaders.gl/json';
-import { Feature, FeatureCollection, Geometry } from 'geojson';
+import { Feature, FeatureCollection, LineString } from 'geojson';
 
 export interface GeojsonRouteProperties {
   routeId: string;
@@ -16,9 +16,9 @@ export interface GeojsonRouteProperties {
   distancesPerPoint: number[];
 }
 
-export type GeojsonRouteFeature = Feature<Geometry, GeojsonRouteProperties>;
+export type GeojsonRouteFeature = Feature<LineString, GeojsonRouteProperties>;
 
-export type GeojsonRoute = FeatureCollection<Geometry, GeojsonRouteProperties>;
+export type GeojsonRoute = FeatureCollection<LineString, GeojsonRouteProperties>;
 
 export const loadRoutes = async (): Promise<GeojsonRouteFeature[]> => {
   const routesJson: GeojsonRoute = await load(
