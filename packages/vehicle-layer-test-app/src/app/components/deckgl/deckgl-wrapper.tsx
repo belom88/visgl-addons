@@ -22,9 +22,9 @@ const INITIAL_VIEWSTATE = {
 };
 
 /* eslint-disable-next-line */
-export interface DeckglProps {}
+export interface DeckglWrapperProps {}
 
-export function Deckgl(props: DeckglProps) {
+export function DeckglWrapper(props: DeckglWrapperProps) {
   const routes: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes);
   const routesRef = useRef<GeojsonRouteFeature[]>(routes);
   routesRef.current = routes;
@@ -87,4 +87,4 @@ export function Deckgl(props: DeckglProps) {
   );
 }
 
-export default Deckgl;
+export default DeckglWrapper;

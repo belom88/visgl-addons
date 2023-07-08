@@ -1,6 +1,5 @@
 import { renderWithProviders } from '../../utils/test-utils';
-
-import Home from './home';
+import DeckglWrapper from './deckgl-wrapper';
 
 vi.mock('@deck.gl/react', () => {
   const DeckGL = vi.fn();
@@ -12,9 +11,9 @@ vi.mock('react-map-gl/maplibre', () => {
 });
 vi.importMock('@belom88/deckgl-vehicle-layer');
 
-describe('Home', () => {
+describe('Deckgl', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<Home />);
+    const { baseElement } = renderWithProviders(<DeckglWrapper />);
     expect(baseElement).toBeTruthy();
   });
 });

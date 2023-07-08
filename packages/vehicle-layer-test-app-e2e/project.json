@@ -13,7 +13,8 @@
       },
       "configurations": {
         "production": {
-          "devServerTarget": "vehicle-layer-test-app:serve:production"
+          "devServerTarget": "vehicle-layer-test-app:serve:production",
+          "watch": true
         },
         "ci": {
           "devServerTarget": "vehicle-layer-test-app:serve-static"

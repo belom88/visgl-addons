@@ -15,7 +15,10 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { baseMapsProviders, selectMapProviderId } from '../../redux/slices/app.slice';
+import {
+  BASE_MAP_PROVIDERS,
+  selectMapProviderId,
+} from '../../redux/slices/app.slice';
 import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
@@ -23,7 +26,7 @@ const drawerWidth = 240;
 const StyledTypography = styled(Typography)<{ selected: boolean }>`
   ${({ selected }) => {
     if (selected) {
-      return `border-bottom: 1px solid #fff;`;
+      return `border-bottom: 2px solid #fff;`;
     }
   }}
 `;
@@ -46,7 +49,7 @@ export function Header(props: HeaderProps) {
       </Typography>
       <Divider />
       <List>
-        {baseMapsProviders.map((item) => (
+        {BASE_MAP_PROVIDERS.map((item) => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item.name} />
@@ -79,7 +82,7 @@ export function Header(props: HeaderProps) {
             VehicleLayer Testing
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {baseMapsProviders.map((item) => (
+            {BASE_MAP_PROVIDERS.map((item) => (
               <Link key={item.id} to={`/base-map/${item.id}`}>
                 <Button key={item.id} sx={{ color: '#fff' }}>
                   <StyledTypography selected={item.id === baseMapProvider.id}>
