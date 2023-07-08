@@ -1,8 +1,6 @@
 import {
-  createAsyncThunk,
   createSelector,
   createSlice,
-  EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { RootState } from '../store';
@@ -13,7 +11,7 @@ type BaseMapProvider = {
   name: string;
   id: string;
 };
-export const baseMapsProviders: BaseMapProvider[] = [
+export const BASE_MAP_PROVIDERS: BaseMapProvider[] = [
   { name: 'MapLibre', id: 'maplibre' },
   { name: 'Mapbox 2', id: 'mapbox2' },
   { name: 'Google Maps', id: 'google-maps' },
@@ -25,13 +23,13 @@ export interface AppState {
 }
 
 // Define the initial state using that type
-const initialState: AppState = { baseMapProvider: baseMapsProviders[0] };
+const initialState: AppState = { baseMapProvider: BASE_MAP_PROVIDERS[0] };
 
 export const appSlice = createSlice({
   name: APP_FEATURE_KEY,
   initialState,
   reducers: {
-    setMapProviderId: (
+    setMapProvider: (
       state: AppState,
       payload: PayloadAction<BaseMapProvider>
     ) => {
