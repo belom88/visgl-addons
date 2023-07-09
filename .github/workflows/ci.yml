@@ -1,0 +1,27 @@
+name: CI
+run-name: ${{ github.actor }} is starting CI
+on: [push]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: nrwl/nx-set-shas@v3
+      - run: npm install
+
+      - name: Check code format
+        run: npx nx format:check
+      - name: Check with lint
+        run: npx nx affected -t lint --parallel=3
+      - name: Run unit tests
+        run: npx nx affected -t test --parallel=3 --configuration=ci
+      - name: Run e2e tests
+        run: npx nx affected -t e2e --parallel=3 --configuration=ci
+      - name: Build packages
+        run: npx nx affected -t build --parallel=3
