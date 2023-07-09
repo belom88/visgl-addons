@@ -8,15 +8,23 @@ const METERS_PER_MILE = 1609.34;
 const VEHICLE_SPEED = 7;
 const MILLISECONDS_IN_AN_HOUR = 1000 * 60 * 60;
 
+/** Vehicle bound to a route */
 export type Vehicle = {
+  /** Start animation time */
   startDateTime: number[];
+  /** The route index the vehicle bound to */
   routeIndex: number;
+  /** The current point on the route */
   pointIndex: number;
 };
 
+/** Animated vehicle ready to put on a map */
 export type AnimatedVehicle = {
+  /** Latitude coordinate in decimal degrees */
   latitude: number;
+  /** Longitude coordinate in decimal degrees */
   longitude: number;
+  /** Bearing, angle between north direction and vehicle direction */
   bearing: number;
 };
 
@@ -68,6 +76,12 @@ const getPositionBetween = (
   return [...scratchVector];
 };
 
+/**
+ * Create a number of vehicles and put them on routes
+ * @param totalVehiclesCount - number of vehicles to add
+ * @param routes
+ * @returns array of vehicles
+ */
 export const createVehicles = (
   totalVehiclesCount: number,
   routes: GeojsonRouteFeature[]
@@ -90,6 +104,10 @@ export const createVehicles = (
     for (let i = 0; i < distances.length; i++) {
       const pointDistance = distances[i];
       while (pointDistance >= currentDistance) {
+        if (vehicles.length >= totalVehiclesCount) {
+          break;
+        }
+
         let startIndex = i - 1;
         let endIndex = i;
 
@@ -117,17 +135,26 @@ export const createVehicles = (
   return vehicles;
 };
 
+/**
+ * Calculate animated position for vehicles
+ * @param vehicles - vehicles bound to routes
+ * @param routes - array of referenced routes
+ * @param endDateTime - date time to animate to
+ * @returns array of vehicles with positions
+ */
 export const animateVehicles = (
   vehicles: Vehicle[],
-  routes: GeojsonRouteFeature[]
+  routes: GeojsonRouteFeature[],
+  endDateTime?: number[]
 ): AnimatedVehicle[] => {
+  const nowDateTime = endDateTime ? moment(endDateTime) : moment();
   if (!routes.length) {
     return [];
   }
   const result: AnimatedVehicle[] = [];
   for (const vehicle of vehicles) {
     const route: GeojsonRouteFeature = routes[vehicle.routeIndex];
-    const duration = moment().diff(vehicle.startDateTime);
+    const duration = nowDateTime.diff(vehicle.startDateTime);
     let distanceCovered = (duration / MILLISECONDS_IN_AN_HOUR) * VEHICLE_SPEED; // miles
     const distances = route.properties.distancesPerPoint;
     let segmentDistance = 0;
@@ -141,7 +168,7 @@ export const animateVehicles = (
       const endPositionDistance = distances[currentPointIndex];
       segmentDistance = endPositionDistance - startPositionDistance;
       currentPointIndex++;
-      currentStartDateTime = moment().toArray();
+      currentStartDateTime = nowDateTime.toArray();
     } while (
       distanceCovered > segmentDistance &&
       currentPointIndex < distances.length
