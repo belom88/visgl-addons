@@ -18,10 +18,10 @@ jobs:
       - name: Check code format
         run: npx nx format:check
       - name: Check with lint
-        run: npx nx run-many -t lint --parallel=3
+        run: npx nx affected -t lint --parallel=3
       - name: Run unit tests
-        run: npx nx run-many -t test --parallel=3 --configuration=ci
+        run: npx nx affected -t test --parallel=3 --configuration=ci
       - name: Run e2e tests
-        run: npx nx run-many -t e2e --parallel=3 --configuration=ci
+        run: npx nx affected -t e2e --parallel=3 --configuration=ci
       - name: Build packages
-        run: npx nx run-many -t build --parallel=3
+        run: npx nx affected -t build --parallel=3
