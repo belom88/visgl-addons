@@ -19,7 +19,7 @@ jobs:
         run: npx nx format:check
       - name: Check with lint
         run: npx nx -t lint --parallel=3
-      - name: run unit tests
+      - name: Run unit tests
         run: npx nx -t test --parallel=3 --configuration=ci
       - name: Run e2e tests
         run: npx nx -t e2e --parallel=3 --configuration=ci
