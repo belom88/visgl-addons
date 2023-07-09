@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is starting CI
 on: [push]
 
 jobs:
-  CI (format check, lint, test, e2e, build):
+  CI:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,12 +16,12 @@ jobs:
       - run: npm ci
 
       - name: Check code format
-      - run: npx nx format:check
+        run: npx nx format:check
       - name: Check with lint
-      - run: npx nx -t lint --parallel=3
-      - name: Run unit tests
-      - run: npx nx -t test --parallel=3 --configuration=ci
+        run: npx nx -t lint --parallel=3
+      - name: run unit tests
+        run: npx nx -t test --parallel=3 --configuration=ci
       - name: Run e2e tests
-      - run: npx nx -t e2e --parallel=3 --configuration=ci
+        run: npx nx -t e2e --parallel=3 --configuration=ci
       - name: Build packages
-      - run: npx nx -t build --parallel=3
+        run: npx nx -t build --parallel=3
