@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Box } from '@mui/material';
 import { useAppDispatch } from '../../redux/hooks';
 import { BASE_MAP_PROVIDERS, appActions } from '../../redux/slices/app.slice';
 import DeckglWrapper from '../../components/deckgl/deckgl-wrapper';
+import LayerPropsPanel from '../../components/layer-props-panel/layer-props-panel';
 
 /* eslint-disable-next-line */
 export interface HomeProps {}
@@ -18,7 +20,12 @@ export function Home(props: HomeProps) {
       dispatch(appActions.setMapProvider(baseMapProvider));
     }
   }, [baseMapProviderId, dispatch]);
-  return <DeckglWrapper />;
+  return (
+    <Box>
+      <LayerPropsPanel />
+      <DeckglWrapper />
+    </Box>
+  );
 }
 
 export default Home;
