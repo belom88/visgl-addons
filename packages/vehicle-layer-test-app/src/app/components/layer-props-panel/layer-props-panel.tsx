@@ -43,7 +43,9 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
           Vehicle Layer Properties
         </Typography>
         <Divider />
-        <Typography variant="subtitle1" component="span">Number of Vehicles</Typography>
+        <Typography variant="subtitle1" component="span">
+          Number of Vehicles
+        </Typography>
         <Stack spacing={2} direction="row" alignItems={'center'}>
           <Typography variant="body2" component="span">
             10
