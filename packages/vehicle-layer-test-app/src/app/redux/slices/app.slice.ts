@@ -1,8 +1,4 @@
-import {
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export const APP_FEATURE_KEY = 'app';
@@ -63,11 +59,7 @@ export const appReducer = appSlice.reducer;
  */
 export const appActions = appSlice.actions;
 
-export const getAppState = (rootState: {
-  [APP_FEATURE_KEY]: AppState;
-}): AppState => rootState[APP_FEATURE_KEY];
-
-export const selectMapProviderId = createSelector(
+export const selectMapProvider = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].baseMapProvider,
   (result) => result
 );

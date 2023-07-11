@@ -5,10 +5,15 @@ import {
 } from '@reduxjs/toolkit';
 import { APP_FEATURE_KEY, appReducer } from './slices/app.slice';
 import { ROUTES_FEATURE_KEY, routesReducer } from './slices/routes.slice';
+import {
+  LAYER_PROPS_FEATURE_KEY,
+  layerPropsReducer,
+} from './slices/layer-props.slice';
 
 const rootReducer = combineReducers({
   [ROUTES_FEATURE_KEY]: routesReducer,
   [APP_FEATURE_KEY]: appReducer,
+  [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
 });
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({

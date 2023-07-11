@@ -17,9 +17,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   BASE_MAP_PROVIDERS,
-  selectMapProviderId,
+  selectMapProvider,
 } from '../../redux/slices/app.slice';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks';
 
 const drawerWidth = 240;
 
@@ -36,7 +36,7 @@ export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const baseMapProvider = useSelector(selectMapProviderId);
+  const baseMapProvider = useAppSelector(selectMapProvider);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
