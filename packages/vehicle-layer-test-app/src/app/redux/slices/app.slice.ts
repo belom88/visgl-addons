@@ -63,11 +63,7 @@ export const appReducer = appSlice.reducer;
  */
 export const appActions = appSlice.actions;
 
-export const getAppState = (rootState: {
-  [APP_FEATURE_KEY]: AppState;
-}): AppState => rootState[APP_FEATURE_KEY];
-
-export const selectMapProviderId = createSelector(
+export const selectMapProvider = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].baseMapProvider,
   (result) => result
 );

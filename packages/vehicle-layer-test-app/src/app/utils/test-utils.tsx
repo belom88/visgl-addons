@@ -10,6 +10,10 @@ import {
   ROUTES_FEATURE_KEY,
   routesReducer,
 } from '../redux/slices/routes.slice';
+import {
+  LAYER_PROPS_FEATURE_KEY,
+  layerPropsReducer,
+} from '../redux/slices/layer-props.slice';
 import { AppStore, RootState } from '../redux/store';
 import { GeojsonRouteFeature } from './load-routes';
 
@@ -59,6 +63,7 @@ export function renderWithProviders(
       reducer: {
         [APP_FEATURE_KEY]: appReducer,
         [ROUTES_FEATURE_KEY]: routesReducer,
+        [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
       },
       preloadedState,
     }),
@@ -72,3 +77,16 @@ export function renderWithProviders(
   // Return an object with the store and all of RTL's query functions
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
+
+export const createStoreWith = (
+  preloadedState: PreloadedState<RootState>
+): AppStore => {
+  return configureStore({
+    reducer: {
+      [APP_FEATURE_KEY]: appReducer,
+      [ROUTES_FEATURE_KEY]: routesReducer,
+      [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
+    },
+    preloadedState,
+  });
+};

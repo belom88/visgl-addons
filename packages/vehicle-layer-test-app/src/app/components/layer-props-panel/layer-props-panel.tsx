@@ -5,9 +5,13 @@ import {
   Slider,
   Stack,
   Typography,
-  useTheme,
+  styled,
 } from '@mui/material';
-import styled from 'styled-components';
+import {
+  layerPropsActions,
+  selectVehiclesCount,
+} from '../../redux/slices/layer-props.slice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 const StyledContainer = styled(Box)`
   bottom: 1.5em;
@@ -26,36 +30,32 @@ const StyledMainPaper = styled(Paper)`
 export interface LayerPropsPanelProps {}
 
 export function LayerPropsPanel(props: LayerPropsPanelProps) {
-  const theme = useTheme();
-
-  const calculateValue = (value: number) => {
-    return 2 ** value;
-  };
-
+  const vehiclesCount = useAppSelector(selectVehiclesCount);
+  const dispatch = useAppDispatch();
   const onVehiclesCountChange = (e: Event, newValue: number | number[]) => {
-    console.log(newValue);
+    dispatch(layerPropsActions.setVehiclesCount(newValue));
   };
 
   return (
     <StyledContainer>
-      <StyledMainPaper elevation={0} theme={theme}>
+      <StyledMainPaper elevation={0}>
         <Typography variant="h6" component="div">
           Vehicle Layer Properties
         </Typography>
         <Divider />
         <Typography variant="subtitle1" component="span">
-          Number of Vehicles
+          Number of Vehicles ({vehiclesCount})
         </Typography>
         <Stack spacing={2} direction="row" alignItems={'center'}>
           <Typography variant="body2" component="span">
             10
           </Typography>
           <Slider
-            aria-label="Volume"
+            aria-label="Number of Vehicles"
             min={10}
             max={10000}
             step={1}
-            // scale={calculateValue}
+            value={vehiclesCount}
             onChange={onVehiclesCountChange}
           />
           <Typography variant="body2" component="span">

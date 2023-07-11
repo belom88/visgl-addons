@@ -11,6 +11,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectAllRoutes } from '../../redux/slices/routes.slice';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
+import styled from 'styled-components';
+import { selectVehiclesCount } from '../../redux/slices/layer-props.slice';
 
 const INITIAL_VIEWSTATE = {
   latitude: 37.794254,
@@ -21,10 +23,20 @@ const INITIAL_VIEWSTATE = {
   pitch: 30,
 };
 
+const DeckGLContainer = styled.div`
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+`;
+
 /* eslint-disable-next-line */
 export interface DeckglWrapperProps {}
 
 export function DeckglWrapper(props: DeckglWrapperProps) {
+  const vehiclesCount = useAppSelector(selectVehiclesCount);
   const routes: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes);
   const routesRef = useRef<GeojsonRouteFeature[]>(routes);
   routesRef.current = routes;
@@ -55,11 +67,14 @@ export function DeckglWrapper(props: DeckglWrapperProps) {
   }, []);
 
   useEffect(() => {
-    vehiclesRef.current = createVehicles(2000, routes);
     if (!animationStarted.current) {
       animateLayer();
     }
   }, [routes, animateLayer]);
+
+  useEffect(() => {
+    vehiclesRef.current = createVehicles(vehiclesCount, routes);
+  }, [vehiclesCount, routes]);
 
   const getLayer = () =>
     new VehicleLayer<AnimatedVehicle>({
@@ -77,13 +92,15 @@ export function DeckglWrapper(props: DeckglWrapperProps) {
     });
 
   return (
-    <DeckGL
-      initialViewState={INITIAL_VIEWSTATE}
-      controller
-      layers={[getLayer()]}
-    >
-      <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
-    </DeckGL>
+    <DeckGLContainer>
+      <DeckGL
+        initialViewState={INITIAL_VIEWSTATE}
+        controller
+        layers={[getLayer()]}
+      >
+        <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
+      </DeckGL>
+    </DeckGLContainer>
   );
 }
 
