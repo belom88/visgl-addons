@@ -17,10 +17,12 @@ describe('LayerPropsPanel', () => {
       expect(sliderLabels.length).toBe(1);
     });
 
-    it('should change slider value', async() => {
+    it('should change slider value', async () => {
       const sliderInput = screen.getByLabelText('Number of Vehicles');
-      await fireEvent.change(sliderInput, {target: {value: 5005}} );
-      const sliderLabels = await screen.getAllByText('Number of Vehicles (5005)');
+      await fireEvent.change(sliderInput, { target: { value: 5005 } });
+      const sliderLabels = await screen.getAllByText(
+        'Number of Vehicles (5005)'
+      );
       expect(sliderLabels.length).toBe(1);
     });
   });

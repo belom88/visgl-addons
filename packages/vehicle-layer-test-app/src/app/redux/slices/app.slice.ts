@@ -1,8 +1,4 @@
-import {
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export const APP_FEATURE_KEY = 'app';
