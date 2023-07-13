@@ -16,6 +16,10 @@ import {
 } from '../redux/slices/layer-props.slice';
 import { AppStore, RootState } from '../redux/store';
 import { GeojsonRouteFeature } from './load-routes';
+import {
+  TEST_CASES_FEATURE_KEY,
+  testCasesReducer,
+} from '../redux/slices/test-cases.slice';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -64,6 +68,7 @@ export function renderWithProviders(
         [APP_FEATURE_KEY]: appReducer,
         [ROUTES_FEATURE_KEY]: routesReducer,
         [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
+        [TEST_CASES_FEATURE_KEY]: testCasesReducer,
       },
       preloadedState,
     }),
@@ -86,6 +91,7 @@ export const createStoreWith = (
       [APP_FEATURE_KEY]: appReducer,
       [ROUTES_FEATURE_KEY]: routesReducer,
       [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
+      [TEST_CASES_FEATURE_KEY]: testCasesReducer,
     },
     preloadedState,
   });

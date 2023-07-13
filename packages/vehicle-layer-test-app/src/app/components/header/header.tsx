@@ -15,11 +15,9 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  BASE_MAP_PROVIDERS,
-  selectMapProvider,
-} from '../../redux/slices/app.slice';
+import { selectMapProvider } from '../../redux/slices/app.slice';
 import { useAppSelector } from '../../redux/hooks';
+import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 
 const drawerWidth = 240;
 

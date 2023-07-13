@@ -1,12 +1,10 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { LayerPropsEdited } from '../../types';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
 
-export interface LayerPropsState {
-  /** Number of vehicles to put on the map */
-  vehiclesCount: number;
-}
+export type LayerPropsState = LayerPropsEdited;
 
 export const initialLayerPropsState: LayerPropsState = {
   vehiclesCount: 2000,

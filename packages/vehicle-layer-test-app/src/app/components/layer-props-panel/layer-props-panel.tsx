@@ -38,7 +38,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
 
   return (
     <StyledContainer>
-      <StyledMainPaper elevation={0}>
+      <StyledMainPaper elevation={2}>
         <Typography variant="h6" component="div">
           Vehicle Layer Properties
         </Typography>
