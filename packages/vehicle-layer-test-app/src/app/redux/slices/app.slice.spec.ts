@@ -1,7 +1,7 @@
+import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 import { createStoreWith } from '../../utils/test-utils';
 import {
   APP_FEATURE_KEY,
-  BASE_MAP_PROVIDERS,
   appActions,
   appReducer,
   selectMapProvider,

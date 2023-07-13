@@ -1,24 +1,14 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { BaseMapProvider } from '../../types';
+import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 
 export const APP_FEATURE_KEY = 'app';
-
-type BaseMapProvider = {
-  name: string;
-  id: string;
-};
-export const BASE_MAP_PROVIDERS: BaseMapProvider[] = [
-  { name: 'MapLibre', id: 'maplibre' },
-  { name: 'Mapbox 2', id: 'mapbox2' },
-  { name: 'Google Maps', id: 'google-maps' },
-  { name: 'ArcGIS', id: 'arcgis' },
-];
 
 export interface AppState {
   baseMapProvider: BaseMapProvider;
 }
 
-// Define the initial state using that type
 const initialState: AppState = { baseMapProvider: BASE_MAP_PROVIDERS[0] };
 
 export const appSlice = createSlice({

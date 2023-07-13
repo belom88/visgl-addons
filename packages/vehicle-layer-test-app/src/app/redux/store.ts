@@ -9,11 +9,16 @@ import {
   LAYER_PROPS_FEATURE_KEY,
   layerPropsReducer,
 } from './slices/layer-props.slice';
+import {
+  TEST_CASES_FEATURE_KEY,
+  testCasesReducer,
+} from './slices/test-cases.slice';
 
 const rootReducer = combineReducers({
   [ROUTES_FEATURE_KEY]: routesReducer,
   [APP_FEATURE_KEY]: appReducer,
   [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
+  [TEST_CASES_FEATURE_KEY]: testCasesReducer,
 });
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({

@@ -18,7 +18,7 @@ export interface RoutesState extends EntityState<GeojsonRouteFeature> {
 
 export const routesAdapter = createEntityAdapter<GeojsonRouteFeature>();
 
-export const getRoutes = createAsyncThunk('gis/getRoutes', async () => {
+export const getRoutes = createAsyncThunk(`${ROUTES_FEATURE_KEY}/getRoutes`, async () => {
   const routes = await loadRoutes();
   return routes;
 });
