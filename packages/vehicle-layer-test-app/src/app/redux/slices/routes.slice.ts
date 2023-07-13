@@ -18,10 +18,13 @@ export interface RoutesState extends EntityState<GeojsonRouteFeature> {
 
 export const routesAdapter = createEntityAdapter<GeojsonRouteFeature>();
 
-export const getRoutes = createAsyncThunk(`${ROUTES_FEATURE_KEY}/getRoutes`, async () => {
-  const routes = await loadRoutes();
-  return routes;
-});
+export const getRoutes = createAsyncThunk(
+  `${ROUTES_FEATURE_KEY}/getRoutes`,
+  async () => {
+    const routes = await loadRoutes();
+    return routes;
+  }
+);
 
 export const initialRoutesState: RoutesState = routesAdapter.getInitialState({
   loadingStatus: RequestStatus.IDLE,

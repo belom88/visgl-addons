@@ -1,4 +1,4 @@
-import { BaseMapProvider } from "../types";
+import { BaseMapProvider } from '../types';
 
 export const BASE_MAP_PROVIDERS: BaseMapProvider[] = [
   { name: 'MapLibre', id: 'maplibre' },
