@@ -71,6 +71,7 @@ Run unit tests
 ```bash
 nx run vehicle-layer-test-app:test
 ```
+
 ### Testing App E2E
 
 The "Testing App E2E" is a [cypress](https://www.cypress.io) testing app with e2e tests for "Testing App"
