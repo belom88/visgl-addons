@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { selectVehiclesCount } from '../../redux/slices/layer-props.slice';
 
 const INITIAL_VIEWSTATE = {
-  latitude: 37.793300,
+  latitude: 37.7933,
   longitude: -122.396326,
   zoom: 20,
   maxZoom: 25,
