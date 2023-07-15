@@ -13,15 +13,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
 import styled from 'styled-components';
 import { selectVehiclesCount } from '../../redux/slices/layer-props.slice';
-
-const INITIAL_VIEWSTATE = {
-  latitude: 37.7933,
-  longitude: -122.396326,
-  zoom: 20,
-  maxZoom: 25,
-  bearing: 0,
-  pitch: 50,
-};
+import { selectMapState } from '../../redux/slices/map.slice';
 
 const DeckGLContainer = styled.div`
   overflow: hidden;
@@ -36,6 +28,7 @@ const DeckGLContainer = styled.div`
 export interface DeckglWrapperProps {}
 
 export function DeckglWrapper(props: DeckglWrapperProps) {
+  const viewState = useAppSelector(selectMapState);
   const vehiclesCount = useAppSelector(selectVehiclesCount);
   const routes: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes);
   const routesRef = useRef<GeojsonRouteFeature[]>(routes);
@@ -93,11 +86,7 @@ export function DeckglWrapper(props: DeckglWrapperProps) {
 
   return (
     <DeckGLContainer>
-      <DeckGL
-        initialViewState={INITIAL_VIEWSTATE}
-        controller
-        layers={[getLayer()]}
-      >
+      <DeckGL initialViewState={viewState} controller layers={[getLayer()]}>
         <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
       </DeckGL>
     </DeckGLContainer>
