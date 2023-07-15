@@ -13,9 +13,9 @@ describe('BaseMapModeSwitcher', () => {
     beforeEach(() => {
       renderWithProviders(<BaseMapModeSwitcher />);
     });
-    it('should initialize with "Overlapped" mode selected', () => {
+    it('should initialize with "Overlaid" mode selected', () => {
       const baseMapInput = screen.getByDisplayValue(
-        BaseMapMode.OVERLAPPED
+        BaseMapMode.OVERLAID
       ) as HTMLInputElement;
       expect(baseMapInput.checked).toBeTruthy();
     });

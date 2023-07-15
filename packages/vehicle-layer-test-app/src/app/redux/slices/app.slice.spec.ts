@@ -14,7 +14,7 @@ describe('app reducer', () => {
   it('should handle initial state', () => {
     const expected = {
       baseMapProvider: BASE_MAP_PROVIDERS[0],
-      baseMapMode: BaseMapMode.OVERLAPPED,
+      baseMapMode: BaseMapMode.OVERLAID,
     };
     expect(appReducer(undefined, { type: '' })).toEqual(expected);
   });

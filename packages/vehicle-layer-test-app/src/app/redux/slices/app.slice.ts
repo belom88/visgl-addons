@@ -12,7 +12,7 @@ export interface AppState {
 
 export const initialState: AppState = {
   baseMapProvider: BASE_MAP_PROVIDERS[0],
-  baseMapMode: BaseMapMode.OVERLAPPED,
+  baseMapMode: BaseMapMode.OVERLAID,
 };
 
 export const appSlice = createSlice({

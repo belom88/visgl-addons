@@ -37,9 +37,9 @@ export function BaseMapModeSwitcher(props: BaseMapModeSwitcherProps) {
           onChange={onBaseMapChangeHandler}
         >
           <FormControlLabel
-            value={BaseMapMode.OVERLAPPED}
+            value={BaseMapMode.OVERLAID}
             control={<Radio />}
-            label="Overlapped"
+            label="Overlaid"
           />
           <FormControlLabel
             value={BaseMapMode.INTERLEAVED}

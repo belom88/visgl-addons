@@ -11,7 +11,7 @@ export type BaseMapProvider = {
 };
 
 export enum BaseMapMode {
-  OVERLAPPED = 'overlapped',
+  OVERLAID = 'overlaid',
   INTERLEAVED = 'interleaved',
 }
 
