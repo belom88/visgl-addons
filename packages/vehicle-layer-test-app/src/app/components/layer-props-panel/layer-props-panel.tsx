@@ -37,7 +37,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
       <StyledMainPaper elevation={2}>
         <Typography variant="h6" component="div">
           Vehicle Layer Properties

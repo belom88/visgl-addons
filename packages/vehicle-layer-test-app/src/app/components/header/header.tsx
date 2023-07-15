@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import { selectMapProvider } from '../../redux/slices/app.slice';
 import { useAppSelector } from '../../redux/hooks';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
+import BaseMapModeSwitcher from '../base-map-mode-switcher/base-map-mode-switcher';
 
 const drawerWidth = 240;
 
@@ -72,13 +73,12 @@ export function Header(props: HeaderProps) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             VehicleLayer Testing
           </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <BaseMapModeSwitcher />
+          </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {BASE_MAP_PROVIDERS.map((item) => (
               <Link key={item.id} to={`/base-map/${item.id}`}>

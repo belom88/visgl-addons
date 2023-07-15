@@ -29,7 +29,8 @@
       "configurations": {
         "development": {
           "buildTarget": "vehicle-layer-test-app:build:development",
-          "hmr": true
+          "hmr": true,
+          "force": true
         },
         "production": {
           "buildTarget": "vehicle-layer-test-app:build:production",
