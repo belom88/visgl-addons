@@ -1,15 +1,19 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { BaseMapProvider } from '../../types';
+import { BaseMapMode, BaseMapProvider } from '../../types';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 
 export const APP_FEATURE_KEY = 'app';
 
 export interface AppState {
   baseMapProvider: BaseMapProvider;
+  baseMapMode: BaseMapMode;
 }
 
-const initialState: AppState = { baseMapProvider: BASE_MAP_PROVIDERS[0] };
+export const initialState: AppState = {
+  baseMapProvider: BASE_MAP_PROVIDERS[0],
+  baseMapMode: BaseMapMode.OVERLAPPED,
+};
 
 export const appSlice = createSlice({
   name: APP_FEATURE_KEY,
@@ -20,6 +24,9 @@ export const appSlice = createSlice({
       payload: PayloadAction<BaseMapProvider>
     ) => {
       state.baseMapProvider = payload.payload;
+    },
+    setBaseMapMode: (state: AppState, payload: PayloadAction<BaseMapMode>) => {
+      state.baseMapMode = payload.payload;
     },
   },
 });
@@ -51,5 +58,10 @@ export const appActions = appSlice.actions;
 
 export const selectMapProvider = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].baseMapProvider,
+  (result) => result
+);
+
+export const selectBaseMapMode = createSelector(
+  (state: RootState) => state[APP_FEATURE_KEY].baseMapMode,
   (result) => result
 );

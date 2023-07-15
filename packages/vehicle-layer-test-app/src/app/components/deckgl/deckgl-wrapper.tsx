@@ -15,12 +15,12 @@ import styled from 'styled-components';
 import { selectVehiclesCount } from '../../redux/slices/layer-props.slice';
 
 const INITIAL_VIEWSTATE = {
-  latitude: 37.794254,
-  longitude: -122.412004,
-  zoom: 12,
+  latitude: 37.793300,
+  longitude: -122.396326,
+  zoom: 20,
   maxZoom: 25,
   bearing: 0,
-  pitch: 30,
+  pitch: 50,
 };
 
 const DeckGLContainer = styled.div`

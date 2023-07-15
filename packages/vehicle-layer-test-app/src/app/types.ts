@@ -10,6 +10,11 @@ export type BaseMapProvider = {
   id: string;
 };
 
+export enum BaseMapMode {
+  OVERLAPPED = 'overlapped',
+  INTERLEAVED = 'interleaved',
+}
+
 export interface LayerPropsEdited {
   /** Number of vehicles to put on the map */
   vehiclesCount: number;
