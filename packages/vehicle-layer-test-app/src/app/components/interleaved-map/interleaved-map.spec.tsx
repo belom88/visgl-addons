@@ -10,7 +10,9 @@ vi.mock('maplibre-gl', () => {
 
 describe('InterleavedMap', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<InterleavedMap vehicles={[]} />);
+    const { baseElement } = renderWithProviders(
+      <InterleavedMap vehicles={[]} />
+    );
     expect(baseElement).toBeTruthy();
   });
 });
