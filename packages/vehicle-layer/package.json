@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "@deck.gl/core": "^8.9.19",
-    "@deck.gl/layers": "^8.9.19",
-    "@deck.gl/mesh-layers": "^8.9.19",
-    "@deck.gl/react": "^8.9.19"
+    "@deck.gl/core": "^8.9.21",
+    "@deck.gl/mesh-layers": "^8.9.21"
   }
 }

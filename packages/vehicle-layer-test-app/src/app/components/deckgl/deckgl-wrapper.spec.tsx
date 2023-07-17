@@ -13,7 +13,9 @@ vi.importMock('@belom88/deckgl-vehicle-layer');
 
 describe('Deckgl', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<DeckglWrapper />);
+    const { baseElement } = renderWithProviders(
+      <DeckglWrapper vehicles={[]} />
+    );
     expect(baseElement).toBeTruthy();
   });
 });

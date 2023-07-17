@@ -1,6 +1,5 @@
+import MapWrapper from './map-wrapper';
 import { renderWithProviders } from '../../utils/test-utils';
-
-import Home from './home';
 
 vi.mock('@deck.gl/react', () => {
   const DeckGL = vi.fn();
@@ -18,9 +17,9 @@ vi.mock('maplibre-gl', () => {
   return { Map };
 });
 
-describe('Home', () => {
+describe('MapWrapper', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<Home />);
+    const { baseElement } = renderWithProviders(<MapWrapper />);
     expect(baseElement).toBeTruthy();
   });
 });

@@ -7,5 +7,8 @@ export default defineConfig({
     include: ['**/*.spec.tsx', '**/*.spec.ts'],
     globals: true,
     environment: 'jsdom',
+    alias: {
+      '@belom88/deckgl-vehicle-layer': './packages/vehicle-layer/src',
+    },
   },
 });
