@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { FunctionComponent, PropsWithChildren } from 'react';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -99,3 +99,8 @@ export const createStoreWith = (
     preloadedState,
   });
 };
+
+export const createWrapper =
+  (store: AppStore): FunctionComponent<PropsWithChildren> =>
+  ({ children }) =>
+    <Provider store={store}>{children}</Provider>;
