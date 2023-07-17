@@ -1,4 +1,3 @@
-import { configureStore } from '@reduxjs/toolkit';
 import {
   LAYER_PROPS_FEATURE_KEY,
   layerPropsActions,
