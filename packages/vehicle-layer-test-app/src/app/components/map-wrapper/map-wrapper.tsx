@@ -19,8 +19,11 @@ import {
 import { BaseMapMode } from '../../types';
 import { createInterleavedContainerWith } from '../interleaved-map/interleaved-map';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
+import { createGoogleMapWith } from '../google-maps-wrapper/google-maps-wrapper';
 
 const mapboxAccessToken = import.meta.env.VITE_MAPBOX_API_KEY;
+const googleMapsOverlaidMapId = import.meta.env.VITE_GOOGLE_MAP_RASTER_ID;
+const googleMapsInteleavedMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
 
 /* eslint-disable-next-line */
 export interface MapWrapperProps {}
@@ -82,6 +85,8 @@ export function MapWrapper(props: MapWrapperProps) {
           mapboxAccessToken,
           'mapbox://styles/mapbox/streets-v12'
         );
+      case BaseMapProviderId.googleMaps:
+        return createGoogleMapWith(googleMapsOverlaidMapId);
       default:
         return null;
     }
@@ -96,6 +101,8 @@ export function MapWrapper(props: MapWrapperProps) {
           mapProvider.id,
           'mapbox://styles/mapbox/streets-v12'
         );
+      case BaseMapProviderId.googleMaps:
+        return createGoogleMapWith(googleMapsInteleavedMapId);
       default:
         return null;
     }
