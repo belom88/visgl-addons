@@ -80,10 +80,7 @@ export function GoogleMapsWrapper({ vehicles, mapId }: GoogleMapsWrapperProps) {
 
   return (
     <Wrapper apiKey={googleMapsApiToken} render={renderMap}>
-      <StyledMapContainer
-        ref={setRef}
-        id="map"
-      />
+      <StyledMapContainer ref={setRef} id="map" />
     </Wrapper>
   );
 }
