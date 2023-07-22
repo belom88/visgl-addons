@@ -8,11 +8,12 @@ import { selectMapState } from '../../redux/slices/map.slice';
 import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 
 const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
 
 /* eslint-disable-next-line */
 export interface GoogleMapsWrapperProps {
   vehicles: AnimatedVehicle[];
-  mapId?: string;
+  interleaved?: boolean;
 }
 
 const renderMap = (status: Status) => {
@@ -21,7 +22,10 @@ const renderMap = (status: Status) => {
   return <h3>{status} .</h3>;
 };
 
-export function GoogleMapsWrapper({ vehicles, mapId }: GoogleMapsWrapperProps) {
+export function GoogleMapsWrapper({
+  vehicles,
+  interleaved = false,
+}: GoogleMapsWrapperProps) {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
   const { longitude, latitude, zoom, pitch, bearing } =
@@ -30,9 +34,10 @@ export function GoogleMapsWrapper({ vehicles, mapId }: GoogleMapsWrapperProps) {
   const overlay = useMemo(
     () =>
       new DeckOverlay({
+        interleaved,
         layers: [],
       }),
-    []
+    [interleaved]
   );
 
   useEffect(() => {
@@ -69,10 +74,10 @@ export function GoogleMapsWrapper({ vehicles, mapId }: GoogleMapsWrapperProps) {
       return;
     }
     const mapInstance = new google.maps.Map(mapContainer, {
-      mapId,
+      mapId: googleMapsMapId,
     });
     setMap(mapInstance);
-  }, [mapId, mapContainer]);
+  }, [mapContainer]);
 
   const setRef = (element: HTMLDivElement) => {
     setMapContainer(element);
@@ -85,9 +90,9 @@ export function GoogleMapsWrapper({ vehicles, mapId }: GoogleMapsWrapperProps) {
   );
 }
 
-export const createGoogleMapWith = (mapId: string) => {
+export const createGoogleMapWith = (interleaved: boolean) => {
   return (props: GoogleMapsWrapperProps) => (
-    <GoogleMapsWrapper {...props} mapId={mapId} />
+    <GoogleMapsWrapper {...props} interleaved={interleaved} />
   );
 };
 

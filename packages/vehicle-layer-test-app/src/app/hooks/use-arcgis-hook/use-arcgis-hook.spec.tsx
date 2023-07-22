@@ -1,21 +1,8 @@
-import MapWrapper from './map-wrapper';
-import { renderWithProviders } from '../../utils/test-utils';
+import { render, renderHook } from '@testing-library/react';
+import * as React from 'react';
 
-vi.mock('@deck.gl/react', () => {
-  const DeckGL = vi.fn();
-  return { DeckGL };
-});
-vi.mock('react-map-gl/maplibre', () => {
-  const Map = vi.fn();
-  return { Map };
-});
-vi.importMock('@belom88/deckgl-vehicle-layer');
-vi.mock('maplibre-gl', () => {
-  const Map = vi.fn().mockReturnValue({
-    on: vi.fn(),
-  });
-  return { Map };
-});
+import useArcgisHook from './use-arcgis-hook';
+import { createStoreWith, createWrapper } from '../../utils/test-utils';
 
 vi.mock('@arcgis/core/Map', () => {
   const ArcGISMap = vi.fn();
@@ -37,9 +24,16 @@ vi.mock('@arcgis/core/views/3d/externalRenderers', () => {
   return { add };
 });
 
-describe('MapWrapper', () => {
+describe('useArcgisHook', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<MapWrapper />);
-    expect(baseElement).toBeTruthy();
+    const ref = React.createRef<HTMLDivElement>();
+    render(<div ref={ref} />);
+
+    const store = createStoreWith({});
+    const { result } = renderHook(() => useArcgisHook(ref), {
+      wrapper: createWrapper(store),
+    });
+
+    expect(result.current).toStrictEqual(null);
   });
 });

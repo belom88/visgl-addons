@@ -1,22 +1,5 @@
+import ArcgisWrapper from './arcgis-wrapper';
 import { renderWithProviders } from '../../utils/test-utils';
-
-import Home from './home';
-
-vi.mock('@deck.gl/react', () => {
-  const DeckGL = vi.fn();
-  return { DeckGL };
-});
-vi.mock('react-map-gl/maplibre', () => {
-  const Map = vi.fn();
-  return { Map };
-});
-vi.importMock('@belom88/deckgl-vehicle-layer');
-vi.mock('maplibre-gl', () => {
-  const Map = vi.fn().mockReturnValue({
-    on: vi.fn(),
-  });
-  return { Map };
-});
 
 vi.mock('@arcgis/core/Map', () => {
   const ArcGISMap = vi.fn();
@@ -27,7 +10,10 @@ vi.mock('@arcgis/core/views/SceneView', () => {
   return { default: SceneView };
 });
 vi.mock('@deck.gl/arcgis', () => {
-  const loadArcGISModules = vi.fn();
+  const DeckRenderer = vi.fn();
+  const loadArcGISModules = vi
+    .fn()
+    .mockReturnValue(Promise.resolve({ DeckRenderer }));
   return { loadArcGISModules };
 });
 vi.mock('@arcgis/core/views/3d/externalRenderers', () => {
@@ -35,9 +21,9 @@ vi.mock('@arcgis/core/views/3d/externalRenderers', () => {
   return { add };
 });
 
-describe('Home', () => {
+describe('ArcgisWrapper', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<Home />);
+    const { baseElement } = renderWithProviders(<ArcgisWrapper vehicles={[]}/>);
     expect(baseElement).toBeTruthy();
   });
 });

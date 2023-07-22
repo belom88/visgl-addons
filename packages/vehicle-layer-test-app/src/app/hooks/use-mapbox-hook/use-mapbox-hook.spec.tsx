@@ -25,6 +25,6 @@ describe('useMapboxHook', () => {
       }
     );
 
-    expect(result.current).toStrictEqual({ current: null });
+    expect(result.current).toStrictEqual(null);
   });
 });
