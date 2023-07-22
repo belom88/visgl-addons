@@ -17,7 +17,9 @@ export interface UnsupportedProps {}
 export function Unsupported(props: UnsupportedProps) {
   return (
     <StyledUnsupportedContainer>
-      <StyledPaper elevation={3}>Overlaid mode is not supported for ArcGIS</StyledPaper>
+      <StyledPaper elevation={3}>
+        Overlaid mode is not supported for ArcGIS
+      </StyledPaper>
     </StyledUnsupportedContainer>
   );
 }

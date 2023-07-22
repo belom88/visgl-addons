@@ -23,7 +23,9 @@ vi.mock('@arcgis/core/views/3d/externalRenderers', () => {
 
 describe('ArcgisWrapper', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<ArcgisWrapper vehicles={[]}/>);
+    const { baseElement } = renderWithProviders(
+      <ArcgisWrapper vehicles={[]} />
+    );
     expect(baseElement).toBeTruthy();
   });
 });

@@ -83,7 +83,7 @@ export const useMapboxHook = (
     pitch,
     baseMapProviderId,
     mapStyle,
-    map
+    map,
   ]);
 
   return map;
