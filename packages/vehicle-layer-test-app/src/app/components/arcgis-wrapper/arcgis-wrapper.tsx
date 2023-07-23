@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { AnimatedVehicle } from '../../utils/vehicles-utils';
-import useArcgisHook from '../../hooks/use-arcgis-hook/use-arcgis-hook';
+import { useArcgis } from '../../hooks/use-arcgis-hook/use-arcgis-hook';
 import { StyledMapContainer } from '../common-styled';
 import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 
@@ -11,7 +11,7 @@ export interface ArcgisWrapperProps {
 
 export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map: unknown | null = useArcgisHook(mapContainer);
+  const map: unknown | null = useArcgis(mapContainer);
 
   const getLayer = (vehicles: AnimatedVehicle[]) =>
     new VehicleLayer<AnimatedVehicle>({

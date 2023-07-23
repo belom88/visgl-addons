@@ -1,7 +1,7 @@
 import { render, renderHook } from '@testing-library/react';
 import * as React from 'react';
 
-import useArcgisHook from './use-arcgis-hook';
+import { useArcgis } from './use-arcgis-hook';
 import { createStoreWith, createWrapper } from '../../utils/test-utils';
 
 vi.mock('@deck.gl/arcgis', () => {
@@ -15,13 +15,13 @@ vi.mock('@deck.gl/arcgis', () => {
   return { loadArcGISModules };
 });
 
-describe('useArcgisHook', () => {
+describe('useArcgis', () => {
   it('should render successfully', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<div ref={ref} />);
 
     const store = createStoreWith({});
-    const { result } = renderHook(() => useArcgisHook(ref), {
+    const { result } = renderHook(() => useArcgis(ref), {
       wrapper: createWrapper(store),
     });
 

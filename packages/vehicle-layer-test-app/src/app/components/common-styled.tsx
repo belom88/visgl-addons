@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import styled from 'styled-components';
 
 export const StyledMapContainer = styled.div`
@@ -7,4 +8,13 @@ export const StyledMapContainer = styled.div`
   height: 100%;
   left: 0;
   top: 0;
+`;
+
+export const StyledTopPanelsContainer = styled(Box)`
+  top: 0;
+  left: 0;
+  width: 100%;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
 `;

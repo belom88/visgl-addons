@@ -3,7 +3,7 @@ import { useState, useEffect, MutableRefObject, useRef } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 
-export function useArcgisHook(
+export function useArcgis(
   mapContainer: MutableRefObject<null | HTMLDivElement>,
   ...args: unknown[]
 ): unknown | null {
@@ -62,5 +62,3 @@ export function useArcgisHook(
 
   return renderer;
 }
-
-export default useArcgisHook;

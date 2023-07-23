@@ -8,11 +8,13 @@ export const APP_FEATURE_KEY = 'app';
 export interface AppState {
   baseMapProvider: BaseMapProvider;
   baseMapMode: BaseMapMode;
+  fps: number;
 }
 
 export const initialState: AppState = {
   baseMapProvider: BASE_MAP_PROVIDERS[0],
   baseMapMode: BaseMapMode.OVERLAID,
+  fps: 60,
 };
 
 export const appSlice = createSlice({
@@ -21,12 +23,18 @@ export const appSlice = createSlice({
   reducers: {
     setMapProvider: (
       state: AppState,
-      payload: PayloadAction<BaseMapProvider>
+      action: PayloadAction<BaseMapProvider>
     ) => {
-      state.baseMapProvider = payload.payload;
+      state.baseMapProvider = action.payload;
     },
-    setBaseMapMode: (state: AppState, payload: PayloadAction<BaseMapMode>) => {
-      state.baseMapMode = payload.payload;
+    setBaseMapMode: (state: AppState, action: PayloadAction<BaseMapMode>) => {
+      state.baseMapMode = action.payload;
+    },
+    setFps: (state: AppState, action: PayloadAction<number>) => {
+      state.fps = action.payload;
+    },
+    resetFps: (state: AppState, action: PayloadAction<void>) => {
+      state.fps = 60;
     },
   },
 });
@@ -63,5 +71,10 @@ export const selectMapProvider = createSelector(
 
 export const selectBaseMapMode = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].baseMapMode,
+  (result) => result
+);
+
+export const selectFps = createSelector(
+  (state: RootState) => state[APP_FEATURE_KEY].fps,
   (result) => result
 );
