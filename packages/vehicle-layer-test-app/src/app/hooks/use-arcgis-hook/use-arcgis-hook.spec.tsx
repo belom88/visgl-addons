@@ -6,14 +6,12 @@ import { createStoreWith, createWrapper } from '../../utils/test-utils';
 
 vi.mock('@deck.gl/arcgis', () => {
   const DeckRenderer = vi.fn();
-  const loadArcGISModules = vi
-    .fn()
-    .mockReturnValue(
-      Promise.resolve({
-        DeckRenderer,
-        modules: [vi.fn(), vi.fn(), { add: vi.fn() }],
-      })
-    );
+  const loadArcGISModules = vi.fn().mockReturnValue(
+    Promise.resolve({
+      DeckRenderer,
+      modules: [vi.fn(), vi.fn(), { add: vi.fn() }],
+    })
+  );
   return { loadArcGISModules };
 });
 
