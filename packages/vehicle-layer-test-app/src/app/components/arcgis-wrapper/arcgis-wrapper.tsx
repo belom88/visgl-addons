@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { AnimatedVehicle } from '../../utils/vehicles-utils';
-import {useArcgis} from '../../hooks/use-arcgis-hook/use-arcgis-hook';
+import { useArcgis } from '../../hooks/use-arcgis-hook/use-arcgis-hook';
 import { StyledMapContainer } from '../common-styled';
 import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 
