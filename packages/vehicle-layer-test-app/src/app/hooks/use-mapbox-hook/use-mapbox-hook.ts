@@ -1,6 +1,6 @@
 import { Map as MaplibreMap } from 'maplibre-gl';
 import mapboxgl, { LngLatLike, Map as MapboxMap } from 'mapbox-gl';
-import { MutableRefObject, RefObject, useEffect, useRef } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { mapActions, selectMapState } from '../../redux/slices/map.slice';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
@@ -11,8 +11,8 @@ export const useMapboxHook = (
   mapContainer: MutableRefObject<null | HTMLDivElement>,
   baseMapProviderId?: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2,
   mapStyle = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
-): RefObject<MaplibreMap | MapboxMap | null> => {
-  const mapRef = useRef<MaplibreMap | MapboxMap | null>(null);
+): MaplibreMap | MapboxMap | null => {
+  const [map, setMap] = useState<MaplibreMap | MapboxMap | null>(null);
   const dispatch = useAppDispatch();
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
@@ -20,19 +20,18 @@ export const useMapboxHook = (
 
   useEffect(() => {
     return () => {
-      const map = mapRef.current;
       if (map) {
         map.remove();
       }
     };
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     if (mapContainer.current == null) {
       return;
     }
 
-    if (mapRef.current != null || isLoadingRef.current) {
+    if (map != null || isLoadingRef.current) {
       return; // initialize map only once
     }
 
@@ -52,25 +51,25 @@ export const useMapboxHook = (
       bearing,
     };
 
-    let map: MapboxMap | MaplibreMap;
+    let newMap: MapboxMap | MaplibreMap;
     if (baseMapProviderId === BaseMapProviderId.mapbox2) {
-      map = new MapboxMap(mapOptions);
+      newMap = new MapboxMap(mapOptions);
     } else {
-      map = new MaplibreMap(mapOptions);
+      newMap = new MaplibreMap(mapOptions);
     }
     isLoadingRef.current = true;
 
-    map.on('style.load', () => {
-      mapRef.current = map;
+    newMap.on('style.load', () => {
+      setMap(newMap);
     });
 
-    map.on('move', () => {
-      const center = map.getCenter();
+    newMap.on('move', () => {
+      const center = newMap.getCenter();
       dispatch(
         mapActions.setMapState({
           longitude: center.lng,
           latitude: center.lat,
-          zoom: map.getZoom(),
+          zoom: newMap.getZoom(),
         })
       );
     });
@@ -84,9 +83,10 @@ export const useMapboxHook = (
     pitch,
     baseMapProviderId,
     mapStyle,
+    map,
   ]);
 
-  return mapRef;
+  return map;
 };
 
 export default useMapboxHook;

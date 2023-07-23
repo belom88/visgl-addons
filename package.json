@@ -58,6 +58,8 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
+    "@arcgis/core": "4.27.6",
+    "@deck.gl/arcgis": "8.9.21",
     "@deck.gl/core": "8.9.21",
     "@deck.gl/google-maps": "8.9.21",
     "@deck.gl/layers": "8.9.21",

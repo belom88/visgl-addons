@@ -34,10 +34,9 @@ export function InterleavedMap({
   mapStyle,
 }: InterleavedMapProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
-  const mapRef = useMapboxHook(mapContainer, baseMapProviderId, mapStyle);
+  const map = useMapboxHook(mapContainer, baseMapProviderId, mapStyle);
 
   useEffect(() => {
-    const map = mapRef.current;
     if (!map) {
       return;
     }
@@ -47,8 +46,8 @@ export function InterleavedMap({
     }
 
     let firstLabelLayerId: undefined | string;
-    if (mapRef.current instanceof MapboxMap) {
-      firstLabelLayerId = getLabelLayerId(mapRef.current);
+    if (map instanceof MapboxMap) {
+      firstLabelLayerId = getLabelLayerId(map);
     }
     map.addLayer(
       // @ts-expect-error maplibre and mapbox types are not compatible
@@ -68,7 +67,7 @@ export function InterleavedMap({
       }),
       firstLabelLayerId
     );
-  }, [vehicles, mapRef]);
+  }, [vehicles, map]);
 
   return (
     <StyledMapContainer
