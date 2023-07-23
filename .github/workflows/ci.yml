@@ -22,6 +22,6 @@ jobs:
       - name: Run unit tests
         run: npx nx affected -t test --parallel=3 --configuration=ci
       - name: Run e2e tests
-        run: NODE_OPTIONS="--max_old_space_size=4096" npx nx affected -t e2e --parallel=3 --configuration=ci
+        run: npx nx affected -t e2e --parallel=3 --configuration=ci
       - name: Build packages
         run: npx nx affected -t build --parallel=3
