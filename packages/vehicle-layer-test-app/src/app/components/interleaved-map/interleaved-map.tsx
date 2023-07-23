@@ -1,7 +1,7 @@
 import { Map as MapboxMap } from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
 import { AnimatedVehicle } from '../../utils/vehicles-utils';
-import useMapboxHook from '../../hooks/use-mapbox-hook/use-mapbox-hook';
+import { useMapbox } from '../../hooks/use-mapbox-hook/use-mapbox-hook';
 import { MapboxLayer } from '@deck.gl/mapbox/typed';
 import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 import { StyledMapContainer } from '../common-styled';
@@ -34,7 +34,7 @@ export function InterleavedMap({
   mapStyle,
 }: InterleavedMapProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map = useMapboxHook(mapContainer, baseMapProviderId, mapStyle);
+  const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
 
   useEffect(() => {
     if (!map) {

@@ -15,14 +15,10 @@ import {
 } from '../../redux/slices/test-cases.slice';
 import { TEST_CASES } from '../../constants/test-cases';
 import { TestCase } from '../../types';
+import { StyledTopPanelsContainer } from '../common-styled';
 
-const StyledContainer = styled(Box)`
-  top: 0;
+const StyledTestCasesContainer = styled(StyledTopPanelsContainer)`
   left: 0.5em;
-  width: 100%;
-  visibility: hidden;
-  position: absolute;
-  z-index: 1;
 `;
 
 const StyledGridContainer = styled(Grid)`
@@ -45,7 +41,7 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
   const dispatch = useAppDispatch();
   const selectedTestCase = useAppSelector(selectSelectedTestCase);
   return (
-    <StyledContainer>
+    <StyledTestCasesContainer>
       <Toolbar />
       <StyledGridContainer container spacing={2}>
         <StyledGridItem item md={3}>
@@ -70,7 +66,7 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
           </StyledMainPaper>
         </StyledGridItem>
       </StyledGridContainer>
-    </StyledContainer>
+    </StyledTestCasesContainer>
   );
 }
 
