@@ -5,7 +5,8 @@ import { AnimatedVehicle } from '../../utils/vehicles-utils';
 import { StyledMapContainer } from '../common-styled';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
-import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
+import { selectScale } from '../../redux/slices/layer-props.slice';
 
 const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
@@ -30,6 +31,7 @@ export function GoogleMapsWrapper({
   const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
+  const vehicleScale = useAppSelector(selectScale);
 
   const overlay = useMemo(
     () =>
@@ -41,23 +43,11 @@ export function GoogleMapsWrapper({
   );
 
   useEffect(() => {
-    const layer = new VehicleLayer<AnimatedVehicle>({
-      id: 'transit-model-vehicle-layer',
-      data: vehicles,
-      getPosition: (vehicle: AnimatedVehicle) => [
-        vehicle.longitude,
-        vehicle.latitude,
-      ],
-      getOrientation: (vehicle: AnimatedVehicle) => [
-        0,
-        -vehicle.bearing + 90,
-        90,
-      ],
-    });
+    const layer = renderVehicleLayer(vehicles, vehicleScale);
     overlay.setProps({
       layers: [layer],
     });
-  }, [vehicles, overlay]);
+  }, [vehicles, overlay, vehicleScale]);
 
   useEffect(() => {
     if (map) {

@@ -2,14 +2,17 @@ import {
   LAYER_PROPS_FEATURE_KEY,
   layerPropsActions,
   layerPropsReducer,
-  selectVehiclesCount,
+  selectVehiclesCountValue,
 } from './layer-props.slice';
 import { createStoreWith } from '../../utils/test-utils';
 
 describe('layerProps reducer', () => {
   it('should handle initial state', () => {
     expect(layerPropsReducer(undefined, { type: '' })).toEqual({
-      vehiclesCount: 2000,
+      vehiclesCountValue: 2000,
+      vehiclesCountMinMax: [10, 10000],
+      animated: true,
+      scale: 1,
     });
   });
 
@@ -21,17 +24,25 @@ describe('layerProps reducer', () => {
 
     expect(state).toEqual(
       expect.objectContaining({
-        vehiclesCount: 5001,
+        vehiclesCountValue: 5001,
+        animated: true,
+        scale: 1,
+        vehiclesCountMinMax: [10, 10000],
       })
     );
   });
 
   it('should selectVehiclesCount', () => {
     const store = createStoreWith({
-      [LAYER_PROPS_FEATURE_KEY]: { vehiclesCount: 5005 },
+      [LAYER_PROPS_FEATURE_KEY]: {
+        vehiclesCountValue: 5005,
+        vehiclesCountMinMax: [100, 1000],
+        animated: true,
+        scale: 1,
+      },
     });
 
-    const vehiclesCount = selectVehiclesCount(store.getState());
+    const vehiclesCount = selectVehiclesCountValue(store.getState());
 
     expect(vehiclesCount).toEqual(5005);
   });

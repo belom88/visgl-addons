@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Map as MaplibreMap } from 'react-map-gl/maplibre';
 import { Map as MapboxMap } from 'react-map-gl';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectVehiclesCount } from '../../redux/slices/layer-props.slice';
+import {
+  selectAnimationState,
+  selectVehiclesCountValue,
+} from '../../redux/slices/layer-props.slice';
 import { selectAllRoutes } from '../../redux/slices/routes.slice';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
 import { createDeckglWith } from '../deckgl-wrapper/deckgl-wrapper';
@@ -32,7 +35,11 @@ export interface MapWrapperProps {}
 
 export function MapWrapper(props: MapWrapperProps) {
   const dispatch = useAppDispatch();
-  const vehiclesCount = useAppSelector(selectVehiclesCount);
+  const vehiclesCount = useAppSelector(selectVehiclesCountValue);
+
+  const animationState = useAppSelector(selectAnimationState);
+  const animationStateRef = useRef<boolean>(true);
+  animationStateRef.current = animationState;
 
   const routes: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes);
   const routesRef = useRef<GeojsonRouteFeature[]>(routes);
@@ -72,12 +79,15 @@ export function MapWrapper(props: MapWrapperProps) {
       fpsRef.current = updateAverageFps(fpsRef.current, currentFps);
 
       dispatch(appActions.setFps(fpsRef.current.value));
-      rerenderLayer();
+      if (animationStateRef.current || !animatedVehiclesRef.current.length) {
+        rerenderLayer();
+      }
+
       window.requestAnimationFrame(animate);
     };
 
     window.requestAnimationFrame(animate);
-  }, [dispatch]);
+  }, [dispatch, animationStateRef, animatedVehiclesRef]);
 
   useEffect(() => {
     if (!animationStarted.current) {
@@ -87,11 +97,12 @@ export function MapWrapper(props: MapWrapperProps) {
 
   useEffect(() => {
     vehiclesRef.current = createVehicles(vehiclesCount, routes);
-  }, [vehiclesCount, routes]);
+  }, [vehiclesCount, routes, animationState]);
 
   useEffect(() => {
     dispatch(appActions.resetFps());
     fpsRef.current = { value: 60, count: 1 };
+    setAnimatedVehicles([]);
   }, [baseMapMode, mapProvider, vehiclesCount, fpsRef, dispatch]);
 
   const DeckglComponent = useMemo(() => {

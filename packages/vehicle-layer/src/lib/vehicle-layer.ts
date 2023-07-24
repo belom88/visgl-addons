@@ -10,19 +10,22 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   VehicleLayerProps<TProps>
 > {
   override renderLayers(): Layer<object> | LayersList | null {
-    return [new ScenegraphLayer({
-      id: `${this.props.id}-scenegraph`,
-      data: this.props.data,
-      getPosition: this.props.getPosition,
-      getOrientation: this.props.getOrientation,
-      getColor: this.props.getColor,
-      scenegraph:
-        'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/transit-bus-low-poly-2.glb',
-      _lighting: 'pbr',
-      updateTriggers: {
-        ...this.props.updateTriggers,
-      },
-    })];
+    return [
+      new ScenegraphLayer({
+        id: `${this.props.id}-scenegraph`,
+        data: this.props.data,
+        getPosition: this.props.getPosition,
+        getOrientation: this.props.getOrientation,
+        getColor: this.props.getColor,
+        getScale: this.props.getScale,
+        scenegraph:
+          'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/transit-bus-low-poly-2.glb',
+        _lighting: 'pbr',
+        updateTriggers: {
+          ...this.props.updateTriggers,
+        },
+      }),
+    ];
   }
 }
 

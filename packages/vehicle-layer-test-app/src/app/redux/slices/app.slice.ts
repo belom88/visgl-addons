@@ -33,7 +33,7 @@ export const appSlice = createSlice({
     setFps: (state: AppState, action: PayloadAction<number>) => {
       state.fps = action.payload;
     },
-    resetFps: (state: AppState, action: PayloadAction<void>) => {
+    resetFps: (state: AppState) => {
       state.fps = 60;
     },
   },
