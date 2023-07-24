@@ -39,7 +39,6 @@ export function InterleavedMap({
   const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
   const vehicleScale = useAppSelector(selectScale);
 
-
   useEffect(() => {
     if (!map) {
       return;
