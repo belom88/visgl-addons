@@ -33,7 +33,10 @@ describe('testCases reducer', () => {
     );
     expect(layerProps).toEqual(
       expect.objectContaining({
-        vehiclesCount: 5000,
+        vehiclesCountValue: 5000,
+        animated: true,
+        scale: 1,
+        vehiclesCountMinMax: [10, 10000],
       })
     );
   });

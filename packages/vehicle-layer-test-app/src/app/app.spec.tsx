@@ -12,7 +12,6 @@ vi.mock('react-map-gl/maplibre', () => {
   const Map = vi.fn();
   return { Map };
 });
-vi.importMock('@belom88/deckgl-vehicle-layer');
 vi.mock('maplibre-gl', () => {
   const Map = vi.fn().mockReturnValue({
     on: vi.fn(),

@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react';
 import { AnimatedVehicle } from '../../utils/vehicles-utils';
 import { useArcgis } from '../../hooks/use-arcgis-hook/use-arcgis-hook';
 import { StyledMapContainer } from '../common-styled';
-import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
+import { useAppSelector } from '../../redux/hooks';
+import { selectScale } from '../../redux/slices/layer-props.slice';
 
 /* eslint-disable-next-line */
 export interface ArcgisWrapperProps {
@@ -12,31 +14,17 @@ export interface ArcgisWrapperProps {
 export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map: unknown | null = useArcgis(mapContainer);
-
-  const getLayer = (vehicles: AnimatedVehicle[]) =>
-    new VehicleLayer<AnimatedVehicle>({
-      id: 'transit-model-vehicle-layer',
-      data: vehicles,
-      getPosition: (vehicle: AnimatedVehicle) => [
-        vehicle.longitude,
-        vehicle.latitude,
-      ],
-      getOrientation: (vehicle: AnimatedVehicle) => [
-        0,
-        -vehicle.bearing + 90,
-        90,
-      ],
-    });
+  const vehicleScale = useAppSelector(selectScale);
 
   useEffect(() => {
     if (!map) {
       return;
     }
 
-    const layers = [getLayer(vehicles)];
+    const layers = [renderVehicleLayer(vehicles, vehicleScale)];
     // @ts-expect-error @deck.gl/arcgis has no types
     map.deck.set({ layers });
-  }, [vehicles, map]);
+  }, [vehicles, map, vehicleScale]);
 
   return (
     <StyledMapContainer

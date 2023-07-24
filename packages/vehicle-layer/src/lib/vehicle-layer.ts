@@ -16,6 +16,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       getPosition: this.props.getPosition,
       getOrientation: this.props.getOrientation,
       getColor: this.props.getColor,
+      getScale: this.props.getScale,
       scenegraph:
         'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/transit-bus-low-poly-2.glb',
       _lighting: 'pbr',

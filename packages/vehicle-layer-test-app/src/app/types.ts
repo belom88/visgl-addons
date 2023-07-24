@@ -16,8 +16,16 @@ export enum BaseMapMode {
 }
 
 export interface LayerPropsEdited {
+  // Scene properties
   /** Number of vehicles to put on the map */
-  vehiclesCount: number;
+  vehiclesCountValue: number;
+  vehiclesCountMinMax: [number, number];
+  /** Is animation switched on */
+  animated: boolean;
+
+  // Vehicle properties
+  /** Vehicle model scale */
+  scale: number;
 }
 
 export interface TestCase {
