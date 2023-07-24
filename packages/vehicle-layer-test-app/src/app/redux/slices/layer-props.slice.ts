@@ -33,6 +33,16 @@ export const layerPropsSlice = createSlice({
         state.vehiclesCountValue = 10000;
       }
     },
+    setAnimation: (state: LayerPropsState, action: PayloadAction<boolean>) => {
+      state.animated = action.payload;
+      if (state.animated) {
+        state.vehiclesCountValue = 2000;
+        state.vehiclesCountMinMax = [10, 10000];
+      } else {
+        state.vehiclesCountMinMax = [1000, 100000];
+        state.vehiclesCountValue = 10000;
+      }
+    },
     setScale: (state: LayerPropsState, action: PayloadAction<number>) => {
       state.scale = action.payload;
     },

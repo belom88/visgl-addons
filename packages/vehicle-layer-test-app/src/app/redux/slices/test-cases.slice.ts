@@ -20,9 +20,12 @@ const initialState: TestCasesState = { selectedTestCase: TEST_CASES[0] };
 export const setTestCase = createAsyncThunk(
   `${TEST_CASES_FEATURE_KEY}/setTestCase`,
   async (testCase: TestCase, { dispatch }) => {
+    dispatch(layerPropsActions.setAnimation(testCase.layerProps.animated));
     dispatch(
-      layerPropsActions.setVehiclesCount(testCase.layerProps.vehiclesCount)
+      layerPropsActions.setVehiclesCount(testCase.layerProps.vehiclesCountValue)
     );
+    dispatch(layerPropsActions.setScale(testCase.layerProps.scale));
+
     return testCase;
   }
 );
