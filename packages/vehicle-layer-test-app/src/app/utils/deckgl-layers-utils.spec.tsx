@@ -1,8 +1,25 @@
+import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+
 import { renderVehicleLayer } from './deckgl-layers-utils';
+
+vi.mock('@deck.gl/core', () => {
+  const CompositeLayer = vi.fn();
+  return { CompositeLayer };
+});
+vi.mock('@deck.gl/layers', () => {
+  const ScatterplotLayer = vi.fn();
+  const ScatterplotLayerProps = {};
+  return { ScatterplotLayer, ScatterplotLayerProps };
+});
+vi.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = vi.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
 
 describe('deckgl-layers-utils', () => {
   it('renderVehicleLayer', () => {
-    const result = renderVehicleLayer([], 1);
-    expect(result.id).toBe('transit-model-vehicle-layer');
+    const result = renderVehicleLayer([], 1, '3D');
+    expect(result).toBeInstanceOf(VehicleLayer);
   });
 });

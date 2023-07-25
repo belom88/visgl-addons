@@ -1,6 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { LayerPropsEdited } from '../../types';
+import { DimentionalMode } from '@belom88/deckgl-vehicle-layer';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
 
@@ -11,6 +12,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountMinMax: [10, 10000],
   animated: true,
   scale: 1,
+  dimentionalMode: '3D',
 };
 
 export const layerPropsSlice = createSlice({
@@ -45,6 +47,15 @@ export const layerPropsSlice = createSlice({
     },
     setScale: (state: LayerPropsState, action: PayloadAction<number>) => {
       state.scale = action.payload;
+    },
+    toggleDimentionalMode: (state: LayerPropsState) => {
+      state.dimentionalMode = state.dimentionalMode === '2D' ? '3D' : '2D';
+    },
+    setDimentionalMode: (
+      state: LayerPropsState,
+      action: PayloadAction<DimentionalMode>
+    ) => {
+      state.dimentionalMode = action.payload;
     },
   },
 });
@@ -88,5 +99,9 @@ export const selectAnimationState = createSelector(
 );
 export const selectScale = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].scale,
+  (result) => result
+);
+export const selectDimentionalMode = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].dimentionalMode,
   (result) => result
 );

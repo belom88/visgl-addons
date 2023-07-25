@@ -1,5 +1,20 @@
 import { VehicleLayer } from './vehicle-layer';
 
+jest.mock('@deck.gl/core', () => {
+  const CompositeLayer = jest.fn();
+  return { CompositeLayer };
+});
+jest.mock('@deck.gl/layers', () => {
+  const ScatterplotLayer = jest.fn();
+  const ScatterplotLayerProps = {};
+  return { ScatterplotLayer, ScatterplotLayerProps };
+});
+jest.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = jest.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
+
 describe('vehicleLayer', () => {
   it('should create VehicleLayer', () => {
     const vehicleLayer = new VehicleLayer({

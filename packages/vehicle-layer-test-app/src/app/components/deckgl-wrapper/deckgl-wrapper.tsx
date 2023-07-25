@@ -6,7 +6,10 @@ import { AnimatedVehicle } from '../../utils/vehicles-utils';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { StyledMapContainer } from '../common-styled';
-import { selectScale } from '../../redux/slices/layer-props.slice';
+import {
+  selectDimentionalMode,
+  selectScale,
+} from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 
 /* eslint-disable-next-line */
@@ -25,8 +28,10 @@ export function DeckglWrapper({
 }: DeckglWrapperProps) {
   const viewState = useAppSelector(selectMapState);
   const vehicleScale = useAppSelector(selectScale);
+  const dimentionalMode = useAppSelector(selectDimentionalMode);
 
-  const getLayer = () => renderVehicleLayer(vehicles, vehicleScale);
+  const getLayer = () =>
+    renderVehicleLayer(vehicles, vehicleScale, dimentionalMode);
 
   return (
     <StyledMapContainer>

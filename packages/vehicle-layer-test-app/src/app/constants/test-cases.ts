@@ -10,6 +10,7 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: true,
       scale: 1,
+      dimentionalMode: '3D',
     },
   },
   {
@@ -21,17 +22,31 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: true,
       scale: 1,
+      dimentionalMode: '3D',
     },
   },
   {
     id: 'static-50000',
-    name: 'Static 50000',
-    description: 'Static 50000 vehicles',
+    name: 'Static 50K',
+    description: 'Static 50K vehicles',
     layerProps: {
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,
       scale: 1,
+      dimentionalMode: '3D',
+    },
+  },
+  {
+    id: '2d-50000',
+    name: 'Static 2D 50K',
+    description: 'Static 50K vehicles; sizeScale 0.5',
+    layerProps: {
+      vehiclesCountValue: 50000,
+      vehiclesCountMinMax: [0, 0],
+      animated: false,
+      scale: 0.5,
+      dimentionalMode: '2D',
     },
   },
 ];

@@ -1,15 +1,17 @@
-import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+import { DimentionalMode, VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 import { AnimatedVehicle } from './vehicles-utils';
 
 /**
  * Render VehicleLayer
  * @param vehicles - data array
  * @param vehicleScale - vehicle model scale through all axes
+ * @param dimentionalMode - VehicleLayer dimentional mode
  * @returns VehicleLayer instance
  */
 export const renderVehicleLayer = (
   vehicles: AnimatedVehicle[],
-  vehicleScale: number
+  vehicleScale: number,
+  dimentionalMode: DimentionalMode
 ): VehicleLayer<AnimatedVehicle> => {
   return new VehicleLayer<AnimatedVehicle>({
     id: 'transit-model-vehicle-layer',
@@ -23,9 +25,10 @@ export const renderVehicleLayer = (
       -vehicle.bearing + 90,
       90,
     ],
-    getScale: () => [vehicleScale, vehicleScale, vehicleScale],
+    sizeScale: vehicleScale,
+    dimentionalMode,
     updateTriggers: {
-      getScale: [vehicleScale],
+      sizeScale: [vehicleScale],
     },
   });
 };

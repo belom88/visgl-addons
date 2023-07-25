@@ -12,6 +12,7 @@ import {
 import {
   layerPropsActions,
   selectAnimationState,
+  selectDimentionalMode,
   selectScale,
   selectVehiclesCountMinMax,
   selectVehiclesCountValue,
@@ -30,6 +31,7 @@ const StyledMainPaper = styled(Paper)`
   padding: ${({ theme }) => theme.spacing(1)};
   textalign: 'center';
 `;
+
 const calculateScale = (value: number) => {
   if (value < 50) {
     return value / 25;
@@ -55,6 +57,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   );
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
+  const dimentionalMode = useAppSelector(selectDimentionalMode);
   const dispatch = useAppDispatch();
 
   const onVehiclesCountChange = (e: Event, newValue: number | number[]) => {
@@ -126,8 +129,17 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
             value={calculateUnscale(vehicleScale)}
             onChange={onScaleChange}
           />
+        </Stack>
+        <Stack direction="row" alignItems={'center'}>
           <Typography variant="body2" component="span">
-            100
+            2D
+          </Typography>
+          <Switch
+            checked={dimentionalMode === '2D' ? false : true}
+            onChange={() => dispatch(layerPropsActions.toggleDimentionalMode())}
+          />
+          <Typography variant="body2" component="span">
+            3D
           </Typography>
         </Stack>
       </StyledMainPaper>

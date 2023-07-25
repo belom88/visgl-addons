@@ -2,13 +2,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Map as MaplibreMap } from 'react-map-gl/maplibre';
 import { Map as MapboxMap } from 'react-map-gl';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+
+import { createDeckglWith } from '../deckgl-wrapper/deckgl-wrapper';
+import { createInterleavedContainerWith } from '../interleaved-map/interleaved-map';
+import { createGoogleMapWith } from '../google-maps-wrapper/google-maps-wrapper';
+import ArcgisWrapper from '../arcgis-wrapper/arcgis-wrapper';
+
 import {
   selectAnimationState,
   selectVehiclesCountValue,
 } from '../../redux/slices/layer-props.slice';
 import { selectAllRoutes } from '../../redux/slices/routes.slice';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
-import { createDeckglWith } from '../deckgl-wrapper/deckgl-wrapper';
 import {
   AnimatedVehicle,
   Vehicle,
@@ -21,10 +26,8 @@ import {
   selectMapProvider,
 } from '../../redux/slices/app.slice';
 import { BaseMapMode } from '../../types';
-import { createInterleavedContainerWith } from '../interleaved-map/interleaved-map';
+
 import { BaseMapProviderId } from '../../constants/base-map-providers';
-import { createGoogleMapWith } from '../google-maps-wrapper/google-maps-wrapper';
-import ArcgisWrapper from '../arcgis-wrapper/arcgis-wrapper';
 import Unsupported from '../unsupported/unsupported';
 import { calculateCurrentFps, updateAverageFps } from '../../utils/fps-utils';
 

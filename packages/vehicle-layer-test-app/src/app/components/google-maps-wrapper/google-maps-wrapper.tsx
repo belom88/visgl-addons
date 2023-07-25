@@ -6,7 +6,10 @@ import { StyledMapContainer } from '../common-styled';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
-import { selectScale } from '../../redux/slices/layer-props.slice';
+import {
+  selectDimentionalMode,
+  selectScale,
+} from '../../redux/slices/layer-props.slice';
 
 const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
@@ -32,6 +35,7 @@ export function GoogleMapsWrapper({
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
   const vehicleScale = useAppSelector(selectScale);
+  const dimentionalMode = useAppSelector(selectDimentionalMode);
 
   const overlay = useMemo(
     () =>
@@ -43,11 +47,11 @@ export function GoogleMapsWrapper({
   );
 
   useEffect(() => {
-    const layer = renderVehicleLayer(vehicles, vehicleScale);
+    const layer = renderVehicleLayer(vehicles, vehicleScale, dimentionalMode);
     overlay.setProps({
       layers: [layer],
     });
-  }, [vehicles, overlay, vehicleScale]);
+  }, [vehicles, overlay, vehicleScale, dimentionalMode]);
 
   useEffect(() => {
     if (map) {
