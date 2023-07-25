@@ -7,7 +7,10 @@ import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 import { StyledMapContainer } from '../common-styled';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
 import { useAppSelector } from '../../redux/hooks';
-import { selectScale } from '../../redux/slices/layer-props.slice';
+import {
+  selectDimentionalMode,
+  selectScale,
+} from '../../redux/slices/layer-props.slice';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
@@ -38,6 +41,7 @@ export function InterleavedMap({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
   const vehicleScale = useAppSelector(selectScale);
+  const dimentionalMode = useAppSelector(selectDimentionalMode);
 
   useEffect(() => {
     if (!map) {
@@ -67,11 +71,12 @@ export function InterleavedMap({
           -vehicle.bearing + 90,
           90,
         ],
-        getScale: () => [vehicleScale, vehicleScale, vehicleScale],
+        sizeScale: vehicleScale,
+        dimentionalMode,
       }),
       firstLabelLayerId
     );
-  }, [vehicles, map, vehicleScale]);
+  }, [vehicles, map, vehicleScale, dimentionalMode]);
 
   return (
     <StyledMapContainer

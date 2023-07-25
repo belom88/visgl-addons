@@ -1,3 +1,5 @@
+import { DimentionalMode } from '@belom88/deckgl-vehicle-layer';
+
 export enum RequestStatus {
   IDLE,
   LOADING,
@@ -26,6 +28,7 @@ export interface LayerPropsEdited {
   // Vehicle properties
   /** Vehicle model scale */
   scale: number;
+  dimentionalMode: DimentionalMode;
 }
 
 export interface TestCase {

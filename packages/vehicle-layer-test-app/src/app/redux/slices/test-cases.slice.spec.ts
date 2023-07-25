@@ -37,6 +37,7 @@ describe('testCases reducer', () => {
         animated: true,
         scale: 1,
         vehiclesCountMinMax: [10, 10000],
+        dimentionalMode: '3D',
       })
     );
   });
