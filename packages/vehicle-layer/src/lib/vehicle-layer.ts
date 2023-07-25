@@ -18,7 +18,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   static override defaultProps = {
     ...ScatterplotLayer.defaultProps,
     ...ScenegraphLayer.defaultProps,
-    dimentionalMode: '3D'
+    dimentionalMode: '3D',
   };
 
   override renderLayers(): Layer<object> | LayersList | null {
@@ -48,7 +48,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           filled: true,
           radiusMinPixels: 1,
           getPosition: this.props.getPosition,
-          getRadius: (this.props.sizeScale || 1),
+          getRadius: this.props.sizeScale || 1,
           getFillColor: [0, 105, 92],
         }),
       ];
