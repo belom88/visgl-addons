@@ -7,9 +7,9 @@ vi.mock('@deck.gl/core', () => {
   return { CompositeLayer };
 });
 vi.mock('@deck.gl/layers', () => {
-  const ScatterplotLayer = vi.fn();
-  const ScatterplotLayerProps = {};
-  return { ScatterplotLayer, ScatterplotLayerProps };
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
 });
 vi.mock('@deck.gl/mesh-layers', () => {
   const ScenegraphLayer = vi.fn();
