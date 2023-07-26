@@ -66,11 +66,8 @@ export function InterleavedMap({
           vehicle.longitude,
           vehicle.latitude,
         ],
-        getOrientation: (vehicle: AnimatedVehicle) => [
-          0,
-          -vehicle.bearing + 90,
-          90,
-        ],
+        getBearing: (vehicle: AnimatedVehicle) => vehicle.bearing,
+        get2dFrontColor: [38, 166, 154],
         sizeScale: vehicleScale,
         dimentionalMode,
       }),
