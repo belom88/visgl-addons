@@ -5,9 +5,9 @@ jest.mock('@deck.gl/core', () => {
   return { CompositeLayer };
 });
 jest.mock('@deck.gl/layers', () => {
-  const ScatterplotLayer = jest.fn();
-  const ScatterplotLayerProps = {};
-  return { ScatterplotLayer, ScatterplotLayerProps };
+  const IconLayer = jest.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
 });
 jest.mock('@deck.gl/mesh-layers', () => {
   const ScenegraphLayer = jest.fn();
