@@ -5,6 +5,7 @@ import {
   CompositeLayer,
   Layer,
   LayersList,
+  WebMercatorViewport,
 } from '@deck.gl/core/typed';
 import {
   ScenegraphLayer,
@@ -32,10 +33,10 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     ...ScenegraphLayer.defaultProps,
     dimentionalMode: '3D',
     getColor: undefined,
-    getBearing: undefined,
     get3dColor: undefined,
     get2dBackgroundColor: [255, 255, 255, 255],
     get2dFrontColor: undefined,
+    getBearing: undefined,
   };
 
   private calculateBearing(
@@ -124,6 +125,33 @@ export class VehicleLayer<TProps> extends CompositeLayer<
               y: 0,
               width: 500,
               height: 500,
+              mask: true,
+            },
+          },
+          billboard: false,
+        }),
+        new IconLayer({
+          id: `${this.props.id}--arrow-icon-background`,
+          data: this.props.data,
+          getPosition: this.props.getPosition,
+          getSize: (this.props.sizeScale || 1) * 5,
+          sizeScale: 0.4,
+          sizeUnits: 'meters',
+          iconAtlas:
+            'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/bus.svg',
+          getIcon: () => 'arrow',
+          getColor: this.props.get2dBackgroundColor || [255, 255, 255, 255],
+          getAngle: () => {
+            const viewport = this.context.viewport as WebMercatorViewport;
+            const bearing = viewport.bearing;
+            return Number.isFinite(bearing) ? -bearing : 0;
+          },
+          iconMapping: {
+            arrow: {
+              x: 0,
+              y: 0,
+              width: 800,
+              height: 800,
               mask: true,
             },
           },

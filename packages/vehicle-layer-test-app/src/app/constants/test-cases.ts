@@ -40,12 +40,12 @@ export const TEST_CASES: TestCase[] = [
   {
     id: '2d-50000',
     name: 'Static 2D 50K',
-    description: 'Static 50K vehicles; sizeScale 0.5',
+    description: 'Static 50K vehicles; sizeScale 0.15',
     layerProps: {
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,
-      scale: 0.5,
+      scale: 0.15,
       dimentionalMode: '2D',
     },
   },
