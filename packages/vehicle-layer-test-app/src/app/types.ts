@@ -7,6 +7,13 @@ export enum RequestStatus {
   FAILED,
 }
 
+export enum MenuId {
+  VEHICLE_LAYER_COMMON_COLOR,
+  VEHICLE_LAYER_3D_COLOR,
+  VEHICLE_LAYER_2D_BACKGROUND,
+  VEHICLE_LAYER_2D_FOREGROUND,
+}
+
 export type BaseMapProvider = {
   name: string;
   id: string;

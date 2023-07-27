@@ -13,7 +13,7 @@ export const StyledMapContainer = styled.div`
 export const StyledTopPanelsContainer = styled(Box)`
   top: 0;
   left: 0;
-  width: 100%;
+  width: 99%;
   visibility: hidden;
   position: absolute;
   z-index: 1;
