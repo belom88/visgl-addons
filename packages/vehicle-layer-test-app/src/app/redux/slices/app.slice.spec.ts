@@ -16,6 +16,7 @@ describe('app reducer', () => {
       baseMapProvider: BASE_MAP_PROVIDERS[0],
       baseMapMode: BaseMapMode.OVERLAID,
       fps: 60,
+      openedMenuId: null,
     };
     expect(appReducer(undefined, { type: '' })).toEqual(expected);
   });

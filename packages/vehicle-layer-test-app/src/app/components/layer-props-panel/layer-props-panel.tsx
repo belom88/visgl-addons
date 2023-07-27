@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Divider,
   FormControlLabel,
   Paper,
@@ -7,8 +8,11 @@ import {
   Stack,
   Switch,
   Typography,
+  Avatar,
   styled,
+  Popover,
 } from '@mui/material';
+import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
 import {
   layerPropsActions,
   selectAnimationState,
@@ -18,6 +22,11 @@ import {
   selectVehiclesCountValue,
 } from '../../redux/slices/layer-props.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { appActions, selectOpenedMenuId } from '../../redux/slices/app.slice';
+import { MenuId } from '../../types';
+import Colorful from '@uiw/react-color-colorful';
+import { green } from '@mui/material/colors';
+import { useRef, useState } from 'react';
 
 const StyledContainer = styled(Box)`
   bottom: 1.5em;
@@ -58,7 +67,11 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
   const dimentionalMode = useAppSelector(selectDimentionalMode);
+  const openedMenuId = useAppSelector(selectOpenedMenuId);
   const dispatch = useAppDispatch();
+
+  const anchorRef = useRef<HTMLButtonElement>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const onVehiclesCountChange = (e: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number') {
@@ -70,6 +83,16 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
     if (typeof newValue === 'number') {
       dispatch(layerPropsActions.setScale(calculateScale(newValue)));
     }
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(appActions.setOpenedMenuId(MenuId.VEHICLE_LAYER_COMMON_COLOR));
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    dispatch(appActions.closeMenu());
+    setAnchorEl(null);
   };
 
   return (
@@ -141,6 +164,39 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
           <Typography variant="body2" component="span">
             3D
           </Typography>
+        </Stack>
+        <Stack direction="row" alignItems={'center'}>
+          <div>
+            <Button
+              aria-describedby={
+                openedMenuId === MenuId.VEHICLE_LAYER_COMMON_COLOR
+                  ? `menu-${MenuId.VEHICLE_LAYER_COMMON_COLOR}`
+                  : undefined
+              }
+              ref={anchorRef}
+              onClick={handleClick}
+            >
+              <Avatar sx={{ bgcolor: green[500] }}>
+                <ColorLensOutlinedIcon />
+              </Avatar>
+            </Button>
+            <Popover
+              id={`menu-${MenuId.VEHICLE_LAYER_COMMON_COLOR}`}
+              anchorEl={anchorEl}
+              open={openedMenuId === MenuId.VEHICLE_LAYER_COMMON_COLOR}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <Colorful />
+            </Popover>
+          </div>
         </Stack>
       </StyledMainPaper>
     </StyledContainer>

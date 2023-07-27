@@ -3524,6 +3524,50 @@
     "@typescript-eslint/types" "5.60.1"
     eslint-visitor-keys "^3.3.0"
 
+"@uiw/color-convert@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/color-convert/-/color-convert-1.3.3.tgz#a09b7f0f260ade9598b7ce1018b9980b5f1594a5"
+  integrity sha512-lCnDyNnHEYY1flsjSBkTodrEUG/YemWrzSwr7r7h8ZZdjk0RRMdIwbgMerOEODYQDh8vtoaorbJncshJ2Z2CSQ==
+
+"@uiw/react-color-alpha@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-color-alpha/-/react-color-alpha-1.3.3.tgz#7f10ab1b3d1a819c171439a91a7b238255323578"
+  integrity sha512-GmK/Dyj5TlLzt5Epcwry+9K4BPsqyPPhV09rsKKyiVa+/4XHRQRj97fjJ0GHgae6+71BPoIC9ulAR/VnmK3lrg==
+  dependencies:
+    "@uiw/color-convert" "1.3.3"
+    "@uiw/react-drag-event-interactive" "1.3.3"
+
+"@uiw/react-color-colorful@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-color-colorful/-/react-color-colorful-1.3.3.tgz#4eb71250db44322618f9b4c736c0728eb1dec1fc"
+  integrity sha512-ib13E672x0NAKW10ygyMqJDan35Rb0dGv/QxVgB8ch/52Ho2D4U7C4tl0fgAxDbapAUW1ZyOssngdjnwUExQhQ==
+  dependencies:
+    "@uiw/color-convert" "1.3.3"
+    "@uiw/react-color-alpha" "1.3.3"
+    "@uiw/react-color-hue" "1.3.3"
+    "@uiw/react-color-saturation" "1.3.3"
+
+"@uiw/react-color-hue@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-color-hue/-/react-color-hue-1.3.3.tgz#ceec88e079aebdba982849b3758c24b9bc2d16f7"
+  integrity sha512-TywdH89nxRG3pVmUTOzyEzg6nI0EI8VSA6Vh0Uh+gGZZQjgDM1ptCa7V5KyeKEfWCvaeo3RBAHPijFOKQrHqow==
+  dependencies:
+    "@uiw/color-convert" "1.3.3"
+    "@uiw/react-color-alpha" "1.3.3"
+
+"@uiw/react-color-saturation@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-color-saturation/-/react-color-saturation-1.3.3.tgz#90003f00e5acc544dc7b01a9536cd4418be5ff47"
+  integrity sha512-gQNPaYgGbvE0Hq4pJjUNOfYuYFSV9QSWwPC23l9R/0WKdHci3ObHk8rycAkg9C6muV1ttBicqt9zqDVSwRHPrw==
+  dependencies:
+    "@uiw/color-convert" "1.3.3"
+    "@uiw/react-drag-event-interactive" "1.3.3"
+
+"@uiw/react-drag-event-interactive@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-drag-event-interactive/-/react-drag-event-interactive-1.3.3.tgz#fc2322f23c360fbd074a9837fcf0abc35cc16aed"
+  integrity sha512-dHHr19i4sa21bTFAd5xufsSYGCDqLBttIRmfQSzIpI18NtjmxKVCGyPL0ysxinWBjFomTUczszY4+fTOXnq1jQ==
+
 "@verdaccio/commons-api@10.2.0":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@verdaccio/commons-api/-/commons-api-10.2.0.tgz#3b684c31749837b0574375bb2e10644ecea9fcca"
