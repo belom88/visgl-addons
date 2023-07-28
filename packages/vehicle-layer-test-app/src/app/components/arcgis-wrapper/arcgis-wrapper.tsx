@@ -5,7 +5,8 @@ import { StyledMapContainer } from '../common-styled';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { useAppSelector } from '../../redux/hooks';
 import {
-  selectDimentionalMode,
+  selectAllColors,
+  selectDimensionMode,
   selectScale,
 } from '../../redux/slices/layer-props.slice';
 
@@ -18,7 +19,8 @@ export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map: unknown | null = useArcgis(mapContainer);
   const vehicleScale = useAppSelector(selectScale);
-  const dimentionalMode = useAppSelector(selectDimentionalMode);
+  const dimesionMode = useAppSelector(selectDimensionMode);
+  const colors = useAppSelector(selectAllColors);
 
   useEffect(() => {
     if (!map) {
@@ -26,11 +28,11 @@ export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
     }
 
     const layers = [
-      renderVehicleLayer(vehicles, vehicleScale, dimentionalMode),
+      renderVehicleLayer(vehicles, vehicleScale, dimesionMode, ...colors),
     ];
     // @ts-expect-error @deck.gl/arcgis has no types
     map.deck.set({ layers });
-  }, [vehicles, map, vehicleScale, dimentionalMode]);
+  }, [vehicles, map, vehicleScale, dimesionMode, colors]);
 
   return (
     <StyledMapContainer

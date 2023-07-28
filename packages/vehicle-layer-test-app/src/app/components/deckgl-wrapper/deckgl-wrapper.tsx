@@ -7,7 +7,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { StyledMapContainer } from '../common-styled';
 import {
-  selectDimentionalMode,
+  selectAllColors,
+  selectDimensionMode,
   selectScale,
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
@@ -28,10 +29,11 @@ export function DeckglWrapper({
 }: DeckglWrapperProps) {
   const viewState = useAppSelector(selectMapState);
   const vehicleScale = useAppSelector(selectScale);
-  const dimentionalMode = useAppSelector(selectDimentionalMode);
+  const dimensionMode = useAppSelector(selectDimensionMode);
+  const colors = useAppSelector(selectAllColors);
 
   const getLayer = () =>
-    renderVehicleLayer(vehicles, vehicleScale, dimentionalMode);
+    renderVehicleLayer(vehicles, vehicleScale, dimensionMode, ...colors);
 
   return (
     <StyledMapContainer>

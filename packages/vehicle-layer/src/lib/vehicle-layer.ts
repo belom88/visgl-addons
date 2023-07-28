@@ -12,17 +12,17 @@ import {
   ScenegraphLayerProps,
 } from '@deck.gl/mesh-layers/typed';
 import { IconLayer, IconLayerProps } from '@deck.gl/layers/typed';
-import { DimentionalMode } from '../types';
+import { DimensionMode } from '../types';
 
 type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
   IconLayerProps<TProps> & {
     /** The layers can work in 2D (Icon arrows) and 3D (Mesh objects) */
-    dimentionalMode: DimentionalMode;
+    dimensionMode: DimensionMode;
     getBearing: Accessor<TProps, number>;
     getColor: Accessor<TProps, Color>;
     get3dColor: Accessor<TProps, Color>;
     get2dBackgroundColor: Accessor<TProps, Color>;
-    get2dFrontColor: Accessor<TProps, Color>;
+    get2dForegroundColor: Accessor<TProps, Color>;
   };
 
 export class VehicleLayer<TProps> extends CompositeLayer<
@@ -35,7 +35,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     getColor: undefined,
     get3dColor: undefined,
     get2dBackgroundColor: [255, 255, 255, 255],
-    get2dFrontColor: undefined,
+    get2dForegroundColor: undefined,
     getBearing: undefined,
   };
 
@@ -53,7 +53,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   }
 
   override renderLayers(): Layer<object> | LayersList | null {
-    if (this.props.dimentionalMode === '3D') {
+    if (this.props.dimensionMode === '3D') {
       return [
         new ScenegraphLayer({
           id: `${this.props.id}-scenegraph`,
@@ -113,7 +113,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           iconAtlas:
             'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',
           getIcon: () => 'arrow',
-          getColor: this.props.get2dFrontColor ||
+          getColor: this.props.get2dForegroundColor ||
             this.props.getColor || [0, 0, 0, 255],
           getAngle: (vehicle: TProps, objectInfo: AccessorContext<TProps>) => {
             const bearing = this.calculateBearing(vehicle, objectInfo);

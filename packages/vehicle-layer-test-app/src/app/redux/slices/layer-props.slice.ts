@@ -1,7 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { LayerPropsEdited } from '../../types';
-import { DimentionalMode } from '@belom88/deckgl-vehicle-layer';
+import { LayerPropsEdited, PopoverId } from '../../types';
+import { DimensionMode } from '@belom88/deckgl-vehicle-layer';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
 
@@ -12,7 +12,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountMinMax: [10, 10000],
   animated: true,
   scale: 1,
-  dimentionalMode: '3D',
+  dimensionMode: '3D',
 };
 
 export const layerPropsSlice = createSlice({
@@ -48,14 +48,36 @@ export const layerPropsSlice = createSlice({
     setScale: (state: LayerPropsState, action: PayloadAction<number>) => {
       state.scale = action.payload;
     },
-    toggleDimentionalMode: (state: LayerPropsState) => {
-      state.dimentionalMode = state.dimentionalMode === '2D' ? '3D' : '2D';
+    toggleDimensionMode: (state: LayerPropsState) => {
+      state.dimensionMode = state.dimensionMode === '2D' ? '3D' : '2D';
     },
-    setDimentionalMode: (
+    setDimensionMode: (
       state: LayerPropsState,
-      action: PayloadAction<DimentionalMode>
+      action: PayloadAction<DimensionMode>
     ) => {
-      state.dimentionalMode = action.payload;
+      state.dimensionMode = action.payload;
+    },
+    setVehicleColor: (
+      state: LayerPropsState,
+      action: PayloadAction<{
+        popoverId: PopoverId;
+        color: [number, number, number];
+      }>
+    ) => {
+      switch (action.payload.popoverId) {
+        case PopoverId.VEHICLE_LAYER_3D_COLOR:
+          state.color3D = action.payload.color;
+          break;
+        case PopoverId.VEHICLE_LAYER_2D_FOREGROUND:
+          state.foregroundColor2d = action.payload.color;
+          break;
+        case PopoverId.VEHICLE_LAYER_2D_BACKGROUND:
+          state.backgroundColor2d = action.payload.color;
+          break;
+        case PopoverId.VEHICLE_LAYER_COMMON_COLOR:
+        default:
+          state.commonColor = action.payload.color;
+      }
     },
   },
 });
@@ -101,7 +123,40 @@ export const selectScale = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].scale,
   (result) => result
 );
-export const selectDimentionalMode = createSelector(
-  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].dimentionalMode,
+export const selectDimensionMode = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].dimensionMode,
   (result) => result
+);
+
+export const selectVehicleColor = createSelector<
+  [
+    (state: RootState) => LayerPropsState,
+    (state: RootState, popoverId: PopoverId) => PopoverId
+  ],
+  [number, number, number] | undefined
+>(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY],
+  (state: RootState, popoverId: PopoverId) => popoverId,
+  (layerPropsState, popoverId): [number, number, number] | undefined => {
+    switch (popoverId) {
+      case PopoverId.VEHICLE_LAYER_3D_COLOR:
+        return layerPropsState.color3D;
+      case PopoverId.VEHICLE_LAYER_2D_FOREGROUND:
+        return layerPropsState.foregroundColor2d;
+      case PopoverId.VEHICLE_LAYER_2D_BACKGROUND:
+        return layerPropsState.backgroundColor2d;
+      case PopoverId.VEHICLE_LAYER_COMMON_COLOR:
+      default:
+        return layerPropsState.commonColor;
+    }
+  }
+);
+export const selectAllColors = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY],
+  (result) => [
+    result.commonColor,
+    result.foregroundColor2d,
+    result.backgroundColor2d,
+    result.color3D,
+  ]
 );

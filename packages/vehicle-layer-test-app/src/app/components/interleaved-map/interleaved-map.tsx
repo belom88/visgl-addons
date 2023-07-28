@@ -8,7 +8,8 @@ import { StyledMapContainer } from '../common-styled';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
 import { useAppSelector } from '../../redux/hooks';
 import {
-  selectDimentionalMode,
+  selectAllColors,
+  selectDimensionMode,
   selectScale,
 } from '../../redux/slices/layer-props.slice';
 
@@ -41,7 +42,8 @@ export function InterleavedMap({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
   const vehicleScale = useAppSelector(selectScale);
-  const dimentionalMode = useAppSelector(selectDimentionalMode);
+  const dimensionMode = useAppSelector(selectDimensionMode);
+  const colors = useAppSelector(selectAllColors);
 
   useEffect(() => {
     if (!map) {
@@ -56,6 +58,7 @@ export function InterleavedMap({
     if (map instanceof MapboxMap) {
       firstLabelLayerId = getLabelLayerId(map);
     }
+    const [commonColor, foregroundColor2d, backgroundColor2d, color3D] = colors;
     map.addLayer(
       // @ts-expect-error maplibre and mapbox types are not compatible
       new MapboxLayer<VehicleLayer>({
@@ -69,11 +72,15 @@ export function InterleavedMap({
         getBearing: (vehicle: AnimatedVehicle) => vehicle.bearing,
         get2dFrontColor: [38, 166, 154],
         sizeScale: vehicleScale,
-        dimentionalMode,
+        dimensionMode,
+        getColor: commonColor,
+        get2dForegroundColor: foregroundColor2d,
+        get2dBackgroundColor: backgroundColor2d,
+        get3dColor: color3D,
       }),
       firstLabelLayerId
     );
-  }, [vehicles, map, vehicleScale, dimentionalMode]);
+  }, [vehicles, map, vehicleScale, dimensionMode, colors]);
 
   return (
     <StyledMapContainer

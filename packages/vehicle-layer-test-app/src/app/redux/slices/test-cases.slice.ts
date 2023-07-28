@@ -26,7 +26,7 @@ export const setTestCase = createAsyncThunk(
     );
     dispatch(layerPropsActions.setScale(testCase.layerProps.scale));
     dispatch(
-      layerPropsActions.setDimentionalMode(testCase.layerProps.dimentionalMode)
+      layerPropsActions.setDimensionMode(testCase.layerProps.dimensionMode)
     );
 
     return testCase;
