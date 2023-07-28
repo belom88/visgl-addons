@@ -1,1 +1,1 @@
-export type DimentionalMode = '2D' | '3D';
+export type DimensionMode = '2D' | '3D';

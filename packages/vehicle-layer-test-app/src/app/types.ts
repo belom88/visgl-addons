@@ -1,4 +1,4 @@
-import { DimentionalMode } from '@belom88/deckgl-vehicle-layer';
+import { DimensionMode } from '@belom88/deckgl-vehicle-layer';
 
 export enum RequestStatus {
   IDLE,
@@ -7,7 +7,7 @@ export enum RequestStatus {
   FAILED,
 }
 
-export enum MenuId {
+export enum PopoverId {
   VEHICLE_LAYER_COMMON_COLOR,
   VEHICLE_LAYER_3D_COLOR,
   VEHICLE_LAYER_2D_BACKGROUND,
@@ -35,7 +35,16 @@ export interface LayerPropsEdited {
   // Vehicle properties
   /** Vehicle model scale */
   scale: number;
-  dimentionalMode: DimentionalMode;
+  /** 2D or 3D mode */
+  dimensionMode: DimensionMode;
+  /** Color for useColor Accessor */
+  commonColor?: [number, number, number];
+  /** Color for get3dColor Accessor */
+  color3D?: [number, number, number];
+  /** Color for get2dForegroundColor Accessor */
+  foregroundColor2d?: [number, number, number];
+  /** Color for get2dBackgroundColor Accessor */
+  backgroundColor2d?: [number, number, number];
 }
 
 export interface TestCase {

@@ -10,7 +10,7 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: true,
       scale: 1,
-      dimentionalMode: '3D',
+      dimensionMode: '3D',
     },
   },
   {
@@ -22,7 +22,7 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: true,
       scale: 1,
-      dimentionalMode: '3D',
+      dimensionMode: '3D',
     },
   },
   {
@@ -34,7 +34,7 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: false,
       scale: 1,
-      dimentionalMode: '3D',
+      dimensionMode: '3D',
     },
   },
   {
@@ -46,7 +46,7 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountMinMax: [0, 0],
       animated: false,
       scale: 0.15,
-      dimentionalMode: '2D',
+      dimensionMode: '2D',
     },
   },
 ];

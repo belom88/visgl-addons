@@ -13,7 +13,7 @@ describe('layerProps reducer', () => {
       vehiclesCountMinMax: [10, 10000],
       animated: true,
       scale: 1,
-      dimentionalMode: '3D',
+      dimensionMode: '3D',
     });
   });
 
@@ -29,7 +29,7 @@ describe('layerProps reducer', () => {
         animated: true,
         scale: 1,
         vehiclesCountMinMax: [10, 10000],
-        dimentionalMode: '3D',
+        dimensionMode: '3D',
       })
     );
   });
@@ -41,7 +41,7 @@ describe('layerProps reducer', () => {
         vehiclesCountMinMax: [100, 1000],
         animated: true,
         scale: 1,
-        dimentionalMode: '3D',
+        dimensionMode: '3D',
       },
     });
 

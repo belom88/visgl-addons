@@ -7,7 +7,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import {
-  selectDimentionalMode,
+  selectAllColors,
+  selectDimensionMode,
   selectScale,
 } from '../../redux/slices/layer-props.slice';
 
@@ -35,7 +36,8 @@ export function GoogleMapsWrapper({
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
   const vehicleScale = useAppSelector(selectScale);
-  const dimentionalMode = useAppSelector(selectDimentionalMode);
+  const dimensionMode = useAppSelector(selectDimensionMode);
+  const colors = useAppSelector(selectAllColors);
 
   const overlay = useMemo(
     () =>
@@ -47,11 +49,16 @@ export function GoogleMapsWrapper({
   );
 
   useEffect(() => {
-    const layer = renderVehicleLayer(vehicles, vehicleScale, dimentionalMode);
+    const layer = renderVehicleLayer(
+      vehicles,
+      vehicleScale,
+      dimensionMode,
+      ...colors
+    );
     overlay.setProps({
       layers: [layer],
     });
-  }, [vehicles, overlay, vehicleScale, dimentionalMode]);
+  }, [vehicles, overlay, vehicleScale, dimensionMode, colors]);
 
   useEffect(() => {
     if (map) {
