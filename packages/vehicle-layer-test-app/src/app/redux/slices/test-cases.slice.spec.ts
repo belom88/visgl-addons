@@ -35,7 +35,7 @@ describe('testCases reducer', () => {
       expect.objectContaining({
         vehiclesCountValue: 5000,
         animated: true,
-        scale: 1,
+        scale: 10,
         vehiclesCountMinMax: [10, 10000],
         dimensionMode: '3D',
       })
