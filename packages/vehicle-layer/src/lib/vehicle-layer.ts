@@ -64,7 +64,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
             objectInfo: AccessorContext<TProps>
           ) => {
             const bearing = this.calculateBearing(vehicle, objectInfo);
-            return [0, -bearing + 90, 90];
+            return [0, -bearing + 90, 0];
           },
           getColor: this.props.get3dColor ||
             this.props.getColor || [255, 255, 255, 255],
@@ -83,7 +83,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           id: `${this.props.id}--arrow-icon-background`,
           data: this.props.data,
           getPosition: this.props.getPosition,
-          getSize: (this.props.sizeScale || 1) * 5,
+          getSize: this.props.sizeScale || 1,
           sizeUnits: 'meters',
           iconAtlas:
             'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-background.svg',
@@ -108,7 +108,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           id: `${this.props.id}-arrow-icon-front`,
           data: this.props.data,
           getPosition: this.props.getPosition,
-          getSize: (this.props.sizeScale || 1) * 5,
+          getSize: this.props.sizeScale || 1,
           sizeUnits: 'meters',
           iconAtlas:
             'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',
@@ -134,7 +134,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           id: `${this.props.id}--arrow-icon-background`,
           data: this.props.data,
           getPosition: this.props.getPosition,
-          getSize: (this.props.sizeScale || 1) * 5,
+          getSize: this.props.sizeScale || 1,
           sizeScale: 0.4,
           sizeUnits: 'meters',
           iconAtlas:
