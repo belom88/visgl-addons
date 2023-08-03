@@ -12,6 +12,8 @@ import {
   selectDimensionMode,
   selectScale,
 } from '../../redux/slices/layer-props.slice';
+import { VehicleType } from 'packages/vehicle-layer/src/types';
+import { initialMapState } from '../../redux/slices/map.slice';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
@@ -77,6 +79,11 @@ export function InterleavedMap({
         get2dForegroundColor: foregroundColor2d,
         get2dBackgroundColor: backgroundColor2d,
         get3dColor: color3D,
+        getVehicleType: (vehicle: AnimatedVehicle) => {
+          return vehicle.longitude < initialMapState.longitude
+            ? VehicleType.Tram
+            : VehicleType.TransitBus;
+        },
       }),
       firstLabelLayerId
     );

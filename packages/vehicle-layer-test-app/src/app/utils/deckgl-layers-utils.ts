@@ -1,5 +1,7 @@
 import { DimensionMode, VehicleLayer } from '@belom88/deckgl-vehicle-layer';
 import { AnimatedVehicle } from './vehicles-utils';
+import { VehicleType } from 'packages/vehicle-layer/src/types';
+import { initialMapState } from '../redux/slices/map.slice';
 
 /**
  * Render VehicleLayer
@@ -33,6 +35,11 @@ export const renderVehicleLayer = (
     dimensionMode,
     updateTriggers: {
       sizeScale: [vehicleScale],
+    },
+    getVehicleType: (vehicle: AnimatedVehicle) => {
+      return vehicle.longitude < initialMapState.longitude
+        ? VehicleType.Tram
+        : VehicleType.TransitBus;
     },
   });
 };
