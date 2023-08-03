@@ -95,7 +95,10 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     });
   }
 
-  private getVehicleTypeIconLayer(vehicleType: VehicleType, data: TProps[]): IconLayer {
+  private getVehicleTypeIconLayer(
+    vehicleType: VehicleType,
+    data: TProps[]
+  ): IconLayer {
     return new IconLayer({
       id: `${this.props.id}-vehilce-icon-${vehicleType}`,
       data,
@@ -203,20 +206,13 @@ export class VehicleLayer<TProps> extends CompositeLayer<
             // @ts-expect-error we are sure that getVehicleType is function
             parseInt(vehicleType) === this.props.getVehicleType(vehicle)
         );
-        layers.push(
-          getLayerCallback(
-            parseInt(vehicleType),
-            filteredData
-          )
-        );
+        layers.push(getLayerCallback(parseInt(vehicleType), filteredData));
       }
     } else {
       const vehileType = Number.isFinite(this.props.getVehicleType)
         ? this.props.getVehicleType
         : VehicleType.TransitBus;
-      layers.push(
-        getLayerCallback(vehileType, this.props.data)
-      );
+      layers.push(getLayerCallback(vehileType, this.props.data));
     }
     return layers;
   }
