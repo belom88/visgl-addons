@@ -1,28 +1,20 @@
-import {
-  Box,
-  Divider,
-  FormControlLabel,
-  Paper,
-  Slider,
-  Stack,
-  Switch,
-  Typography,
-  styled,
-} from '@mui/material';
-import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
-import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
-import OpacityIcon from '@mui/icons-material/Opacity';
+import { useMemo } from 'react';
+import { Box, Paper, styled } from '@mui/material';
+
 import {
   layerPropsActions,
   selectAnimationState,
   selectDimensionMode,
   selectScale,
+  selectVehicleColor,
   selectVehiclesCountMinMax,
   selectVehiclesCountValue,
 } from '../../redux/slices/layer-props.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import ColorPicker from '../color-picker/color-picker';
+import SceneProps from './scene-props/scene-props';
+import VehicleLayerProps from './vehicle-layer-props/vehicle-layer-props';
 import { PopoverId } from '../../types';
+import * as d3 from 'd3';
 
 const StyledContainer = styled(Box)`
   bottom: 1.5em;
@@ -37,19 +29,11 @@ const StyledMainPaper = styled(Paper)`
   textalign: 'center';
 `;
 
-const calculateScale = (value: number) => {
-  if (value < 50) {
-    return value / 25;
-  } else {
-    return (value - 49) * 2;
+const rgbToHex = (rgb?: [number, number, number]): string => {
+  if (!rgb) {
+    return '#FFF';
   }
-};
-const calculateUnscale = (value: number) => {
-  if (value < 2) {
-    return value * 25;
-  } else {
-    return 50 + value / 2;
-  }
+  return d3.rgb(...rgb).formatHex();
 };
 
 /* eslint-disable-next-line */
@@ -63,6 +47,36 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
   const dimensionMode = useAppSelector(selectDimensionMode);
+
+  const vehicleCommonColor = useAppSelector((state) =>
+    selectVehicleColor(state, PopoverId.VEHICLE_LAYER_COMMON_COLOR)
+  );
+  const commonHexColor = useMemo(
+    () => rgbToHex(vehicleCommonColor),
+    [vehicleCommonColor]
+  );
+
+  const vehicle3dColor = useAppSelector((state) =>
+    selectVehicleColor(state, PopoverId.VEHICLE_LAYER_3D_COLOR)
+  );
+  const d3HexColor = useMemo(() => rgbToHex(vehicle3dColor), [vehicle3dColor]);
+
+  const vehicle2dForegroundColor = useAppSelector((state) =>
+    selectVehicleColor(state, PopoverId.VEHICLE_LAYER_2D_FOREGROUND)
+  );
+  const d2ForegroundHexColor = useMemo(
+    () => rgbToHex(vehicle2dForegroundColor),
+    [vehicle2dForegroundColor]
+  );
+
+  const vehicle2dBackgroundColor = useAppSelector((state) =>
+    selectVehicleColor(state, PopoverId.VEHICLE_LAYER_2D_BACKGROUND)
+  );
+  const d2BackgroundHexColor = useMemo(
+    () => rgbToHex(vehicle2dBackgroundColor),
+    [vehicle2dBackgroundColor]
+  );
+
   const dispatch = useAppDispatch();
 
   const onVehiclesCountChange = (e: Event, newValue: number | number[]) => {
@@ -71,114 +85,46 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
     }
   };
 
-  const onScaleChange = (e: Event, newValue: number | number[]) => {
-    if (typeof newValue === 'number') {
-      dispatch(layerPropsActions.setScale(calculateScale(newValue)));
-    }
+  const onColorChangeHandler = (
+    color: [number, number, number],
+    popoverId: PopoverId
+  ) => {
+    dispatch(
+      layerPropsActions.setVehicleColor({
+        popoverId,
+        color,
+      })
+    );
   };
 
   return (
     <StyledContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
       <StyledMainPaper elevation={2}>
-        <Typography variant="h6" component="div">
-          Scene Properties
-        </Typography>
-        <Divider />
-        <Stack spacing={2} direction="row" alignItems={'center'}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={animationState}
-                onChange={() => dispatch(layerPropsActions.toggleAnimation())}
-              />
-            }
-            label="Animation"
-          />
-        </Stack>
-        <Typography variant="subtitle1" component="span">
-          Number of Vehicles ({vehiclesCount})
-        </Typography>
-        <Stack spacing={2} direction="row" alignItems={'center'}>
-          <Typography variant="body2" component="span">
-            {vehiclesCountMin}
-          </Typography>
-          <Slider
-            aria-label="Number of Vehicles"
-            min={vehiclesCountMin}
-            max={vehiclesCountMax}
-            step={1}
-            value={vehiclesCount}
-            onChange={onVehiclesCountChange}
-          />
-          <Typography variant="body2" component="span">
-            {vehiclesCountMax}
-          </Typography>
-        </Stack>
-        <Typography variant="h6" component="div">
-          VehicleLayer Properties
-        </Typography>
-        <Divider />
-        <Typography variant="subtitle1" component="span">
-          Scale ({vehicleScale.toFixed(3)})
-        </Typography>
-        <Stack spacing={2} direction="row" alignItems={'center'}>
-          <Typography variant="body2" component="span">
-            0.1
-          </Typography>
-          <Slider
-            aria-label="Vehicle Scale"
-            min={0.1}
-            max={99}
-            step={0.1}
-            scale={calculateScale}
-            value={calculateUnscale(vehicleScale)}
-            onChange={onScaleChange}
-          />
-        </Stack>
-        <Stack direction="row" alignItems={'center'}>
-          <Typography variant="body2" component="span">
-            2D
-          </Typography>
-          <Switch
-            checked={dimensionMode === '2D' ? false : true}
-            onChange={() => dispatch(layerPropsActions.toggleDimensionMode())}
-          />
-          <Typography variant="body2" component="span">
-            3D
-          </Typography>
-        </Stack>
-        <Stack direction="row" alignItems={'center'}>
-          <ColorPicker
-            popoverId={PopoverId.VEHICLE_LAYER_COMMON_COLOR}
-            Icon={ColorLensOutlinedIcon}
-          >
-            useColor
-          </ColorPicker>
-          {dimensionMode === '2D' && (
-            <>
-              <ColorPicker
-                popoverId={PopoverId.VEHICLE_LAYER_2D_FOREGROUND}
-                Icon={OpacityIcon}
-              >
-                get2dForegroundColor
-              </ColorPicker>
-              <ColorPicker
-                popoverId={PopoverId.VEHICLE_LAYER_2D_BACKGROUND}
-                Icon={FormatColorFillIcon}
-              >
-                get2dBackgroundColor
-              </ColorPicker>
-            </>
-          )}
-          {dimensionMode === '3D' && (
-            <ColorPicker
-              popoverId={PopoverId.VEHICLE_LAYER_3D_COLOR}
-              Icon={OpacityIcon}
-            >
-              get3dColor
-            </ColorPicker>
-          )}
-        </Stack>
+        <SceneProps
+          animationState={animationState}
+          vehiclesCount={vehiclesCount}
+          vehiclesCountMin={vehiclesCountMin}
+          vehiclesCountMax={vehiclesCountMax}
+          onAnimationStateChange={() =>
+            dispatch(layerPropsActions.toggleAnimation())
+          }
+          onVehiclesCountChange={onVehiclesCountChange}
+        />
+        <VehicleLayerProps
+          vehicleScale={vehicleScale}
+          dimensionMode={dimensionMode}
+          commonHexColor={commonHexColor}
+          d3HexColor={d3HexColor}
+          d2ForegroundHexColor={d2ForegroundHexColor}
+          d2BackgroundHexColor={d2BackgroundHexColor}
+          onScaleChange={(value: number) =>
+            dispatch(layerPropsActions.setScale(value))
+          }
+          onDimensionModeChange={() =>
+            dispatch(layerPropsActions.toggleDimensionMode())
+          }
+          onColorChange={onColorChangeHandler}
+        />
       </StyledMainPaper>
     </StyledContainer>
   );

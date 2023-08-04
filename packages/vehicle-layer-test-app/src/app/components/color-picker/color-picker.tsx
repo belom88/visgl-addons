@@ -1,4 +1,4 @@
-import { PropsWithChildren, useMemo, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -10,15 +10,10 @@ import {
 } from '@mui/material';
 import { ColorResult } from '@uiw/color-convert';
 import Colorful from '@uiw/react-color-colorful';
-import * as d3 from 'd3';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { appActions, selectOpenedMenuId } from '../../redux/slices/app.slice';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { PopoverId } from '../../types';
-import {
-  layerPropsActions,
-  selectVehicleColor,
-} from '../../redux/slices/layer-props.slice';
 
 const StyledColorButton = styled(Button)`
   text-transform: none;
@@ -26,48 +21,33 @@ const StyledColorButton = styled(Button)`
 
 /* eslint-disable-next-line */
 export interface ColorPickerProps {
+  value: string;
   popoverId: PopoverId;
   Icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
     muiName: string;
   };
+  onColorChange: (value: ColorResult) => void;
 }
 
 export function ColorPicker({
+  value,
   popoverId,
   Icon,
   children,
+  onColorChange,
 }: PropsWithChildren<ColorPickerProps>) {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const openedPopoverId = useAppSelector(selectOpenedMenuId);
-  const vehicleColor = useAppSelector((state) =>
-    selectVehicleColor(state, popoverId)
-  );
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(appActions.setOpenedMenuId(popoverId));
+    dispatch(appActions.setOpenedPopoverId(popoverId));
     setAnchorEl(event.currentTarget);
   };
 
   const onCloseHandler = () => {
-    dispatch(appActions.closeMenu());
+    dispatch(appActions.closePopover());
     setAnchorEl(null);
-  };
-
-  const hexColor = useMemo(() => {
-    if (!vehicleColor) {
-      return '#FFF';
-    }
-    return d3.rgb(...vehicleColor).formatHex();
-  }, [vehicleColor]);
-
-  const onColorChange = (value: ColorResult) => {
-    dispatch(
-      layerPropsActions.setVehicleColor({
-        popoverId,
-        color: [value.rgb.r, value.rgb.g, value.rgb.b],
-      })
-    );
   };
 
   return (
@@ -80,7 +60,7 @@ export function ColorPicker({
         onClick={onClickHandler}
       >
         <Stack direction="row" spacing={1} alignItems={'center'}>
-          <Avatar sx={{ bgcolor: hexColor }}>
+          <Avatar sx={{ bgcolor: value }}>
             <Icon />
           </Avatar>
           <Typography>{children}</Typography>
@@ -100,7 +80,7 @@ export function ColorPicker({
           horizontal: 'left',
         }}
       >
-        <Colorful color={hexColor} onChange={onColorChange} />
+        <Colorful color={value} onChange={onColorChange} />
       </Popover>
     </>
   );
