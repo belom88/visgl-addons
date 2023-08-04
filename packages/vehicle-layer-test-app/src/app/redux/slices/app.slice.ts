@@ -38,10 +38,10 @@ export const appSlice = createSlice({
     resetFps: (state: AppState) => {
       state.fps = 60;
     },
-    setOpenedMenuId: (state: AppState, action: PayloadAction<PopoverId>) => {
+    setOpenedPopoverId: (state: AppState, action: PayloadAction<PopoverId>) => {
       state.openedPopoverId = action.payload;
     },
-    closeMenu: (state: AppState) => {
+    closePopover: (state: AppState) => {
       state.openedPopoverId = null;
     },
   },
