@@ -1,13 +1,15 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { LayerPropsEdited, PopoverId } from '../../types';
+import { LayerPropsEdited, PopoverId, UseCaseId } from '../../types';
 import { DimensionMode } from '@belom88/deckgl-vehicle-layer';
+import { setAnimation } from './utils/layer-props-slice-utils';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
 
 export type LayerPropsState = LayerPropsEdited;
 
 export const initialLayerPropsState: LayerPropsState = {
+  useCase: UseCaseId.SF_TRANSIT,
   vehiclesCountValue: 2000,
   vehiclesCountMinMax: [10, 10000],
   animated: true,
@@ -19,6 +21,10 @@ export const layerPropsSlice = createSlice({
   name: LAYER_PROPS_FEATURE_KEY,
   initialState: initialLayerPropsState,
   reducers: {
+    setUseCase: (state: LayerPropsState, action: PayloadAction<UseCaseId>) => {
+      state.useCase = action.payload;
+      setAnimation(state, state.useCase !== UseCaseId.ANFIELD);
+    },
     setVehiclesCount: (
       state: LayerPropsState,
       action: PayloadAction<number>
@@ -26,24 +32,10 @@ export const layerPropsSlice = createSlice({
       state.vehiclesCountValue = action.payload;
     },
     toggleAnimation: (state: LayerPropsState) => {
-      state.animated = !state.animated;
-      if (state.animated) {
-        state.vehiclesCountValue = 2000;
-        state.vehiclesCountMinMax = [10, 10000];
-      } else {
-        state.vehiclesCountMinMax = [1000, 100000];
-        state.vehiclesCountValue = 10000;
-      }
+      setAnimation(state, !state.animated);
     },
     setAnimation: (state: LayerPropsState, action: PayloadAction<boolean>) => {
-      state.animated = action.payload;
-      if (state.animated) {
-        state.vehiclesCountValue = 2000;
-        state.vehiclesCountMinMax = [10, 10000];
-      } else {
-        state.vehiclesCountMinMax = [1000, 100000];
-        state.vehiclesCountValue = 10000;
-      }
+      setAnimation(state, action.payload);
     },
     setScale: (state: LayerPropsState, action: PayloadAction<number>) => {
       state.scale = action.payload;
@@ -107,6 +99,10 @@ export const layerPropsReducer = layerPropsSlice.reducer;
  */
 export const layerPropsActions = layerPropsSlice.actions;
 
+export const selectUseCase = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].useCase,
+  (result) => result
+);
 export const selectVehiclesCountValue = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].vehiclesCountValue,
   (result) => result

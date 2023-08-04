@@ -10,22 +10,24 @@ import ArcgisWrapper from '../arcgis-wrapper/arcgis-wrapper';
 
 import {
   selectAnimationState,
+  selectUseCase,
   selectVehiclesCountValue,
 } from '../../redux/slices/layer-props.slice';
 import { selectAllRoutes } from '../../redux/slices/routes.slice';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
 import {
-  AnimatedVehicle,
   Vehicle,
+  SfVehicle,
   animateVehicles,
-  createVehicles,
+  createSfVehicles,
+  createAnfieldVehicles,
 } from '../../utils/vehicles-utils';
 import {
   appActions,
   selectBaseMapMode,
   selectMapProvider,
 } from '../../redux/slices/app.slice';
-import { BaseMapMode } from '../../types';
+import { BaseMapMode, UseCaseId } from '../../types';
 
 import { BaseMapProviderId } from '../../constants/base-map-providers';
 import Unsupported from '../unsupported/unsupported';
@@ -38,6 +40,7 @@ export interface MapWrapperProps {}
 
 export function MapWrapper(props: MapWrapperProps) {
   const dispatch = useAppDispatch();
+  const useCase = useAppSelector(selectUseCase);
   const vehiclesCount = useAppSelector(selectVehiclesCountValue);
 
   const animationState = useAppSelector(selectAnimationState);
@@ -48,12 +51,11 @@ export function MapWrapper(props: MapWrapperProps) {
   const routesRef = useRef<GeojsonRouteFeature[]>(routes);
   routesRef.current = routes;
 
-  const vehiclesRef = useRef<Vehicle[]>([]);
+  const sfVehiclesRef = useRef<SfVehicle[]>([]);
+  const anfieldVehiclesRef = useRef<Vehicle[]>(createAnfieldVehicles());
   const animationStarted = useRef<boolean>(false);
-  const [animatedVehicles, setAnimatedVehicles] = useState<AnimatedVehicle[]>(
-    []
-  );
-  const animatedVehiclesRef = useRef<AnimatedVehicle[]>([]);
+  const [animatedVehicles, setAnimatedVehicles] = useState<Vehicle[]>([]);
+  const animatedVehiclesRef = useRef<Vehicle[]>([]);
   animatedVehiclesRef.current = animatedVehicles;
 
   const baseMapMode = useAppSelector(selectBaseMapMode);
@@ -68,9 +70,12 @@ export function MapWrapper(props: MapWrapperProps) {
     animationStarted.current = true;
 
     const rerenderLayer = (): void => {
-      const newAnimatedVehicles = animateVehicles(
-        vehiclesRef.current,
+      const sfAnimatedVehicles = animateVehicles(
+        sfVehiclesRef.current,
         routesRef.current
+      );
+      const newAnimatedVehicles = sfAnimatedVehicles.concat(
+        anfieldVehiclesRef.current
       );
       setAnimatedVehicles(newAnimatedVehicles);
     };
@@ -99,8 +104,21 @@ export function MapWrapper(props: MapWrapperProps) {
   }, [routes, animateLayer]);
 
   useEffect(() => {
-    vehiclesRef.current = createVehicles(vehiclesCount, routes);
-  }, [vehiclesCount, routes, animationState]);
+    if (useCase === UseCaseId.SF_TRANSIT) {
+      sfVehiclesRef.current = createSfVehicles(vehiclesCount, routes);
+    } else {
+      sfVehiclesRef.current = [];
+    }
+  }, [vehiclesCount, routes, animationState, useCase]);
+
+  // TODO: Deck.gl fails
+  // useEffect(() => {
+  //   if (useCase === UseCaseId.SF_TRANSIT) {
+  //     dispatch(mapActions.setMapState(sfViewState));
+  //   } else if (useCase === UseCaseId.ANFIELD) {
+  //     dispatch(mapActions.setMapState(anfieldViewState));
+  //   }
+  // }, [useCase, dispatch]);
 
   useEffect(() => {
     dispatch(appActions.resetFps());

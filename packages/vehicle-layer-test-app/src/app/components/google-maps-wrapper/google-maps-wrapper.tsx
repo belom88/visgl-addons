@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { GoogleMapsOverlay as DeckOverlay } from '@deck.gl/google-maps/typed';
-import { AnimatedVehicle } from '../../utils/vehicles-utils';
+import { Vehicle } from '../../utils/vehicles-utils';
 import { StyledMapContainer } from '../common-styled';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
@@ -17,7 +17,7 @@ const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
 
 /* eslint-disable-next-line */
 export interface GoogleMapsWrapperProps {
-  vehicles: AnimatedVehicle[];
+  vehicles: Vehicle[];
   interleaved?: boolean;
 }
 

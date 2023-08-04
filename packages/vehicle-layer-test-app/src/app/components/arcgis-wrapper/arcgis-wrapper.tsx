@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AnimatedVehicle } from '../../utils/vehicles-utils';
+import { Vehicle } from '../../utils/vehicles-utils';
 import { useArcgis } from '../../hooks/use-arcgis-hook/use-arcgis-hook';
 import { StyledMapContainer } from '../common-styled';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
@@ -12,7 +12,7 @@ import {
 
 /* eslint-disable-next-line */
 export interface ArcgisWrapperProps {
-  vehicles: AnimatedVehicle[];
+  vehicles: Vehicle[];
 }
 
 export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {

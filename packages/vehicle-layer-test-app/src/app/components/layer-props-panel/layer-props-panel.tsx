@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { Box, Paper, styled } from '@mui/material';
+import { Box, Paper, Tab, Tabs, styled } from '@mui/material';
 
 import {
   layerPropsActions,
   selectAnimationState,
   selectDimensionMode,
   selectScale,
+  selectUseCase,
   selectVehicleColor,
   selectVehiclesCountMinMax,
   selectVehiclesCountValue,
@@ -13,7 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import SceneProps from './scene-props/scene-props';
 import VehicleLayerProps from './vehicle-layer-props/vehicle-layer-props';
-import { PopoverId } from '../../types';
+import { PopoverId, UseCaseId } from '../../types';
 import * as d3 from 'd3';
 
 const StyledContainer = styled(Box)`
@@ -36,10 +37,18 @@ const rgbToHex = (rgb?: [number, number, number]): string => {
   return d3.rgb(...rgb).formatHex();
 };
 
+const a11yProps = (index: number) => {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+};
+
 /* eslint-disable-next-line */
 export interface LayerPropsPanelProps {}
 
 export function LayerPropsPanel(props: LayerPropsPanelProps) {
+  const useCase = useAppSelector(selectUseCase);
   const vehiclesCount = useAppSelector(selectVehiclesCountValue);
   const [vehiclesCountMin, vehiclesCountMax] = useAppSelector(
     selectVehiclesCountMinMax
@@ -97,19 +106,38 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
     );
   };
 
+  const onTabChangeHandler = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
+    dispatch(layerPropsActions.setUseCase(newValue));
+  };
+
   return (
     <StyledContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
       <StyledMainPaper elevation={2}>
-        <SceneProps
-          animationState={animationState}
-          vehiclesCount={vehiclesCount}
-          vehiclesCountMin={vehiclesCountMin}
-          vehiclesCountMax={vehiclesCountMax}
-          onAnimationStateChange={() =>
-            dispatch(layerPropsActions.toggleAnimation())
-          }
-          onVehiclesCountChange={onVehiclesCountChange}
-        />
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={useCase}
+            onChange={onTabChangeHandler}
+            aria-label="basic tabs example"
+          >
+            <Tab label="SF" value={UseCaseId.SF_TRANSIT} {...a11yProps(0)} />
+            <Tab label="Anfield" value={UseCaseId.ANFIELD} {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        {useCase === UseCaseId.SF_TRANSIT && (
+          <SceneProps
+            animationState={animationState}
+            vehiclesCount={vehiclesCount}
+            vehiclesCountMin={vehiclesCountMin}
+            vehiclesCountMax={vehiclesCountMax}
+            onAnimationStateChange={() =>
+              dispatch(layerPropsActions.toggleAnimation())
+            }
+            onVehiclesCountChange={onVehiclesCountChange}
+          />
+        )}
         <VehicleLayerProps
           vehicleScale={vehicleScale}
           dimensionMode={dimensionMode}

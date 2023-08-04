@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { initialViewState } from '../../constants/view-states';
 
 export const MAP_FEATURE_KEY = 'map';
 
@@ -12,14 +13,7 @@ export interface MapState {
   pitch: number;
 }
 
-export const initialMapState: MapState = {
-  latitude: 37.7933,
-  longitude: -122.396326,
-  zoom: 20,
-  maxZoom: 25,
-  bearing: 0,
-  pitch: 50,
-};
+export const initialMapState: MapState = initialViewState;
 
 export const mapSlice = createSlice({
   name: MAP_FEATURE_KEY,

@@ -2,7 +2,7 @@ import type { Map as MaplibreMap } from 'react-map-gl/maplibre';
 import type { Map as MapboxMap } from 'react-map-gl';
 import { DeckGL } from '@deck.gl/react/typed';
 
-import { AnimatedVehicle } from '../../utils/vehicles-utils';
+import { Vehicle } from '../../utils/vehicles-utils';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { StyledMapContainer } from '../common-styled';
@@ -15,7 +15,7 @@ import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 
 /* eslint-disable-next-line */
 export interface DeckglWrapperProps {
-  vehicles: AnimatedVehicle[];
+  vehicles: Vehicle[];
   Map?: typeof MaplibreMap | typeof MapboxMap;
   mapboxAccessToken?: string;
   mapStyle?: string;

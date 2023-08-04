@@ -5,10 +5,12 @@ import {
   selectVehiclesCountValue,
 } from './layer-props.slice';
 import { createStoreWith } from '../../utils/test-utils';
+import { UseCaseId } from '../../types';
 
 describe('layerProps reducer', () => {
   it('should handle initial state', () => {
     expect(layerPropsReducer(undefined, { type: '' })).toEqual({
+      useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [10, 10000],
       animated: true,
@@ -37,6 +39,7 @@ describe('layerProps reducer', () => {
   it('should selectVehiclesCount', () => {
     const store = createStoreWith({
       [LAYER_PROPS_FEATURE_KEY]: {
+        useCase: UseCaseId.SF_TRANSIT,
         vehiclesCountValue: 5005,
         vehiclesCountMinMax: [100, 1000],
         animated: true,
