@@ -21,10 +21,7 @@ export const renderVehicleLayer = (
   return new VehicleLayer<Vehicle>({
     id: 'transit-model-vehicle-layer',
     data: vehicles,
-    getPosition: (vehicle: Vehicle) => [
-      vehicle.longitude,
-      vehicle.latitude,
-    ],
+    getPosition: (vehicle: Vehicle) => [vehicle.longitude, vehicle.latitude],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
     getColor: commonColor,
     get2dForegroundColor: foregroundColor2d,

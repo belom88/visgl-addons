@@ -25,7 +25,7 @@ export enum BaseMapMode {
 }
 
 export interface LayerPropsEdited {
-  useCase: UseCaseId,
+  useCase: UseCaseId;
 
   // Scene properties
   /** Number of vehicles to put on the map */

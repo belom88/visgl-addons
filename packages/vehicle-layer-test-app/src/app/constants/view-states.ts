@@ -17,5 +17,3 @@ export const initialViewState = {
   ...sfViewState,
   maxZoom: 25,
 };
-
-
