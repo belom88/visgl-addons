@@ -1,7 +1,6 @@
 import { DimensionMode, VehicleLayer } from '@belom88/deckgl-vehicle-layer';
-import { AnimatedVehicle } from './vehicles-utils';
+import { Vehicle } from './vehicles-utils';
 import { VehicleType } from 'packages/vehicle-layer/src/types';
-import { initialMapState } from '../redux/slices/map.slice';
 
 /**
  * Render VehicleLayer
@@ -11,22 +10,19 @@ import { initialMapState } from '../redux/slices/map.slice';
  * @returns VehicleLayer instance
  */
 export const renderVehicleLayer = (
-  vehicles: AnimatedVehicle[],
+  vehicles: Vehicle[],
   vehicleScale: number,
   dimensionMode: DimensionMode,
   commonColor?: [number, number, number],
   foregroundColor2d?: [number, number, number],
   backgroundColor2d?: [number, number, number],
   color3D?: [number, number, number]
-): VehicleLayer<AnimatedVehicle> => {
-  return new VehicleLayer<AnimatedVehicle>({
+): VehicleLayer<Vehicle> => {
+  return new VehicleLayer<Vehicle>({
     id: 'transit-model-vehicle-layer',
     data: vehicles,
-    getPosition: (vehicle: AnimatedVehicle) => [
-      vehicle.longitude,
-      vehicle.latitude,
-    ],
-    getBearing: (vehicle: AnimatedVehicle) => vehicle.bearing,
+    getPosition: (vehicle: Vehicle) => [vehicle.longitude, vehicle.latitude],
+    getBearing: (vehicle: Vehicle) => vehicle.bearing,
     getColor: commonColor,
     get2dForegroundColor: foregroundColor2d,
     get2dBackgroundColor: backgroundColor2d,
@@ -36,10 +32,8 @@ export const renderVehicleLayer = (
     updateTriggers: {
       sizeScale: [vehicleScale],
     },
-    getVehicleType: (vehicle: AnimatedVehicle) => {
-      return vehicle.longitude < initialMapState.longitude
-        ? VehicleType.Tram
-        : VehicleType.TransitBus;
+    getVehicleType: (vehicle: Vehicle) => {
+      return vehicle.vehilceType || VehicleType.TransitBus;
     },
   });
 };

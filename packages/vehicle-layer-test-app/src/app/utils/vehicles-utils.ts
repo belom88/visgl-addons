@@ -1,7 +1,8 @@
 import { Vector3, toDegrees, toRadians } from '@math.gl/core';
 import { Ellipsoid } from '@math.gl/geospatial';
-import { GeojsonRouteFeature } from './load-routes';
+import type { GeojsonRouteFeature } from './load-routes';
 import moment from 'moment';
+import { VehicleType } from '@belom88/deckgl-vehicle-layer';
 
 const METERS_PER_MILE = 1609.34;
 /** 15 miles/h */
@@ -9,7 +10,7 @@ const VEHICLE_SPEED = 7;
 const MILLISECONDS_IN_AN_HOUR = 1000 * 60 * 60;
 
 /** Vehicle bound to a route */
-export type Vehicle = {
+export type SfVehicle = {
   /** Start animation time */
   startDateTime: number[];
   /** The route index the vehicle bound to */
@@ -18,14 +19,16 @@ export type Vehicle = {
   pointIndex: number;
 };
 
-/** Animated vehicle ready to put on a map */
-export type AnimatedVehicle = {
+/** Vehicle ready to put on a map */
+export type Vehicle = {
   /** Latitude coordinate in decimal degrees */
   latitude: number;
   /** Longitude coordinate in decimal degrees */
   longitude: number;
   /** Bearing, angle between north direction and vehicle direction */
   bearing: number;
+  /** Vehicle type */
+  vehilceType?: VehicleType;
 };
 
 const scratchVector = new Vector3();
@@ -77,15 +80,15 @@ const getPositionBetween = (
 };
 
 /**
- * Create a number of vehicles and put them on routes
+ * Create a number of vehicles and put them on routes in San Francisco
  * @param totalVehiclesCount - number of vehicles to add
  * @param routes
  * @returns array of vehicles
  */
-export const createVehicles = (
+export const createSfVehicles = (
   totalVehiclesCount: number,
   routes: GeojsonRouteFeature[]
-): Vehicle[] => {
+): SfVehicle[] => {
   const routesLength = routes.reduce(
     (acc: number, route: GeojsonRouteFeature) => {
       const distances = route.properties.distancesPerPoint;
@@ -93,7 +96,7 @@ export const createVehicles = (
     },
     0
   );
-  const vehicles: Vehicle[] = [];
+  const vehicles: SfVehicle[] = [];
   for (let routeIndex = 0; routeIndex < routes.length; routeIndex++) {
     const route = routes[routeIndex];
     const distances = route.properties.distancesPerPoint;
@@ -135,6 +138,23 @@ export const createVehicles = (
   return vehicles;
 };
 
+export const createAnfieldVehicles = (): Vehicle[] => {
+  return [
+    {
+      latitude: 53.432814,
+      longitude: -2.956419,
+      bearing: 180,
+      vehilceType: VehicleType.TransitBus,
+    },
+    {
+      latitude: 53.432578,
+      longitude: -2.956792,
+      bearing: 180,
+      vehilceType: VehicleType.Tram,
+    },
+  ];
+};
+
 /**
  * Calculate animated position for vehicles
  * @param vehicles - vehicles bound to routes
@@ -143,15 +163,15 @@ export const createVehicles = (
  * @returns array of vehicles with positions
  */
 export const animateVehicles = (
-  vehicles: Vehicle[],
+  vehicles: SfVehicle[],
   routes: GeojsonRouteFeature[],
   endDateTime?: number[]
-): AnimatedVehicle[] => {
+): Vehicle[] => {
   const nowDateTime = endDateTime ? moment(endDateTime) : moment();
   if (!routes.length) {
     return [];
   }
-  const result: AnimatedVehicle[] = [];
+  const result: Vehicle[] = [];
   for (const vehicle of vehicles) {
     const route: GeojsonRouteFeature = routes[vehicle.routeIndex];
     const duration = nowDateTime.diff(vehicle.startDateTime);

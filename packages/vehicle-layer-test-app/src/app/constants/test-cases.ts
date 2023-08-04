@@ -1,4 +1,4 @@
-import { TestCase } from '../types';
+import { TestCase, UseCaseId } from '../types';
 
 export const TEST_CASES: TestCase[] = [
   {
@@ -6,6 +6,7 @@ export const TEST_CASES: TestCase[] = [
     name: 'Animation 2000',
     description: 'Animated 2000 vehicles',
     layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [0, 0],
       animated: true,
@@ -18,6 +19,7 @@ export const TEST_CASES: TestCase[] = [
     name: 'Animation 5000',
     description: 'Animated 5000 vehicles',
     layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 5000,
       vehiclesCountMinMax: [0, 0],
       animated: true,
@@ -30,6 +32,7 @@ export const TEST_CASES: TestCase[] = [
     name: 'Static 50K',
     description: 'Static 50K vehicles',
     layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,
@@ -42,6 +45,7 @@ export const TEST_CASES: TestCase[] = [
     name: 'Static 2D 50K',
     description: 'Static 50K vehicles; sizeScale 0.15',
     layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,

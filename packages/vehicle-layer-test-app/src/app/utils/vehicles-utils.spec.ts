@@ -1,16 +1,22 @@
 import moment from 'moment';
 import { ROUTE_STUB } from './test-utils';
-import { animateVehicles, createVehicles } from './vehicles-utils';
+import { animateVehicles, createSfVehicles } from './vehicles-utils';
+
+vi.mock('@deck.gl/layers', () => {
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
+});
 
 describe('utils/vehicles-utils', () => {
   describe('createVehicles', () => {
     it('should not create vehicles', () => {
-      const result = createVehicles(10000, []);
+      const result = createSfVehicles(10000, []);
       expect(result).toEqual([]);
     });
 
     it('should create vehicles', () => {
-      const result = createVehicles(10000, [ROUTE_STUB]);
+      const result = createSfVehicles(10000, [ROUTE_STUB]);
       expect(result.length).toEqual(10000);
     });
   });

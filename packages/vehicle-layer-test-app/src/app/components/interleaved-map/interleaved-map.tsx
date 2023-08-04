@@ -1,6 +1,6 @@
 import { Map as MapboxMap } from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
-import { AnimatedVehicle } from '../../utils/vehicles-utils';
+import { Vehicle } from '../../utils/vehicles-utils';
 import { useMapbox } from '../../hooks/use-mapbox-hook/use-mapbox-hook';
 import { MapboxLayer } from '@deck.gl/mapbox/typed';
 import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
@@ -19,7 +19,7 @@ const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
 /* eslint-disable-next-line */
 export interface InterleavedMapProps {
-  vehicles: AnimatedVehicle[];
+  vehicles: Vehicle[];
   baseMapProviderId?: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2;
   mapStyle?: string;
 }
@@ -67,11 +67,11 @@ export function InterleavedMap({
         id: 'transit-model-vehicle-layer',
         type: VehicleLayer,
         data: vehicles,
-        getPosition: (vehicle: AnimatedVehicle) => [
+        getPosition: (vehicle: Vehicle) => [
           vehicle.longitude,
           vehicle.latitude,
         ],
-        getBearing: (vehicle: AnimatedVehicle) => vehicle.bearing,
+        getBearing: (vehicle: Vehicle) => vehicle.bearing,
         get2dFrontColor: [38, 166, 154],
         sizeScale: vehicleScale,
         dimensionMode,
@@ -79,7 +79,7 @@ export function InterleavedMap({
         get2dForegroundColor: foregroundColor2d,
         get2dBackgroundColor: backgroundColor2d,
         get3dColor: color3D,
-        getVehicleType: (vehicle: AnimatedVehicle) => {
+        getVehicleType: (vehicle: Vehicle) => {
           return vehicle.longitude < initialMapState.longitude
             ? VehicleType.Tram
             : VehicleType.TransitBus;
