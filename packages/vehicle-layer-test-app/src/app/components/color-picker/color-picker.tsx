@@ -26,7 +26,7 @@ export interface ColorPickerProps {
   Icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
     muiName: string;
   };
-  onColorChange: (value: ColorResult) => void; 
+  onColorChange: (value: ColorResult) => void;
 }
 
 export function ColorPicker({
@@ -34,7 +34,7 @@ export function ColorPicker({
   popoverId,
   Icon,
   children,
-  onColorChange
+  onColorChange,
 }: PropsWithChildren<ColorPickerProps>) {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
