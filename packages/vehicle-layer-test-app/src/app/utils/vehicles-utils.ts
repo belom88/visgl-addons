@@ -141,15 +141,15 @@ export const createSfVehicles = (
 export const createAnfieldVehicles = (): Vehicle[] => {
   return [
     {
-      latitude: 53.432814,
-      longitude: -2.956419,
-      bearing: 180,
+      latitude: 53.43185529968051,
+      longitude: -2.9577037905967574,
+      bearing: -51.94099460927194,
       vehilceType: VehicleType.TransitBus,
     },
     {
-      latitude: 53.432578,
-      longitude: -2.956792,
-      bearing: 180,
+      latitude: 53.431755073582494,
+      longitude: -2.9578708705967136,
+      bearing: -51.94099460927194,
       vehilceType: VehicleType.Tram,
     },
   ];

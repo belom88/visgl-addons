@@ -97,7 +97,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
 
   private getVehicleTypeIconLayer(
     vehicleType: VehicleType,
-    data: TProps[]
+    data: TProps[],
+    viewportBearing: number
   ): IconLayer {
     return new IconLayer({
       id: `${this.props.id}-vehilce-icon-${vehicleType}`,
@@ -110,9 +111,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       getIcon: () => 'arrow',
       getColor: this.props.get2dBackgroundColor || [255, 255, 255, 255],
       getAngle: () => {
-        const viewport = this.context.viewport as WebMercatorViewport;
-        const bearing = viewport.bearing;
-        return Number.isFinite(bearing) ? -bearing : 0;
+        return Number.isFinite(viewportBearing) ? -viewportBearing : 0;
       },
       iconMapping: {
         arrow: {
@@ -124,6 +123,10 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         },
       },
       billboard: false,
+      updateTriggers: {
+        ...this.props.updateTriggers,
+        getAngle: [viewportBearing],
+      },
     });
   }
 
@@ -153,6 +156,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           },
         },
         billboard: false,
+        updateTriggers: {
+          ...this.props.updateTriggers,
+        },
       }),
       new IconLayer({
         id: `${this.props.id}-arrow-icon-foreground`,
@@ -179,6 +185,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           },
         },
         billboard: false,
+        updateTriggers: {
+          ...this.props.updateTriggers,
+        },
       }),
     ];
   }
@@ -189,9 +198,13 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       layers = this.get2DArrowLayers();
     }
 
+    const viewport = this.context.viewport as WebMercatorViewport;
+    const viewportBearing = viewport.bearing;
+
     let getLayerCallback: (
       vehicleType: VehicleType,
-      data: TProps[]
+      data: TProps[],
+      viewportBearing: number
     ) => ScenegraphLayer | IconLayer;
     if (this.props.dimensionMode === '3D') {
       getLayerCallback = this.getVehicleTypeScenegraphLayer.bind(this);
@@ -206,13 +219,17 @@ export class VehicleLayer<TProps> extends CompositeLayer<
             // @ts-expect-error we are sure that getVehicleType is function
             parseInt(vehicleType) === this.props.getVehicleType(vehicle)
         );
-        layers.push(getLayerCallback(parseInt(vehicleType), filteredData));
+        layers.push(
+          getLayerCallback(parseInt(vehicleType), filteredData, viewportBearing)
+        );
       }
     } else {
       const vehileType = Number.isFinite(this.props.getVehicleType)
         ? this.props.getVehicleType
         : VehicleType.TransitBus;
-      layers.push(getLayerCallback(vehileType, this.props.data));
+      layers.push(
+        getLayerCallback(vehileType, this.props.data, viewportBearing)
+      );
     }
     return layers;
   }

@@ -13,6 +13,14 @@ export function useArcgis(
   const isLoadingRef = useRef<boolean>(false);
 
   useEffect(() => {
+    if (!sceneView) {
+      return;
+    }
+    // @ts-expect-error no ArcGIS types
+    sceneView.goTo([longitude, latitude], { animate: false });
+  }, [longitude, latitude, sceneView]);
+
+  useEffect(() => {
     if (mapContainer.current == null) {
       return;
     }

@@ -32,6 +32,8 @@ import { BaseMapMode, UseCaseId } from '../../types';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
 import Unsupported from '../unsupported/unsupported';
 import { calculateCurrentFps, updateAverageFps } from '../../utils/fps-utils';
+import { mapActions } from '../../redux/slices/map.slice';
+import { anfieldViewState, sfViewState } from '../../constants/view-states';
 
 const mapboxAccessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
@@ -111,14 +113,13 @@ export function MapWrapper(props: MapWrapperProps) {
     }
   }, [vehiclesCount, routes, animationState, useCase]);
 
-  // TODO: Deck.gl fails
-  // useEffect(() => {
-  //   if (useCase === UseCaseId.SF_TRANSIT) {
-  //     dispatch(mapActions.setMapState(sfViewState));
-  //   } else if (useCase === UseCaseId.ANFIELD) {
-  //     dispatch(mapActions.setMapState(anfieldViewState));
-  //   }
-  // }, [useCase, dispatch]);
+  useEffect(() => {
+    if (useCase === UseCaseId.SF_TRANSIT) {
+      dispatch(mapActions.setMapState(sfViewState));
+    } else if (useCase === UseCaseId.ANFIELD) {
+      dispatch(mapActions.setMapState(anfieldViewState));
+    }
+  }, [useCase, dispatch]);
 
   useEffect(() => {
     dispatch(appActions.resetFps());
