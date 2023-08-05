@@ -7,10 +7,11 @@ export const sfViewState = {
 };
 
 export const anfieldViewState = {
-  latitude: 53.432814,
-  longitude: -2.956419,
+  latitude: 53.431798446246546,
+  longitude: -2.957781323439993,
+  zoom: 20,
   bearing: 0,
-  pitch: 90,
+  pitch: 60,
 };
 
 export const initialViewState = {

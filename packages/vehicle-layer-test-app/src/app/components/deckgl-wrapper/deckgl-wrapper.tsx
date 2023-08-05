@@ -37,7 +37,11 @@ export function DeckglWrapper({
 
   return (
     <StyledMapContainer>
-      <DeckGL initialViewState={viewState} controller layers={[getLayer()]}>
+      <DeckGL
+        initialViewState={{ ...viewState }}
+        controller
+        layers={[getLayer()]}
+      >
         {Map && (
           <Map mapboxAccessToken={mapboxAccessToken} mapStyle={mapStyle} />
         )}
