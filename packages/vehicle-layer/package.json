@@ -1,6 +1,6 @@
 {
   "name": "@belom88/vehicle-layer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "type": "module",
   "keywords": [
@@ -18,7 +18,7 @@
   },
   "peerDependencies": {
     "@deck.gl/core": "^8.9.21",
-    "@deck.gl/layers": "8.9.21",
+    "@deck.gl/layers": "^8.9.21",
     "@deck.gl/mesh-layers": "^8.9.21"
   }
 }
