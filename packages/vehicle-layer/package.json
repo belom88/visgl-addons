@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/belom88/visgl-addons"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@deck.gl/core": "^8.9.21",
     "@deck.gl/layers": "8.9.21",
     "@deck.gl/mesh-layers": "^8.9.21"
