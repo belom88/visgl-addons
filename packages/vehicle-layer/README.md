@@ -1,8 +1,10 @@
 # VehicleLayer
 
-VehicleLayer package is a [deck.gl](https://deck.gl) layer. It is developed to visualize different vehicle types, for instance, transit buses and trams. The layer can visualize vehicles in 2D or 3D modes.
+Visualize transit vehicles on a map easily.
 
-![Demo image](./images//demo.png)
+VehicleLayer package is a deck.gl layer. It is developed to visualize different vehicle types, for instance, transit buses and trams. The layer can visualize vehicles in 2D or 3D modes.
+
+![Demo image](https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/images//demo.png)
 
 ## Short example
 
@@ -39,7 +41,6 @@ const deckgl = new Deck({
       sizeScale: 10,
       dimensionMode: '3D',
       getColor: [238, 255, 203],
-      get2dBackgroundColor: [59, 4, 4],
       getPosition: (vehicle) => [vehicle.longitude, vehicle.latitude],
       getBearing: (vehicle) => vehicle.bearing,
       getVehicleType: (vehicle) => vehicle.vehilceType,
@@ -50,7 +51,7 @@ const deckgl = new Deck({
 
 ## Requirements
 
-- Web-browser with WebGL API (see https://caniuse.com/webgl)
+- Web-browser with WebGL API support(see https://caniuse.com/webgl)
 
 ## Dependencies
 
@@ -68,7 +69,7 @@ The compatibility table mentions deck.gl version that was used to build the spec
 
 ## Vehicle types
 
-Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can be imported to use vehicle types in a human readable way.
+Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can be imported to define vehicle types in a human readable way.
 
 | VehicleType | Code |
 | ----------- | ---- |
@@ -79,7 +80,7 @@ Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can 
 
 ### data
 
-_type_: `T[]` where T is a Vehicle object;
+_type_: `T[]` where T is a Vehicle object type;
 
 _default_: []
 
@@ -115,7 +116,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: undefined
 
-_description_: deck.gl accessor that transforms vehicle data to 3D model color. This accessor overrides `getColor` accessor
+_description_: deck.gl accessor that transforms vehicle data to the color of 3D model. This accessor overrides `getColor` accessor
 
 ### get2dBackgroundColor
 
@@ -123,7 +124,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: [255, 255, 255]
 
-_description_: deck.gl accessor that transforms vehicle data to 2D icon background color
+_description_: deck.gl accessor that transforms vehicle data to the background color of 2D icon
 
 ### get2dForegroundColor
 
@@ -131,7 +132,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: [0, 0, 0]
 
-_description_: deck.gl accessor that transforms vehicle data to 2D icon foreground color. This accessor overrides `getColor` accessor.
+_description_: deck.gl accessor that transforms vehicle data to the foreground color of 2D icon. This accessor overrides `getColor` accessor.
 
 ### getVehicleType
 
