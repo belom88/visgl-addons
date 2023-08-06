@@ -3,6 +3,17 @@
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "webgl",
+    "deck.gl",
+    "maps",
+    "transit",
+    "visualization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belom88/visgl-addons"
+  },
   "dependencies": {
     "@deck.gl/core": "^8.9.21",
     "@deck.gl/layers": "8.9.21",
