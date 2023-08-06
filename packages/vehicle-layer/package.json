@@ -10,6 +10,8 @@
     "transit",
     "visualization"
   ],
+  "main": "main.js",
+  "typings": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/belom88/visgl-addons"
