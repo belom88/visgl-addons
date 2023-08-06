@@ -65,7 +65,7 @@ The compatibility table mentions deck.gl version that was used to build the spec
 
 | VehicleLayer | built on deck.gl |
 | ------------ | ---------------- |
-| 0.0.1        | ^8.9.21          |
+| 0.0.X        | ^8.9.21          |
 
 ## Vehicle types
 
