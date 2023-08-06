@@ -2,7 +2,7 @@ import { Vector3, toDegrees, toRadians } from '@math.gl/core';
 import { Ellipsoid } from '@math.gl/geospatial';
 import type { GeojsonRouteFeature } from './load-routes';
 import moment from 'moment';
-import { VehicleType } from '@belom88/deckgl-vehicle-layer';
+import { VehicleType } from '@belom88/vehicle-layer';
 
 const METERS_PER_MILE = 1609.34;
 /** 15 miles/h */

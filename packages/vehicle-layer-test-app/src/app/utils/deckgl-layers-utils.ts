@@ -1,5 +1,5 @@
 import { MapboxLayer } from '@deck.gl/mapbox/typed';
-import { DimensionMode, VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+import { DimensionMode, VehicleLayer } from '@belom88/vehicle-layer';
 import { Vehicle } from './vehicles-utils';
 import { VehicleType } from 'packages/vehicle-layer/src/types';
 

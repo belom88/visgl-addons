@@ -8,7 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     alias: {
-      '@belom88/deckgl-vehicle-layer': './packages/vehicle-layer/src',
+      '@belom88/vehicle-layer': './packages/vehicle-layer/src',
     },
   },
 });

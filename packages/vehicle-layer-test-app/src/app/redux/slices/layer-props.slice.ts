@@ -1,7 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { LayerPropsEdited, PopoverId, UseCaseId } from '../../types';
-import { DimensionMode } from '@belom88/deckgl-vehicle-layer';
+import { DimensionMode } from '@belom88/vehicle-layer';
 import { setAnimation } from './utils/layer-props-slice-utils';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';

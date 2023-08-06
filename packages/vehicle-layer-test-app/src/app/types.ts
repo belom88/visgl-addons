@@ -1,4 +1,4 @@
-import { DimensionMode } from '@belom88/deckgl-vehicle-layer';
+import { DimensionMode } from '@belom88/vehicle-layer';
 
 export enum RequestStatus {
   IDLE,

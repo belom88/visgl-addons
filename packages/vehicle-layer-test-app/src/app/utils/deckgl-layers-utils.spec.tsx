@@ -1,4 +1,4 @@
-import { VehicleLayer } from '@belom88/deckgl-vehicle-layer';
+import { VehicleLayer } from '@belom88/vehicle-layer';
 
 import { renderVehicleLayer } from './deckgl-layers-utils';
 
