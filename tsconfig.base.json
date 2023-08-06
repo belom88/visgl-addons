@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@belom88/deckgl-vehicle-layer": ["packages/vehicle-layer/src/index.ts"]
+      "@belom88/vehicle-layer": ["packages/vehicle-layer/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

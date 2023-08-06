@@ -24,7 +24,7 @@ vi.mock('react-map-gl/maplibre', () => {
   const Map = vi.fn();
   return { Map };
 });
-vi.importMock('@belom88/deckgl-vehicle-layer');
+vi.importMock('@belom88/vehicle-layer');
 
 describe('Deckgl', () => {
   it('should render successfully', () => {

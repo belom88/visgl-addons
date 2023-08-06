@@ -52,7 +52,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     get3dColor: undefined,
     get2dBackgroundColor: [255, 255, 255, 255],
     get2dForegroundColor: undefined,
-    getBearing: undefined,
+    getBearing: 0,
     getVehicleType: undefined,
   };
 

@@ -5,6 +5,7 @@
   "private": true,
   "devDependencies": {
     "@nx/cypress": "16.4.2",
+    "@nx/esbuild": "^16.6.0",
     "@nx/eslint-plugin": "16.4.2",
     "@nx/jest": "16.4.2",
     "@nx/js": "^16.4.2",
@@ -30,6 +31,7 @@
     "@vitest/ui": "^0.32.0",
     "babel-plugin-styled-components": "1.10.7",
     "cypress": "^12.11.0",
+    "esbuild": "^0.17.17",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",

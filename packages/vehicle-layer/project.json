@@ -5,13 +5,33 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/packages/vehicle-layer",
         "main": "packages/vehicle-layer/src/index.ts",
+        "outputPath": "dist/packages/vehicle-layer",
+        "outputFileName": "main.js",
+        "bundle": true,
         "tsConfig": "packages/vehicle-layer/tsconfig.lib.json",
-        "assets": ["packages/vehicle-layer/*.md", "packages/vehicle-layer/models/**.*"]
+        "assets": [
+          "packages/vehicle-layer/*.md",
+          "packages/vehicle-layer/LICENSE",
+          "packages/vehicle-layer/models/**.*",
+          "packages/vehicle-layer/icons/**.*",
+          "packages/vehicle-layer/images/**.*",
+          "packages/vehicle-layer/src/**/**.*"
+        ],
+        "platform": "browser"
+      },
+      "configurations": {
+        "development": {
+          "minify": false,
+          "bundle": false
+        },
+        "production": {
+          "minify": true
+        }
       }
     },
     "publish": {
