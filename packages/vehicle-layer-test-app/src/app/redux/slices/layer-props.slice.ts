@@ -13,7 +13,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountValue: 2000,
   vehiclesCountMinMax: [10, 10000],
   animated: true,
-  scale: 10,
+  scale: 1,
   dimensionMode: '3D',
 };
 

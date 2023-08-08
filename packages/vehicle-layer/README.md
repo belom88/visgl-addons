@@ -4,7 +4,7 @@ Visualize transit vehicles on a map easily.
 
 VehicleLayer package is a deck.gl layer. It is developed to visualize different vehicle types, for instance, transit buses and trams. The layer can visualize vehicles in 2D or 3D modes.
 
-![Demo image](https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/images//demo.png)
+![Demo image](https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/images/demo.png)
 
 ## Short example
 
@@ -38,7 +38,6 @@ const deckgl = new Deck({
           vehilceType: VehicleType.Tram,
         },
       ],
-      sizeScale: 10,
       dimensionMode: '3D',
       getColor: [238, 255, 203],
       getPosition: (vehicle) => [vehicle.longitude, vehicle.latitude],
@@ -92,7 +91,15 @@ _type_: '2D' or '3D'
 
 _default_: '3D'
 
-_description_: In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models;
+_description_: In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models.
+
+### sizeScale
+
+_type_: number
+
+_default_: 1
+
+_description_: For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied by 5.
 
 ### getBearing
 
@@ -100,7 +107,7 @@ _type_: Accessor<TProps, number>
 
 _default_: 0
 
-_description_: deck.gl accessor that transforms vehicle data to the movement direction of the vehicle
+_description_: deck.gl accessor that transforms vehicle data to the movement direction of the vehicle.
 
 ### getColor
 
@@ -108,7 +115,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: [255, 255, 255]
 
-_description_: deck.gl accessor that transforms vehicle data to the vehicle color
+_description_: deck.gl accessor that transforms vehicle data to the vehicle color.
 
 ### get3dColor
 
@@ -116,7 +123,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: undefined
 
-_description_: deck.gl accessor that transforms vehicle data to the color of 3D model. This accessor overrides `getColor` accessor
+_description_: deck.gl accessor that transforms vehicle data to the color of 3D model. This accessor overrides `getColor` accessor.
 
 ### get2dBackgroundColor
 
@@ -124,7 +131,7 @@ _type_: Accessor<TProps, Color>
 
 _default_: [255, 255, 255]
 
-_description_: deck.gl accessor that transforms vehicle data to the background color of 2D icon
+_description_: deck.gl accessor that transforms vehicle data to the background color of 2D icon.
 
 ### get2dForegroundColor
 
