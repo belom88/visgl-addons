@@ -17,26 +17,38 @@ import { DimensionMode, VehicleType } from '../types';
 const VEHILCE_TYPE_URLS = {
   [VehicleType.TransitBus]: {
     model:
-      'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/transit-bus-low-poly-2.glb',
+      'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/scaled/scaled-transit-bus-low-poly-2.glb',
     icon: 'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/bus.svg',
   },
   [VehicleType.Tram]: {
     model:
-      'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/tram-low-poly-1.glb',
+      'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/models/scaled/scaled-tram-low-poly-1.glb',
     icon: 'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/tram.svg',
   },
 };
 
+/** Vehicle width in meters */
+const VEHICLE_WIDTH = 5;
+
 type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
   IconLayerProps<TProps> & {
+    /** Array of vehicles objects. Vehicle object must containt position information. */
     data: TProps[];
-    /** The layers can work in 2D (Icon arrows) and 3D (Mesh objects) */
+    /** In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models. */
     dimensionMode: DimensionMode;
+    /** For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied by 5.  */
+    sizeScale: number;
+    /** deck.gl accessor that transforms vehicle data to the movement direction of the vehicle. */
     getBearing: Accessor<TProps, number>;
+    /** deck.gl accessor that transforms vehicle data to the vehicle color. */
     getColor: Accessor<TProps, Color>;
+    /** deck.gl accessor that transforms vehicle data to the color of 3D model. This accessor overrides `getColor` accessor. */
     get3dColor: Accessor<TProps, Color>;
+    /** deck.gl accessor that transforms vehicle data to the background color of 2D icon. */
     get2dBackgroundColor: Accessor<TProps, Color>;
+    /** deck.gl accessor that transforms vehicle data to the foreground color of 2D icon. This accessor overrides `getColor` accessor. */
     get2dForegroundColor: Accessor<TProps, Color>;
+    /** deck.gl accessor that transforms vehicle data to a vehicle type. */
     getVehicleType: Accessor<TProps, VehicleType>;
   };
 
@@ -48,6 +60,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     ...ScenegraphLayer.defaultProps,
     data: [],
     dimentionalMode: '3D',
+    sizeScale: 1,
     getColor: undefined,
     get3dColor: undefined,
     get2dBackgroundColor: [255, 255, 255, 255],
@@ -104,7 +117,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       id: `${this.props.id}-vehilce-icon-${vehicleType}`,
       data,
       getPosition: this.props.getPosition,
-      getSize: this.props.sizeScale || 1,
+      getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
       sizeScale: 0.4,
       sizeUnits: 'meters',
       iconAtlas: VEHILCE_TYPE_URLS[vehicleType].icon,
@@ -136,7 +149,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         id: `${this.props.id}--arrow-icon-background`,
         data: this.props.data,
         getPosition: this.props.getPosition,
-        getSize: this.props.sizeScale || 1,
+        getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
         sizeUnits: 'meters',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-background.svg',
@@ -164,7 +177,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         id: `${this.props.id}-arrow-icon-foreground`,
         data: this.props.data,
         getPosition: this.props.getPosition,
-        getSize: this.props.sizeScale || 1,
+        getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
         sizeUnits: 'meters',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',

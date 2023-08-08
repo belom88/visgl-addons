@@ -14,7 +14,7 @@ describe('layerProps reducer', () => {
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [10, 10000],
       animated: true,
-      scale: 10,
+      scale: 1,
       dimensionMode: '3D',
     });
   });
@@ -29,7 +29,7 @@ describe('layerProps reducer', () => {
       expect.objectContaining({
         vehiclesCountValue: 5001,
         animated: true,
-        scale: 10,
+        scale: 1,
         vehiclesCountMinMax: [10, 10000],
         dimensionMode: '3D',
       })
@@ -43,7 +43,7 @@ describe('layerProps reducer', () => {
         vehiclesCountValue: 5005,
         vehiclesCountMinMax: [100, 1000],
         animated: true,
-        scale: 10,
+        scale: 1,
         dimensionMode: '3D',
       },
     });
