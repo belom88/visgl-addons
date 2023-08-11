@@ -1453,7 +1453,7 @@
     "@babel/runtime" "^7.0.0"
     esri-loader "^3.3.0"
 
-"@deck.gl/core@8.9.21", "@deck.gl/core@^8.9.21":
+"@deck.gl/core@8.9.21":
   version "8.9.21"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.9.21.tgz#0de50d6caed129becb9e80e28709b230ff13e2f2"
   integrity sha512-kyPOEkl90T5agiNhIPCool03/4MMQXKoNqSurdXtJS7+xU9FVf7/biTrLxVxWCfF8kqRgxX6sJ4m2PKUwRjV0A==
@@ -1504,7 +1504,7 @@
     "@babel/runtime" "^7.0.0"
     "@types/mapbox-gl" "^2.6.3"
 
-"@deck.gl/mesh-layers@^8.9.21":
+"@deck.gl/mesh-layers@8.9.21":
   version "8.9.21"
   resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.9.21.tgz#7a0e04ba5aa3569a65c75d1335a6fb3bfd16a4fc"
   integrity sha512-alTRtuZADvz18txumJeE/cTJQ6I1DqYDHGGFHA/FlKA3kYcy91Te4evHSok/+k8xlNyzf26cjgs9EoHAbUDpuQ==
