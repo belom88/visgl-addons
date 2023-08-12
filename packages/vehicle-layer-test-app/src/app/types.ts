@@ -1,4 +1,4 @@
-import { DimensionMode } from '@belom88/vehicle-layer';
+import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
 
 export enum RequestStatus {
   IDLE,
@@ -35,6 +35,10 @@ export interface LayerPropsEdited {
   animated: boolean;
 
   // Vehicle properties
+  /** A way to define vehicles size */
+  sizeMode: SizeMode;
+  /** Size in pixels for pixel size mode */
+  size: number;
   /** Vehicle model scale */
   scale: number;
   /** 2D or 3D mode */

@@ -7,6 +7,21 @@ import {
 import { createStoreWith } from '../../utils/test-utils';
 import { UseCaseId } from '../../types';
 
+vi.mock('@deck.gl/core', () => {
+  const CompositeLayer = vi.fn();
+  return { CompositeLayer };
+});
+vi.mock('@deck.gl/layers', () => {
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
+});
+vi.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = vi.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
+
 describe('layerProps reducer', () => {
   it('should handle initial state', () => {
     expect(layerPropsReducer(undefined, { type: '' })).toEqual({
@@ -14,6 +29,8 @@ describe('layerProps reducer', () => {
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [10, 10000],
       animated: true,
+      size: 20,
+      sizeMode: 0,
       scale: 1,
       dimensionMode: '3D',
     });

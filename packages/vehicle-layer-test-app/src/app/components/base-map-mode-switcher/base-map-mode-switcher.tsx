@@ -32,7 +32,7 @@ export function BaseMapModeSwitcher(props: BaseMapModeSwitcherProps) {
       <FormControl>
         <RadioGroup
           row
-          name="row-radio-buttons-group"
+          name="size-mode-radio-buttons-group"
           value={baseMapMode}
           onChange={onBaseMapChangeHandler}
         >

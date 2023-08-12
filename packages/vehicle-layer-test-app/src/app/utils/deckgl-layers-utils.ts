@@ -1,7 +1,7 @@
 import { MapboxLayer } from '@deck.gl/mapbox/typed';
 import { DimensionMode, VehicleLayer } from '@belom88/vehicle-layer';
 import { Vehicle } from './vehicles-utils';
-import { VehicleType } from 'packages/vehicle-layer/src/types';
+import { SizeMode, VehicleType } from 'packages/vehicle-layer/src/types';
 
 /**
  * Render VehicleLayer
@@ -12,6 +12,8 @@ import { VehicleType } from 'packages/vehicle-layer/src/types';
  */
 export const renderVehicleLayer = (
   vehicles: Vehicle[],
+  sizeMode: SizeMode,
+  size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,
   commonColor?: [number, number, number],
@@ -28,6 +30,8 @@ export const renderVehicleLayer = (
     get2dForegroundColor: foregroundColor2d,
     get2dBackgroundColor: backgroundColor2d,
     get3dColor: color3D,
+    sizeMode,
+    size,
     sizeScale: vehicleScale,
     dimensionMode,
     updateTriggers: {
@@ -41,6 +45,8 @@ export const renderVehicleLayer = (
 
 export const getMapboxLayer = (
   vehicles: Vehicle[],
+  sizeMode: SizeMode,
+  size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,
   commonColor?: [number, number, number],
@@ -55,6 +61,8 @@ export const getMapboxLayer = (
     data: vehicles,
     getPosition: (vehicle: Vehicle) => [vehicle.longitude, vehicle.latitude],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
+    sizeMode,
+    size,
     sizeScale: vehicleScale,
     dimensionMode,
     getColor: commonColor,

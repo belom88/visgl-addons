@@ -2,6 +2,21 @@ import { RequestStatus } from '../../types';
 import { ROUTE_STUB } from '../../utils/test-utils';
 import { getRoutes, routesAdapter, routesReducer } from './routes.slice';
 
+vi.mock('@deck.gl/core', () => {
+  const CompositeLayer = vi.fn();
+  return { CompositeLayer };
+});
+vi.mock('@deck.gl/layers', () => {
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
+});
+vi.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = vi.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
+
 describe('routes reducer', () => {
   it('should handle initial state', () => {
     const expected = routesAdapter.getInitialState({

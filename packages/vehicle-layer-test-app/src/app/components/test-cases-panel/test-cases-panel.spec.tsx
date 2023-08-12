@@ -3,6 +3,21 @@ import { createStoreWith, renderWithProviders } from '../../utils/test-utils';
 import TestCasesPanel from './test-cases-panel';
 import { TEST_CASES } from '../../constants/test-cases';
 
+vi.mock('@deck.gl/core', () => {
+  const CompositeLayer = vi.fn();
+  return { CompositeLayer };
+});
+vi.mock('@deck.gl/layers', () => {
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
+});
+vi.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = vi.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
+
 describe('TestCasesPanel', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithProviders(<TestCasesPanel />);

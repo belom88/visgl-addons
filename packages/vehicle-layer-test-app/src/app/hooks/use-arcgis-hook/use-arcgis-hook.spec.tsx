@@ -4,6 +4,21 @@ import * as React from 'react';
 import { useArcgis } from './use-arcgis-hook';
 import { createStoreWith, createWrapper } from '../../utils/test-utils';
 
+vi.mock('@deck.gl/core', () => {
+  const CompositeLayer = vi.fn();
+  return { CompositeLayer };
+});
+vi.mock('@deck.gl/layers', () => {
+  const IconLayer = vi.fn();
+  const IconLayerProps = {};
+  return { IconLayer, IconLayerProps };
+});
+vi.mock('@deck.gl/mesh-layers', () => {
+  const ScenegraphLayer = vi.fn();
+  const ScenegraphLayerProps = {};
+  return { ScenegraphLayer, ScenegraphLayerProps };
+});
+
 vi.mock('@deck.gl/arcgis', () => {
   const DeckRenderer = vi.fn();
   const loadArcGISModules = vi.fn().mockReturnValue(

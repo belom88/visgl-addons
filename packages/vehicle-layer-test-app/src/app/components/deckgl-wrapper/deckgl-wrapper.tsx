@@ -10,6 +10,8 @@ import {
   selectAllColors,
   selectDimensionMode,
   selectScale,
+  selectSize,
+  selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 
@@ -28,12 +30,21 @@ export function DeckglWrapper({
   mapStyle = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 }: DeckglWrapperProps) {
   const viewState = useAppSelector(selectMapState);
+  const sizeMode = useAppSelector(selectSizeMode);
+  const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
 
   const getLayer = () =>
-    renderVehicleLayer(vehicles, vehicleScale, dimensionMode, ...colors);
+    renderVehicleLayer(
+      vehicles,
+      sizeMode,
+      size,
+      vehicleScale,
+      dimensionMode,
+      ...colors
+    );
 
   return (
     <StyledMapContainer>

@@ -8,6 +8,8 @@ import {
   selectAllColors,
   selectDimensionMode,
   selectScale,
+  selectSize,
+  selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 
 /* eslint-disable-next-line */
@@ -18,6 +20,8 @@ export interface ArcgisWrapperProps {
 export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map: unknown | null = useArcgis(mapContainer);
+  const sizeMode = useAppSelector(selectSizeMode);
+  const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimesionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
@@ -28,11 +32,18 @@ export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
     }
 
     const layers = [
-      renderVehicleLayer(vehicles, vehicleScale, dimesionMode, ...colors),
+      renderVehicleLayer(
+        vehicles,
+        sizeMode,
+        size,
+        vehicleScale,
+        dimesionMode,
+        ...colors
+      ),
     ];
     // @ts-expect-error @deck.gl/arcgis has no types
     map.deck.set({ layers });
-  }, [vehicles, map, vehicleScale, dimesionMode, colors]);
+  }, [vehicles, map, sizeMode, size, vehicleScale, dimesionMode, colors]);
 
   return (
     <StyledMapContainer

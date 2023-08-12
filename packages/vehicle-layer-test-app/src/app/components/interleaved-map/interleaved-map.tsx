@@ -9,6 +9,8 @@ import {
   selectAllColors,
   selectDimensionMode,
   selectScale,
+  selectSize,
+  selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
 
@@ -40,6 +42,8 @@ export function InterleavedMap({
 }: InterleavedMapProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
+  const sizeMode = useAppSelector(selectSizeMode);
+  const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
@@ -62,6 +66,8 @@ export function InterleavedMap({
       // @ts-expect-error maplibre and mapbox types are not compatible
       getMapboxLayer(
         vehicles,
+        sizeMode,
+        size,
         vehicleScale,
         dimensionMode,
         commonColor,
@@ -71,7 +77,7 @@ export function InterleavedMap({
       ),
       firstLabelLayerId
     );
-  }, [vehicles, map, vehicleScale, dimensionMode, colors]);
+  }, [vehicles, map, sizeMode, size, vehicleScale, dimensionMode, colors]);
 
   return (
     <StyledMapContainer
