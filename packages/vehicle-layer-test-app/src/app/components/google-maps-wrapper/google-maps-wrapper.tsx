@@ -10,6 +10,8 @@ import {
   selectAllColors,
   selectDimensionMode,
   selectScale,
+  selectSize,
+  selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 
 const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -35,6 +37,8 @@ export function GoogleMapsWrapper({
   const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
+  const sizeMode = useAppSelector(selectSizeMode);
+  const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
@@ -51,6 +55,8 @@ export function GoogleMapsWrapper({
   useEffect(() => {
     const layer = renderVehicleLayer(
       vehicles,
+      sizeMode,
+      size,
       vehicleScale,
       dimensionMode,
       ...colors
@@ -58,7 +64,7 @@ export function GoogleMapsWrapper({
     overlay.setProps({
       layers: [layer],
     });
-  }, [vehicles, overlay, vehicleScale, dimensionMode, colors]);
+  }, [vehicles, overlay, sizeMode, size, vehicleScale, dimensionMode, colors]);
 
   useEffect(() => {
     if (map) {

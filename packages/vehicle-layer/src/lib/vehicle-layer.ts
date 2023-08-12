@@ -12,7 +12,7 @@ import {
   ScenegraphLayerProps,
 } from '@deck.gl/mesh-layers/typed';
 import { IconLayer, IconLayerProps } from '@deck.gl/layers/typed';
-import { DimensionMode, VehicleType } from '../types';
+import { DimensionMode, SizeMode, VehicleType } from '../types';
 
 const VEHILCE_TYPE_URLS = {
   [VehicleType.TransitBus]: {
@@ -36,7 +36,11 @@ type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
     data: TProps[];
     /** In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models. */
     dimensionMode: DimensionMode;
-    /** For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied by 5.  */
+    /** A way to define vehicles size */
+    sizeMode: SizeMode;
+    /** Size in pixels for pixel size mode */
+    size: number;
+    /** For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied.  */
     sizeScale: number;
     /** deck.gl accessor that transforms vehicle data to the movement direction of the vehicle. */
     getBearing: Accessor<TProps, number>;
@@ -60,6 +64,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     ...ScenegraphLayer.defaultProps,
     data: [],
     dimentionalMode: '3D',
+    sizeMode: SizeMode.Original,
+    size: 20,
     sizeScale: 1,
     getColor: undefined,
     get3dColor: undefined,
@@ -85,7 +91,11 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   private getVehicleTypeScenegraphLayer(
     vehicleType: VehicleType,
     data: TProps[]
-  ): ScenegraphLayer {
+  ): ScenegraphLayer | null {
+    if (this.props.sizeMode === SizeMode.Pixel) {
+      return null;
+    }
+
     return new ScenegraphLayer({
       id: `${this.props.id}-scenegraph-${vehicleType}`,
       data,
@@ -117,9 +127,13 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       id: `${this.props.id}-vehilce-icon-${vehicleType}`,
       data,
       getPosition: this.props.getPosition,
-      getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
+      getSize:
+        this.props.sizeMode === SizeMode.Original
+          ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+          : this.props.size,
       sizeScale: 0.4,
-      sizeUnits: 'meters',
+      sizeUnits:
+        this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
       iconAtlas: VEHILCE_TYPE_URLS[vehicleType].icon,
       getIcon: () => 'arrow',
       getColor: this.props.get2dBackgroundColor || [255, 255, 255, 255],
@@ -149,8 +163,12 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         id: `${this.props.id}--arrow-icon-background`,
         data: this.props.data,
         getPosition: this.props.getPosition,
-        getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
-        sizeUnits: 'meters',
+        getSize:
+          this.props.sizeMode === SizeMode.Original
+            ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+            : this.props.size,
+        sizeUnits:
+          this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-background.svg',
         getIcon: () => 'arrow',
@@ -177,8 +195,12 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         id: `${this.props.id}-arrow-icon-foreground`,
         data: this.props.data,
         getPosition: this.props.getPosition,
-        getSize: (this.props.sizeScale || 1) * VEHICLE_WIDTH,
-        sizeUnits: 'meters',
+        getSize:
+          this.props.sizeMode === SizeMode.Original
+            ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+            : this.props.size,
+        sizeUnits:
+          this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',
         getIcon: () => 'arrow',
@@ -206,7 +228,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   }
 
   override renderLayers(): Layer<object> | LayersList | null {
-    let layers: (ScenegraphLayer | IconLayer)[] = [];
+    let layers: (ScenegraphLayer | IconLayer | null)[] = [];
     if (this.props.dimensionMode === '2D') {
       layers = this.get2DArrowLayers();
     }
@@ -218,7 +240,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       vehicleType: VehicleType,
       data: TProps[],
       viewportBearing: number
-    ) => ScenegraphLayer | IconLayer;
+    ) => ScenegraphLayer | IconLayer | null;
     if (this.props.dimensionMode === '3D') {
       getLayerCallback = this.getVehicleTypeScenegraphLayer.bind(this);
     } else {

@@ -17,9 +17,9 @@
         "assets": [
           "packages/vehicle-layer/*.md",
           "packages/vehicle-layer/LICENSE",
-          "packages/vehicle-layer/models/**.*",
-          "packages/vehicle-layer/icons/**.*",
-          "packages/vehicle-layer/images/**.*",
+          "packages/vehicle-layer/models/**/**.*",
+          "packages/vehicle-layer/icons/**/**.*",
+          "packages/vehicle-layer/images/**/**.*",
           "packages/vehicle-layer/src/**/**.*"
         ],
         "platform": "browser"

@@ -1,7 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { LayerPropsEdited, PopoverId, UseCaseId } from '../../types';
-import { DimensionMode } from '@belom88/vehicle-layer';
+import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
 import { setAnimation } from './utils/layer-props-slice-utils';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
@@ -13,6 +13,8 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountValue: 2000,
   vehiclesCountMinMax: [10, 10000],
   animated: true,
+  sizeMode: SizeMode.Original,
+  size: 20,
   scale: 1,
   dimensionMode: '3D',
 };
@@ -36,6 +38,12 @@ export const layerPropsSlice = createSlice({
     },
     setAnimation: (state: LayerPropsState, action: PayloadAction<boolean>) => {
       setAnimation(state, action.payload);
+    },
+    setSizeMode: (state: LayerPropsState, action: PayloadAction<SizeMode>) => {
+      state.sizeMode = action.payload;
+    },
+    setSize: (state: LayerPropsState, action: PayloadAction<number>) => {
+      state.size = action.payload;
     },
     setScale: (state: LayerPropsState, action: PayloadAction<number>) => {
       state.scale = action.payload;
@@ -113,6 +121,14 @@ export const selectVehiclesCountMinMax = createSelector(
 );
 export const selectAnimationState = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].animated,
+  (result) => result
+);
+export const selectSizeMode = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].sizeMode,
+  (result) => result
+);
+export const selectSize = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].size,
   (result) => result
 );
 export const selectScale = createSelector(

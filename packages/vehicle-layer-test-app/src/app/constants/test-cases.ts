@@ -1,3 +1,4 @@
+import { SizeMode } from '@belom88/vehicle-layer';
 import { TestCase, UseCaseId } from '../types';
 
 export const TEST_CASES: TestCase[] = [
@@ -10,6 +11,8 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [0, 0],
       animated: true,
+      sizeMode: SizeMode.Original,
+      size: 20,
       scale: 1,
       dimensionMode: '3D',
     },
@@ -23,8 +26,25 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountValue: 5000,
       vehiclesCountMinMax: [0, 0],
       animated: true,
+      sizeMode: SizeMode.Original,
+      size: 20,
       scale: 1,
       dimensionMode: '3D',
+    },
+  },
+  {
+    id: 'animation-10000-2d-pixel-size-70',
+    name: 'Animation 2D 10000. Pixel Size 70',
+    description: 'Animated 10000 vehicles in 2D mode. Size mode is set to `combined` with 70 pixels size.',
+    layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
+      vehiclesCountValue: 10000,
+      vehiclesCountMinMax: [0, 0],
+      animated: true,
+      sizeMode: SizeMode.Combined,
+      size: 70,
+      scale: 1,
+      dimensionMode: '2D',
     },
   },
   {
@@ -36,6 +56,8 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,
+      sizeMode: SizeMode.Original,
+      size: 20,
       scale: 0.25,
       dimensionMode: '3D',
     },
@@ -49,6 +71,8 @@ export const TEST_CASES: TestCase[] = [
       vehiclesCountValue: 50000,
       vehiclesCountMinMax: [0, 0],
       animated: false,
+      sizeMode: SizeMode.Original,
+      size: 20,
       scale: 0.15,
       dimensionMode: '2D',
     },

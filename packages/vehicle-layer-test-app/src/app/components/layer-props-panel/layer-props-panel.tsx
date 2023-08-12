@@ -6,6 +6,8 @@ import {
   selectAnimationState,
   selectDimensionMode,
   selectScale,
+  selectSize,
+  selectSizeMode,
   selectUseCase,
   selectVehicleColor,
   selectVehiclesCountMinMax,
@@ -16,6 +18,7 @@ import SceneProps from './scene-props/scene-props';
 import VehicleLayerProps from './vehicle-layer-props/vehicle-layer-props';
 import { PopoverId, UseCaseId } from '../../types';
 import * as d3 from 'd3';
+import { SizeMode } from '@belom88/vehicle-layer';
 
 const StyledContainer = styled(Box)`
   bottom: 1.5em;
@@ -53,6 +56,8 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const [vehiclesCountMin, vehiclesCountMax] = useAppSelector(
     selectVehiclesCountMinMax
   );
+  const sizeMode = useAppSelector(selectSizeMode);
+  const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
   const dimensionMode = useAppSelector(selectDimensionMode);
@@ -139,12 +144,20 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
           />
         )}
         <VehicleLayerProps
+          sizeMode={sizeMode}
+          size={size}
           vehicleScale={vehicleScale}
           dimensionMode={dimensionMode}
           commonHexColor={commonHexColor}
           d3HexColor={d3HexColor}
           d2ForegroundHexColor={d2ForegroundHexColor}
           d2BackgroundHexColor={d2BackgroundHexColor}
+          onSizeModeChange={(result: SizeMode) =>
+            dispatch(layerPropsActions.setSizeMode(result))
+          }
+          onSizeChange={(value: number) =>
+            dispatch(layerPropsActions.setSize(value))
+          }
           onScaleChange={(value: number) =>
             dispatch(layerPropsActions.setScale(value))
           }

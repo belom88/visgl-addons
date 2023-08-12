@@ -4,3 +4,9 @@ export enum VehicleType {
   TransitBus,
   Tram,
 }
+
+export enum SizeMode {
+  Original,
+  Pixel,
+  Combined
+}
