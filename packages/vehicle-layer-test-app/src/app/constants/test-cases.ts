@@ -35,7 +35,8 @@ export const TEST_CASES: TestCase[] = [
   {
     id: 'animation-10000-2d-pixel-size-70',
     name: 'Animation 2D 10000. Pixel Size 70',
-    description: 'Animated 10000 vehicles in 2D mode. Size mode is set to `combined` with 70 pixels size.',
+    description:
+      'Animated 10000 vehicles in 2D mode. Size mode is set to `combined` with 70 pixels size.',
     layerProps: {
       useCase: UseCaseId.SF_TRANSIT,
       vehiclesCountValue: 10000,

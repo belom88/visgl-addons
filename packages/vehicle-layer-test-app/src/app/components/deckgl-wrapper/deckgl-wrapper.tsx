@@ -37,7 +37,14 @@ export function DeckglWrapper({
   const colors = useAppSelector(selectAllColors);
 
   const getLayer = () =>
-    renderVehicleLayer(vehicles, sizeMode, size, vehicleScale, dimensionMode, ...colors);
+    renderVehicleLayer(
+      vehicles,
+      sizeMode,
+      size,
+      vehicleScale,
+      dimensionMode,
+      ...colors
+    );
 
   return (
     <StyledMapContainer>

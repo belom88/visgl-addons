@@ -8,5 +8,5 @@ export enum VehicleType {
 export enum SizeMode {
   Original,
   Pixel,
-  Combined
+  Combined,
 }
