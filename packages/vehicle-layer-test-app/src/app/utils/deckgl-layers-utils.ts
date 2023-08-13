@@ -39,7 +39,7 @@ export const renderVehicleLayer = (
     },
     getVehicleType: (vehicle: Vehicle) => {
       return vehicle.vehilceType || VehicleType.TransitBus;
-    }
+    },
   });
 };
 
