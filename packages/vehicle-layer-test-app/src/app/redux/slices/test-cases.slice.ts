@@ -24,6 +24,8 @@ export const setTestCase = createAsyncThunk(
     dispatch(
       layerPropsActions.setVehiclesCount(testCase.layerProps.vehiclesCountValue)
     );
+    dispatch(layerPropsActions.setSizeMode(testCase.layerProps.sizeMode));
+    dispatch(layerPropsActions.setSize(testCase.layerProps.size));
     dispatch(layerPropsActions.setScale(testCase.layerProps.scale));
     dispatch(
       layerPropsActions.setDimensionMode(testCase.layerProps.dimensionMode)

@@ -29,6 +29,8 @@ const VEHILCE_TYPE_URLS = {
 
 /** Vehicle width in meters */
 const VEHICLE_WIDTH = 5;
+/** TransitBus volume size in meters */
+const TRANSIT_BUS_VOLUME_SIZE = 10.5;
 
 type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
   IconLayerProps<TProps> & {
@@ -92,8 +94,26 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     vehicleType: VehicleType,
     data: TProps[]
   ): ScenegraphLayer | null {
+    let sizeScale = this.props.sizeScale;
     if (this.props.sizeMode === SizeMode.Pixel) {
-      return null;
+      const viewport = this.context.viewport as WebMercatorViewport;
+      const centralPixel = viewport.project([
+        viewport.longitude,
+        viewport.latitude,
+      ]);
+      const nextPixel = viewport.project(
+        viewport.addMetersToLngLat(
+          [viewport.longitude, viewport.latitude],
+          [1, 0]
+        )
+      );
+      const meterPixelSize = Math.sqrt(
+        (centralPixel[0] - nextPixel[0]) ** 2 +
+          (centralPixel[1] - nextPixel[1]) ** 2
+      );
+      // 1m : meterPixelSize
+      // TRANSIT_BUS_VOLUME_SIZE : this.props.size
+      sizeScale = this.props.size / TRANSIT_BUS_VOLUME_SIZE / meterPixelSize;
     }
 
     return new ScenegraphLayer({
@@ -109,7 +129,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       },
       getColor: this.props.get3dColor ||
         this.props.getColor || [255, 255, 255, 255],
-      sizeScale: this.props.sizeScale,
+      sizeScale,
       scenegraph: VEHILCE_TYPE_URLS[vehicleType].model,
       _lighting: 'pbr',
       updateTriggers: {

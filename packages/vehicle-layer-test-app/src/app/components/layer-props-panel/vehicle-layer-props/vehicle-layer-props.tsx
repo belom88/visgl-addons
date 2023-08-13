@@ -112,6 +112,11 @@ export function VehicleLayerProps({
               label="Original"
             />
             <FormControlLabel
+              value={SizeMode.Pixel}
+              control={<Radio />}
+              label="Pixel"
+            />
+            <FormControlLabel
               value={SizeMode.Combined}
               control={<Radio />}
               label="Combined"
@@ -119,7 +124,8 @@ export function VehicleLayerProps({
           </RadioGroup>
         </FormControl>
       </Stack>
-      {sizeMode !== SizeMode.Original && dimensionMode === '2D' && (
+      {((sizeMode !== SizeMode.Original && dimensionMode === '2D') ||
+        sizeMode === SizeMode.Pixel) && (
         <>
           <Typography variant="subtitle1" component="span">
             Pixel Size ({size})
@@ -142,7 +148,7 @@ export function VehicleLayerProps({
           </Stack>{' '}
         </>
       )}
-      {(dimensionMode === '3D' ||
+      {((dimensionMode === '3D' && sizeMode !== SizeMode.Pixel) ||
         (dimensionMode === '2D' && sizeMode === SizeMode.Original)) && (
         <>
           <Typography variant="subtitle1" component="span">

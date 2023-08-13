@@ -1,3 +1,4 @@
+import { SizeMode } from '@belom88/vehicle-layer';
 import { TEST_CASES } from '../../constants/test-cases';
 import { createStoreWith } from '../../utils/test-utils';
 import { setTestCase, testCasesReducer } from './test-cases.slice';
@@ -50,9 +51,32 @@ describe('testCases reducer', () => {
       expect.objectContaining({
         vehiclesCountValue: 5000,
         animated: true,
+        sizeMode: SizeMode.Original,
         scale: 1,
         vehiclesCountMinMax: [10, 10000],
         dimensionMode: '3D',
+      })
+    );
+  });
+
+  it('should set `sizeMode` and `size`', async () => {
+    const store = createStoreWith({});
+    await store.dispatch(setTestCase(TEST_CASES[2]));
+    const { testCases, layerProps } = store.getState();
+    expect(testCases).toEqual(
+      expect.objectContaining({
+        selectedTestCase: TEST_CASES[2],
+      })
+    );
+    expect(layerProps).toEqual(
+      expect.objectContaining({
+        vehiclesCountValue: 10000,
+        animated: true,
+        sizeMode: SizeMode.Combined,
+        size: 70,
+        scale: 1,
+        vehiclesCountMinMax: [10, 10000],
+        dimensionMode: '2D',
       })
     );
   });
