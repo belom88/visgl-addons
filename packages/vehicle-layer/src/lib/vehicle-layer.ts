@@ -90,6 +90,20 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     return bearing;
   }
 
+  private get commonProperties() {
+    return {
+      pickable: this.props.pickable,
+      onHover: this.props.onHover,
+      onClick: this.props.onClick,
+      onDragStart: this.props.onDragStart,
+      onDrag: this.props.onDrag,
+      onDragEnd: this.props.onDragEnd,
+      highlightColor: this.props.highlightColor,
+      highlightedObjectIndex: this.props.highlightedObjectIndex,
+      autoHighlight: this.props.autoHighlight,
+    };
+  }
+
   private getVehicleTypeScenegraphLayer(
     vehicleType: VehicleType,
     data: TProps[]
@@ -135,6 +149,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       updateTriggers: {
         ...this.props.updateTriggers,
       },
+      ...this.commonProperties,
     });
   }
 
@@ -174,6 +189,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         ...this.props.updateTriggers,
         getAngle: [viewportBearing],
       },
+      ...this.commonProperties,
     });
   }
 
@@ -210,6 +226,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         updateTriggers: {
           ...this.props.updateTriggers,
         },
+        ...this.commonProperties,
       }),
       new IconLayer({
         id: `${this.props.id}-arrow-icon-foreground`,
@@ -243,6 +260,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         updateTriggers: {
           ...this.props.updateTriggers,
         },
+        ...this.commonProperties,
       }),
     ];
   }
