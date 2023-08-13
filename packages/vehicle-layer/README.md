@@ -70,10 +70,20 @@ The compatibility table mentions deck.gl version that was used to build the spec
 
 Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can be imported to define vehicle types in a human readable way.
 
-| VehicleType | Code |
-| ----------- | ---- |
-| TransitBus  | 0    |
-| Tram        | 1    |
+| VehicleType  | Code |
+| ------------ | ---- |
+| `TransitBus` | `0`  |
+| `Tram`       | `1`  |
+
+## Size modes
+
+Size mode is a number that encodes a way to set size of vehicles. `SizeMode` enum can be imported to define size mode in a human readable way.
+
+| SizeMode   | Code | Description                                                                                                                                                   |
+| ---------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Original` | `0`  | `3D` - get original size of 3D model. `2D` - icon size is set in meters and multiplied by 5. The size might be scaled with `sizeScale` property.              |
+| `Pixel`    | `1`  | `3D` - size of vehicle is rescaled to be approximately equal to the `size` in pixels. `2D` - icon size is set in pixels. The size is set with `size` property |
+| `Combined` | `2`  | `3D` - `Original` size mode behavior, `2D` - `Pixel` size mode behavior                                                                                       |
 
 ## Properties
 
@@ -93,13 +103,29 @@ _default_: '3D'
 
 _description_: In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models.
 
+### sizeMode
+
+_type_: SizeMode
+
+_default_: SizeMode.Original
+
+_description_: Change the way to set size of vehicles.
+
+### size
+
+_type_: number
+
+_default_: 20
+
+_description_: Pixel size of vehicles. This property is active when `sizeMode` property is set to `Pixel` or `dimensionMode` is set to `2D` and `sizeMode` is set to `Combined`.
+
 ### sizeScale
 
 _type_: number
 
 _default_: 1
 
-_description_: For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied by 5.
+_description_: For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied by 5. This property is active when `sizeMode` property is set to `Original` or `dimensionMode` is set to `3D` and `sizeMode` is set to `Combined`
 
 ### getBearing
 
