@@ -3,16 +3,18 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { GoogleMapsOverlay as DeckOverlay } from '@deck.gl/google-maps/typed';
 import { Vehicle } from '../../utils/vehicles-utils';
 import { StyledMapContainer } from '../common-styled';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import {
   selectAllColors,
   selectDimensionMode,
+  selectPickableState,
   selectScale,
   selectSize,
   selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
+import { appActions } from '../../redux/slices/app.slice';
 
 const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
@@ -33,6 +35,7 @@ export function GoogleMapsWrapper({
   vehicles,
   interleaved = false,
 }: GoogleMapsWrapperProps) {
+  const dispatch = useAppDispatch();
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
   const { longitude, latitude, zoom, pitch, bearing } =
@@ -41,6 +44,7 @@ export function GoogleMapsWrapper({
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
+  const pickableState = useAppSelector(selectPickableState);
   const colors = useAppSelector(selectAllColors);
 
   const overlay = useMemo(
@@ -59,12 +63,27 @@ export function GoogleMapsWrapper({
       size,
       vehicleScale,
       dimensionMode,
+      pickableState,
+      (pickingInfo) => {
+        dispatch(appActions.setPickingData(pickingInfo.object));
+        return true;
+      },
       ...colors
     );
     overlay.setProps({
       layers: [layer],
     });
-  }, [vehicles, overlay, sizeMode, size, vehicleScale, dimensionMode, colors]);
+  }, [
+    vehicles,
+    overlay,
+    sizeMode,
+    size,
+    vehicleScale,
+    dimensionMode,
+    pickableState,
+    dispatch,
+    colors,
+  ]);
 
   useEffect(() => {
     if (map) {

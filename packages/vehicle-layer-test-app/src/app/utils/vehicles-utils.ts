@@ -29,6 +29,19 @@ export type Vehicle = {
   bearing: number;
   /** Vehicle type */
   vehilceType?: VehicleType;
+
+  /** Route short name */
+  routeShortName: string;
+  /** Route long name */
+  routeLongName: string;
+  /** Route description */
+  routeDesc: string;
+  /** Route type */
+  routeType: string;
+  /** Route color */
+  routeColor: string;
+  /** Route text color */
+  routeTextColor: string;
 };
 
 const scratchVector = new Vector3();
@@ -145,12 +158,24 @@ export const createAnfieldVehicles = (): Vehicle[] => {
       longitude: -2.9577037905967574,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.TransitBus,
+      routeShortName: 'N/A',
+      routeLongName: 'N/A',
+      routeDesc: 'N/A',
+      routeType: 'N/A',
+      routeColor: '#AAA',
+      routeTextColor: '000',
     },
     {
       latitude: 53.431755073582494,
       longitude: -2.9578708705967136,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.Tram,
+      routeShortName: 'N/A',
+      routeLongName: 'N/A',
+      routeDesc: 'N/A',
+      routeType: 'N/A',
+      routeColor: '#AAA',
+      routeTextColor: '000',
     },
   ];
 };
@@ -209,10 +234,26 @@ export const animateVehicles = (
       distanceCovered
     );
     const bearing = calculateBearing(startPosition, endPosition);
+    const {
+      routeShortName,
+      routeLongName,
+      routeDesc,
+      routeType,
+      routeColor,
+      routeTextColor,
+    } = route.properties;
     result.push({
       longitude: position[0],
       latitude: position[1],
       bearing,
+      vehilceType:
+        routeType === '0' ? VehicleType.Tram : VehicleType.TransitBus,
+      routeShortName,
+      routeLongName,
+      routeDesc,
+      routeType,
+      routeColor,
+      routeTextColor,
     });
   }
   return result;

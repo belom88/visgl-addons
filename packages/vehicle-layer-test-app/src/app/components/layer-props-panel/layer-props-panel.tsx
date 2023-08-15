@@ -5,6 +5,7 @@ import {
   layerPropsActions,
   selectAnimationState,
   selectDimensionMode,
+  selectPickableState,
   selectScale,
   selectSize,
   selectSizeMode,
@@ -31,6 +32,12 @@ const StyledContainer = styled(Box)`
 const StyledMainPaper = styled(Paper)`
   padding: ${({ theme }) => theme.spacing(1)};
   textalign: 'center';
+`;
+
+const StyledContentContainer = styled(Box)`
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  padding: 0 1em;
 `;
 
 const rgbToHex = (rgb?: [number, number, number]): string => {
@@ -60,6 +67,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
+  const pickableState = useAppSelector(selectPickableState);
   const dimensionMode = useAppSelector(selectDimensionMode);
 
   const vehicleCommonColor = useAppSelector((state) =>
@@ -131,41 +139,47 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
             <Tab label="Anfield" value={UseCaseId.ANFIELD} {...a11yProps(1)} />
           </Tabs>
         </Box>
-        {useCase === UseCaseId.SF_TRANSIT && (
-          <SceneProps
-            animationState={animationState}
-            vehiclesCount={vehiclesCount}
-            vehiclesCountMin={vehiclesCountMin}
-            vehiclesCountMax={vehiclesCountMax}
-            onAnimationStateChange={() =>
-              dispatch(layerPropsActions.toggleAnimation())
+        <StyledContentContainer>
+          {useCase === UseCaseId.SF_TRANSIT && (
+            <SceneProps
+              animationState={animationState}
+              pickableState={pickableState}
+              vehiclesCount={vehiclesCount}
+              vehiclesCountMin={vehiclesCountMin}
+              vehiclesCountMax={vehiclesCountMax}
+              onAnimationStateChange={() =>
+                dispatch(layerPropsActions.toggleAnimation())
+              }
+              onPickingChange={() =>
+                dispatch(layerPropsActions.togglePicking())
+              }
+              onVehiclesCountChange={onVehiclesCountChange}
+            />
+          )}
+          <VehicleLayerProps
+            sizeMode={sizeMode}
+            size={size}
+            vehicleScale={vehicleScale}
+            dimensionMode={dimensionMode}
+            commonHexColor={commonHexColor}
+            d3HexColor={d3HexColor}
+            d2ForegroundHexColor={d2ForegroundHexColor}
+            d2BackgroundHexColor={d2BackgroundHexColor}
+            onSizeModeChange={(result: SizeMode) =>
+              dispatch(layerPropsActions.setSizeMode(result))
             }
-            onVehiclesCountChange={onVehiclesCountChange}
+            onSizeChange={(value: number) =>
+              dispatch(layerPropsActions.setSize(value))
+            }
+            onScaleChange={(value: number) =>
+              dispatch(layerPropsActions.setScale(value))
+            }
+            onDimensionModeChange={() =>
+              dispatch(layerPropsActions.toggleDimensionMode())
+            }
+            onColorChange={onColorChangeHandler}
           />
-        )}
-        <VehicleLayerProps
-          sizeMode={sizeMode}
-          size={size}
-          vehicleScale={vehicleScale}
-          dimensionMode={dimensionMode}
-          commonHexColor={commonHexColor}
-          d3HexColor={d3HexColor}
-          d2ForegroundHexColor={d2ForegroundHexColor}
-          d2BackgroundHexColor={d2BackgroundHexColor}
-          onSizeModeChange={(result: SizeMode) =>
-            dispatch(layerPropsActions.setSizeMode(result))
-          }
-          onSizeChange={(value: number) =>
-            dispatch(layerPropsActions.setSize(value))
-          }
-          onScaleChange={(value: number) =>
-            dispatch(layerPropsActions.setScale(value))
-          }
-          onDimensionModeChange={() =>
-            dispatch(layerPropsActions.toggleDimensionMode())
-          }
-          onColorChange={onColorChangeHandler}
-        />
+        </StyledContentContainer>
       </StyledMainPaper>
     </StyledContainer>
   );

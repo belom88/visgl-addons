@@ -13,6 +13,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountValue: 2000,
   vehiclesCountMinMax: [10, 10000],
   animated: true,
+  pickable: false,
   sizeMode: SizeMode.Original,
   size: 20,
   scale: 1,
@@ -38,6 +39,12 @@ export const layerPropsSlice = createSlice({
     },
     setAnimation: (state: LayerPropsState, action: PayloadAction<boolean>) => {
       setAnimation(state, action.payload);
+    },
+    togglePicking: (state: LayerPropsState) => {
+      state.pickable = !state.pickable;
+    },
+    setPicking: (state: LayerPropsState, action: PayloadAction<boolean>) => {
+      state.pickable = action.payload;
     },
     setSizeMode: (state: LayerPropsState, action: PayloadAction<SizeMode>) => {
       state.sizeMode = action.payload;
@@ -121,6 +128,10 @@ export const selectVehiclesCountMinMax = createSelector(
 );
 export const selectAnimationState = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].animated,
+  (result) => result
+);
+export const selectPickableState = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].pickable,
   (result) => result
 );
 export const selectSizeMode = createSelector(

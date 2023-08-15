@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { BaseMapMode, BaseMapProvider, PopoverId } from '../../types';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
+import { Vehicle } from '../../utils/vehicles-utils';
 
 export const APP_FEATURE_KEY = 'app';
 
@@ -10,6 +11,7 @@ export interface AppState {
   baseMapMode: BaseMapMode;
   fps: number;
   openedPopoverId: null | PopoverId;
+  pickingData: null | Vehicle;
 }
 
 export const initialState: AppState = {
@@ -17,6 +19,7 @@ export const initialState: AppState = {
   baseMapMode: BaseMapMode.OVERLAID,
   fps: 60,
   openedPopoverId: null,
+  pickingData: null,
 };
 
 export const appSlice = createSlice({
@@ -37,6 +40,13 @@ export const appSlice = createSlice({
     },
     resetFps: (state: AppState) => {
       state.fps = 60;
+    },
+    setPickingData: (state: AppState, action: PayloadAction<Vehicle>) => {
+      console.log(action.payload);
+      state.pickingData = action.payload;
+    },
+    resetPickingData: (state: AppState) => {
+      state.pickingData = null;
     },
     setOpenedPopoverId: (state: AppState, action: PayloadAction<PopoverId>) => {
       state.openedPopoverId = action.payload;
@@ -84,6 +94,11 @@ export const selectBaseMapMode = createSelector(
 
 export const selectFps = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].fps,
+  (result) => result
+);
+
+export const selectPikckingData = createSelector(
+  (state: RootState) => state[APP_FEATURE_KEY].pickingData,
   (result) => result
 );
 

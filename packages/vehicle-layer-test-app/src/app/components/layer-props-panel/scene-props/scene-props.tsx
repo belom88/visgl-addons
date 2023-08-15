@@ -10,19 +10,23 @@ import {
 /* eslint-disable-next-line */
 export interface ScenePropsProps {
   animationState: boolean;
+  pickableState: boolean;
   vehiclesCount: number;
   vehiclesCountMin: number;
   vehiclesCountMax: number;
   onAnimationStateChange: () => void;
+  onPickingChange: () => void;
   onVehiclesCountChange: (e: Event, newValue: number | number[]) => void;
 }
 
 export function SceneProps({
   animationState,
+  pickableState,
   vehiclesCount,
   vehiclesCountMin,
   vehiclesCountMax,
   onAnimationStateChange,
+  onPickingChange,
   onVehiclesCountChange,
 }: ScenePropsProps) {
   return (
@@ -40,6 +44,14 @@ export function SceneProps({
             />
           }
           label="Animation"
+        />
+      </Stack>
+      <Stack spacing={2} direction="row" alignItems={'center'}>
+        <FormControlLabel
+          control={
+            <Switch checked={pickableState} onChange={onPickingChange} />
+          }
+          label="Picking"
         />
       </Stack>
       <Typography variant="subtitle1" component="span">

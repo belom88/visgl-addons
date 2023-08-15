@@ -3,17 +3,19 @@ import type { Map as MapboxMap } from 'react-map-gl';
 import { DeckGL } from '@deck.gl/react/typed';
 
 import { Vehicle } from '../../utils/vehicles-utils';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
 import { StyledMapContainer } from '../common-styled';
 import {
   selectAllColors,
   selectDimensionMode,
+  selectPickableState,
   selectScale,
   selectSize,
   selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
+import { appActions } from '../../redux/slices/app.slice';
 
 /* eslint-disable-next-line */
 export interface DeckglWrapperProps {
@@ -29,12 +31,14 @@ export function DeckglWrapper({
   mapboxAccessToken,
   mapStyle = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 }: DeckglWrapperProps) {
+  const dispatch = useAppDispatch();
   const viewState = useAppSelector(selectMapState);
   const sizeMode = useAppSelector(selectSizeMode);
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
+  const pickableState = useAppSelector(selectPickableState);
 
   const getLayer = () =>
     renderVehicleLayer(
@@ -43,6 +47,11 @@ export function DeckglWrapper({
       size,
       vehicleScale,
       dimensionMode,
+      pickableState,
+      (pickingInfo) => {
+        dispatch(appActions.setPickingData(pickingInfo.object));
+        return true;
+      },
       ...colors
     );
 
