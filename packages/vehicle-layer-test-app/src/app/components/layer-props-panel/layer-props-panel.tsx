@@ -20,19 +20,7 @@ import VehicleLayerProps from './vehicle-layer-props/vehicle-layer-props';
 import { PopoverId, UseCaseId } from '../../types';
 import * as d3 from 'd3';
 import { SizeMode } from '@belom88/vehicle-layer';
-
-const StyledContainer = styled(Box)`
-  bottom: 1.5em;
-  right: 0.5em;
-  width: 40rem;
-  position: absolute;
-  z-index: 1;
-`;
-
-const StyledMainPaper = styled(Paper)`
-  padding: ${({ theme }) => theme.spacing(1)};
-  textalign: 'center';
-`;
+import { StyledBottomRightContainer, StyledMainPaper } from '../common-styled';
 
 const StyledContentContainer = styled(Box)`
   max-height: calc(100vh - 200px);
@@ -127,7 +115,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   };
 
   return (
-    <StyledContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
+    <StyledBottomRightContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
       <StyledMainPaper elevation={2}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
@@ -181,7 +169,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
           />
         </StyledContentContainer>
       </StyledMainPaper>
-    </StyledContainer>
+    </StyledBottomRightContainer>
   );
 }
 
