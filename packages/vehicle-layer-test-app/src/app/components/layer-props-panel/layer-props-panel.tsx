@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Box, Paper, Tab, Tabs, styled } from '@mui/material';
+import { Box, Tab, Tabs, styled } from '@mui/material';
 
 import {
   layerPropsActions,
