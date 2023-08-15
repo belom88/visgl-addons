@@ -2,6 +2,7 @@ import { MapboxLayer } from '@deck.gl/mapbox/typed';
 import { DimensionMode, VehicleLayer } from '@belom88/vehicle-layer';
 import { Vehicle } from './vehicles-utils';
 import { SizeMode, VehicleType } from 'packages/vehicle-layer/src/types';
+import { PickingInfo } from '@deck.gl/core/typed';
 
 /**
  * Render VehicleLayer
@@ -16,6 +17,8 @@ export const renderVehicleLayer = (
   size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,
+  pickable: boolean,
+  onClick: (info: PickingInfo) => boolean,
   commonColor?: [number, number, number],
   foregroundColor2d?: [number, number, number],
   backgroundColor2d?: [number, number, number],
@@ -34,6 +37,8 @@ export const renderVehicleLayer = (
     size,
     sizeScale: vehicleScale,
     dimensionMode,
+    pickable,
+    onClick,
     updateTriggers: {
       sizeScale: [vehicleScale],
     },
@@ -49,6 +54,8 @@ export const getMapboxLayer = (
   size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,
+  pickable: boolean,
+  onClick: (info: PickingInfo) => boolean,
   commonColor?: [number, number, number],
   foregroundColor2d?: [number, number, number],
   backgroundColor2d?: [number, number, number],
@@ -65,6 +72,8 @@ export const getMapboxLayer = (
     size,
     sizeScale: vehicleScale,
     dimensionMode,
+    pickable,
+    onClick,
     getColor: commonColor,
     get2dForegroundColor: foregroundColor2d,
     get2dBackgroundColor: backgroundColor2d,

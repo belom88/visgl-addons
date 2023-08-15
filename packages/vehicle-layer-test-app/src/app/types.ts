@@ -33,6 +33,8 @@ export interface LayerPropsEdited {
   vehiclesCountMinMax: [number, number];
   /** Is animation switched on */
   animated: boolean;
+  /** Is picking of vehicles enabled */
+  pickable: boolean;
 
   // Vehicle properties
   /** A way to define vehicles size */

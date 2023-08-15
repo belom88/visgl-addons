@@ -4,15 +4,17 @@ import { Vehicle } from '../../utils/vehicles-utils';
 import { useMapbox } from '../../hooks/use-mapbox-hook/use-mapbox-hook';
 import { StyledMapContainer } from '../common-styled';
 import { BaseMapProviderId } from '../../constants/base-map-providers';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectAllColors,
   selectDimensionMode,
+  selectPickableState,
   selectScale,
   selectSize,
   selectSizeMode,
 } from '../../redux/slices/layer-props.slice';
 import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
+import { appActions } from '../../redux/slices/app.slice';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
@@ -40,12 +42,14 @@ export function InterleavedMap({
   baseMapProviderId,
   mapStyle,
 }: InterleavedMapProps) {
+  const dispatch = useAppDispatch();
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
   const sizeMode = useAppSelector(selectSizeMode);
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
+  const pickableState = useAppSelector(selectPickableState);
   const colors = useAppSelector(selectAllColors);
 
   useEffect(() => {
@@ -70,6 +74,11 @@ export function InterleavedMap({
         size,
         vehicleScale,
         dimensionMode,
+        pickableState,
+        (pickingInfo) => {
+          dispatch(appActions.setPickingData(pickingInfo.object));
+          return true;
+        },
         commonColor,
         foregroundColor2d,
         backgroundColor2d,
