@@ -32,6 +32,7 @@ describe('app reducer', () => {
       baseMapMode: BaseMapMode.OVERLAID,
       fps: 60,
       openedPopoverId: null,
+      pickingData: null,
     };
     expect(appReducer(undefined, { type: '' })).toEqual(expected);
   });

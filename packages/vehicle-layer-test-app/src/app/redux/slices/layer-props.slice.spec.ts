@@ -6,6 +6,7 @@ import {
 } from './layer-props.slice';
 import { createStoreWith } from '../../utils/test-utils';
 import { UseCaseId } from '../../types';
+import { SizeMode } from '@belom88/vehicle-layer';
 
 vi.mock('@deck.gl/core', () => {
   const CompositeLayer = vi.fn();
@@ -29,6 +30,7 @@ describe('layerProps reducer', () => {
       vehiclesCountValue: 2000,
       vehiclesCountMinMax: [10, 10000],
       animated: true,
+      pickable: false,
       size: 20,
       sizeMode: 0,
       scale: 1,
@@ -46,6 +48,7 @@ describe('layerProps reducer', () => {
       expect.objectContaining({
         vehiclesCountValue: 5001,
         animated: true,
+        pickable: false,
         scale: 1,
         vehiclesCountMinMax: [10, 10000],
         dimensionMode: '3D',
@@ -60,6 +63,9 @@ describe('layerProps reducer', () => {
         vehiclesCountValue: 5005,
         vehiclesCountMinMax: [100, 1000],
         animated: true,
+        pickable: false,
+        sizeMode: SizeMode.Original,
+        size: 20,
         scale: 1,
         dimensionMode: '3D',
       },

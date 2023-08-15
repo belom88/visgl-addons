@@ -52,6 +52,13 @@ describe('utils/vehicles-utils', () => {
           bearing: 76.46523999104141,
           latitude: 37.79544914424243,
           longitude: -122.39689889903744,
+          routeColor: '005B95',
+          routeDesc: '5am-12 midnight daily',
+          routeLongName: 'CALIFORNIA',
+          routeShortName: '1',
+          routeTextColor: 'FFFFFF',
+          routeType: '3',
+          vehilceType: 0,
         },
       ]);
     });
