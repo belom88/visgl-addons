@@ -86,7 +86,17 @@ export function InterleavedMap({
       ),
       firstLabelLayerId
     );
-  }, [vehicles, map, sizeMode, size, vehicleScale, dimensionMode, colors]);
+  }, [
+    vehicles,
+    map,
+    sizeMode,
+    size,
+    vehicleScale,
+    dimensionMode,
+    colors,
+    dispatch,
+    pickableState,
+  ]);
 
   return (
     <StyledMapContainer
