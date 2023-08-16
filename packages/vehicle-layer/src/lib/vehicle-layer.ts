@@ -176,6 +176,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         ...this.props.updateTriggers,
         getAngle: [viewportBearing],
       },
+      parameters: {
+        depthTest: false,
+      },
     });
   }
 
@@ -213,6 +216,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         updateTriggers: {
           ...this.props.updateTriggers,
         },
+        parameters: {
+          depthTest: false,
+        },
       }),
       new IconLayer({
         ...this.props,
@@ -246,6 +252,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         billboard: false,
         updateTriggers: {
           ...this.props.updateTriggers,
+        },
+        parameters: {
+          depthTest: false,
         },
       }),
     ];
