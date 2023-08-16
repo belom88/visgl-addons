@@ -144,6 +144,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     data: TProps[],
     viewportBearing: number
   ): IconLayer {
+    const sizeScale =
+      this.props.sizeMode === SizeMode.Original ? this.props.sizeScale : 1;
+
     return new IconLayer({
       ...this.props,
       id: `${this.props.id}-vehilce-icon-${vehicleType}`,
@@ -151,9 +154,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       getPosition: this.props.getPosition,
       getSize:
         this.props.sizeMode === SizeMode.Original
-          ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+          ? VEHICLE_WIDTH
           : this.props.size,
-      sizeScale: 0.4,
+      sizeScale: 0.4 * sizeScale,
       sizeUnits:
         this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
       iconAtlas: VEHILCE_TYPE_URLS[vehicleType].icon,
@@ -183,6 +186,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
   }
 
   private get2DArrowLayers(): IconLayer[] {
+    const sizeScale =
+      this.props.sizeMode === SizeMode.Original ? this.props.sizeScale : 1;
     return [
       new IconLayer({
         ...this.props,
@@ -191,8 +196,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         getPosition: this.props.getPosition,
         getSize:
           this.props.sizeMode === SizeMode.Original
-            ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+            ? VEHICLE_WIDTH
             : this.props.size,
+        sizeScale,
         sizeUnits:
           this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
@@ -227,8 +233,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         getPosition: this.props.getPosition,
         getSize:
           this.props.sizeMode === SizeMode.Original
-            ? (this.props.sizeScale || 1) * VEHICLE_WIDTH
+            ? VEHICLE_WIDTH
             : this.props.size,
+        sizeScale,
         sizeUnits:
           this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
