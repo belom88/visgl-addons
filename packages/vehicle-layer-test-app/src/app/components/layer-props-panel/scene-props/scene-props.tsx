@@ -11,22 +11,26 @@ import {
 export interface ScenePropsProps {
   animationState: boolean;
   pickableState: boolean;
+  terrainState: boolean;
   vehiclesCount: number;
   vehiclesCountMin: number;
   vehiclesCountMax: number;
   onAnimationStateChange: () => void;
   onPickingChange: () => void;
+  onTerrainStateChange: () => void;
   onVehiclesCountChange: (e: Event, newValue: number | number[]) => void;
 }
 
 export function SceneProps({
   animationState,
   pickableState,
+  terrainState,
   vehiclesCount,
   vehiclesCountMin,
   vehiclesCountMax,
   onAnimationStateChange,
   onPickingChange,
+  onTerrainStateChange,
   onVehiclesCountChange,
 }: ScenePropsProps) {
   return (
@@ -52,6 +56,14 @@ export function SceneProps({
             <Switch checked={pickableState} onChange={onPickingChange} />
           }
           label="Picking"
+        />
+      </Stack>
+      <Stack spacing={2} direction="row" alignItems={'center'}>
+        <FormControlLabel
+          control={
+            <Switch checked={terrainState} onChange={onTerrainStateChange} />
+          }
+          label="Terrain"
         />
       </Stack>
       <Typography variant="subtitle1" component="span">

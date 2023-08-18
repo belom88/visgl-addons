@@ -35,6 +35,8 @@ export interface LayerPropsEdited {
   animated: boolean;
   /** Is picking of vehicles enabled */
   pickable: boolean;
+  /** Add terrain if possible */
+  terrain: boolean;
 
   // Vehicle properties
   /** A way to define vehicles size */

@@ -9,6 +9,7 @@ import {
   selectScale,
   selectSize,
   selectSizeMode,
+  selectTerrainState,
   selectUseCase,
   selectVehicleColor,
   selectVehiclesCountMinMax,
@@ -56,6 +57,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const vehicleScale = useAppSelector(selectScale);
   const animationState = useAppSelector(selectAnimationState);
   const pickableState = useAppSelector(selectPickableState);
+  const terrainState = useAppSelector(selectTerrainState);
   const dimensionMode = useAppSelector(selectDimensionMode);
 
   const vehicleCommonColor = useAppSelector((state) =>
@@ -132,6 +134,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
             <SceneProps
               animationState={animationState}
               pickableState={pickableState}
+              terrainState={terrainState}
               vehiclesCount={vehiclesCount}
               vehiclesCountMin={vehiclesCountMin}
               vehiclesCountMax={vehiclesCountMax}
@@ -140,6 +143,9 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
               }
               onPickingChange={() =>
                 dispatch(layerPropsActions.togglePicking())
+              }
+              onTerrainStateChange={() =>
+                dispatch(layerPropsActions.toggleTerrain())
               }
               onVehiclesCountChange={onVehiclesCountChange}
             />
