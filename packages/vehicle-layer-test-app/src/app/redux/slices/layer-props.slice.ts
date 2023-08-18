@@ -14,7 +14,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountMinMax: [10, 10000],
   animated: true,
   pickable: false,
-  terrain: false,
+  terrain: true,
   sizeMode: SizeMode.Original,
   size: 20,
   scale: 1,

@@ -22,7 +22,7 @@ export type GeojsonRoute = FeatureCollection<LineString, GeojsonRouteProperties>
 
 export const loadRoutes = async (): Promise<GeojsonRouteFeature[]> => {
   const routesJson: GeojsonRoute = await load(
-    '/sf_routes.geojson',
+    '/sf_routes_3d.geojson',
     _GeoJSONLoader
   );
   return routesJson.features;

@@ -25,6 +25,8 @@ export type Vehicle = {
   latitude: number;
   /** Longitude coordinate in decimal degrees */
   longitude: number;
+  /** Elevation of the vehicle */
+  elevation: number;
   /** Bearing, angle between north direction and vehicle direction */
   bearing: number;
   /** Vehicle type */
@@ -83,8 +85,10 @@ const getPositionBetween = (
   end: number[],
   distanceCovered: number
 ): number[] => {
-  Ellipsoid.WGS84.cartographicToCartesian([...start, 0], scratchVector);
-  Ellipsoid.WGS84.cartographicToCartesian([...end, 0], scratchVector2);
+  const start3d = start.length === 3 ? start : [...start, 0];
+  const end3d = end.length === 3 ? end : [...end, 0];
+  Ellipsoid.WGS84.cartographicToCartesian(start3d, scratchVector);
+  Ellipsoid.WGS84.cartographicToCartesian([...end3d, 0], scratchVector2);
   scratchVector2.subtract(scratchVector);
   scratchVector2.normalize().scale(distanceCovered * METERS_PER_MILE);
   scratchVector.add(scratchVector2);
@@ -156,6 +160,7 @@ export const createAnfieldVehicles = (): Vehicle[] => {
     {
       latitude: 53.43185529968051,
       longitude: -2.9577037905967574,
+      elevation: 0,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.TransitBus,
       routeShortName: 'N/A',
@@ -168,6 +173,7 @@ export const createAnfieldVehicles = (): Vehicle[] => {
     {
       latitude: 53.431755073582494,
       longitude: -2.9578708705967136,
+      elevation: 0,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.Tram,
       routeShortName: 'N/A',
@@ -245,6 +251,7 @@ export const animateVehicles = (
     result.push({
       longitude: position[0],
       latitude: position[1],
+      elevation: position[2],
       bearing,
       vehilceType:
         routeType === '0' ? VehicleType.Tram : VehicleType.TransitBus,
