@@ -60,7 +60,9 @@ export function SceneProps({
       </Stack>
       <Stack spacing={2} direction="row" alignItems={'center'}>
         <FormControlLabel
-          control={<Switch checked={terrainState} onChange={onTerrainStateChange} />}
+          control={
+            <Switch checked={terrainState} onChange={onTerrainStateChange} />
+          }
           label="Terrain"
         />
       </Stack>
