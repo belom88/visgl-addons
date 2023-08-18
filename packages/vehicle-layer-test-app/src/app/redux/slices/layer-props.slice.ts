@@ -14,6 +14,7 @@ export const initialLayerPropsState: LayerPropsState = {
   vehiclesCountMinMax: [10, 10000],
   animated: true,
   pickable: false,
+  terrain: false,
   sizeMode: SizeMode.Original,
   size: 20,
   scale: 1,
@@ -45,6 +46,12 @@ export const layerPropsSlice = createSlice({
     },
     setPicking: (state: LayerPropsState, action: PayloadAction<boolean>) => {
       state.pickable = action.payload;
+    },
+    toggleTerrain: (state: LayerPropsState) => {
+      state.terrain = !state.terrain;
+    },
+    setTerrain: (state: LayerPropsState, action: PayloadAction<boolean>) => {
+      state.terrain = action.payload;
     },
     setSizeMode: (state: LayerPropsState, action: PayloadAction<SizeMode>) => {
       state.sizeMode = action.payload;
@@ -132,6 +139,10 @@ export const selectAnimationState = createSelector(
 );
 export const selectPickableState = createSelector(
   (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].pickable,
+  (result) => result
+);
+export const selectTerrainState = createSelector(
+  (state: RootState) => state[LAYER_PROPS_FEATURE_KEY].terrain,
   (result) => result
 );
 export const selectSizeMode = createSelector(
