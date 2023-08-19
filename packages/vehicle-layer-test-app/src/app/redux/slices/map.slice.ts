@@ -11,6 +11,7 @@ export interface MapState {
   maxZoom: number;
   bearing: number;
   pitch: number;
+  position: number[];
 }
 
 export const initialMapState: MapState = initialViewState;

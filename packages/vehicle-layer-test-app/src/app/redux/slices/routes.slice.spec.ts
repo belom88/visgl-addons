@@ -1,6 +1,12 @@
 import { RequestStatus } from '../../types';
 import { ROUTE_STUB } from '../../utils/test-utils';
-import { getRoutes, routesAdapter, routesReducer } from './routes.slice';
+import {
+  getRoutes,
+  getRoutes2d,
+  routes2dAdapter,
+  routes3dAdapter,
+  routesReducer,
+} from './routes.slice';
 
 vi.mock('@deck.gl/core', () => {
   const CompositeLayer = vi.fn();
@@ -19,18 +25,25 @@ vi.mock('@deck.gl/mesh-layers', () => {
 
 describe('routes reducer', () => {
   it('should handle initial state', () => {
-    const expected = routesAdapter.getInitialState({
+    const expected2d = routes2dAdapter.getInitialState({
+      loadingStatus: RequestStatus.IDLE,
+      error: null,
+    });
+    const expected3d = routes3dAdapter.getInitialState({
       loadingStatus: RequestStatus.IDLE,
       error: null,
     });
 
-    expect(routesReducer(undefined, { type: '' })).toEqual(expected);
+    expect(routesReducer(undefined, { type: '' })).toEqual({
+      routes2d: expected2d,
+      routes3d: expected3d,
+    });
   });
 
   it('should handle getRoutes', () => {
-    let state = routesReducer(undefined, getRoutes.pending(''));
+    let state = routesReducer(undefined, getRoutes2d.pending(''));
 
-    expect(state).toEqual(
+    expect(state.routes2d).toEqual(
       expect.objectContaining({
         loadingStatus: RequestStatus.LOADING,
         error: null,
@@ -39,9 +52,9 @@ describe('routes reducer', () => {
       })
     );
 
-    state = routesReducer(state, getRoutes.fulfilled([ROUTE_STUB], ''));
+    state = routesReducer(state, getRoutes2d.fulfilled([ROUTE_STUB], ''));
 
-    expect(state).toEqual(
+    expect(state.routes2d).toEqual(
       expect.objectContaining({
         loadingStatus: RequestStatus.SUCCEDED,
         error: null,
@@ -49,9 +62,9 @@ describe('routes reducer', () => {
       })
     );
 
-    state = routesReducer(state, getRoutes.rejected(new Error('Uh oh'), ''));
+    state = routesReducer(state, getRoutes2d.rejected(new Error('Uh oh'), ''));
 
-    expect(state).toEqual(
+    expect(state.routes2d).toEqual(
       expect.objectContaining({
         loadingStatus: RequestStatus.FAILED,
         error: 'Uh oh',

@@ -1,10 +1,17 @@
-import type { Map as MaplibreMap } from 'react-map-gl/maplibre';
-import type { Map as MapboxMap } from 'react-map-gl';
+import {
+  type Map as MaplibreMap,
+  MapRef as MaplibreMapRef,
+} from 'react-map-gl/maplibre';
+import {
+  Source,
+  type Map as MapboxMap,
+  MapRef as MapboxMapRef,
+} from 'react-map-gl';
 import { DeckGL } from '@deck.gl/react/typed';
 
 import { Vehicle } from '../../utils/vehicles-utils';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectMapState } from '../../redux/slices/map.slice';
+import { mapActions, selectMapState } from '../../redux/slices/map.slice';
 import { StyledMapContainer } from '../common-styled';
 import {
   selectAllColors,
@@ -13,9 +20,12 @@ import {
   selectScale,
   selectSize,
   selectSizeMode,
+  selectTerrainState,
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
+import { ViewStateChangeParameters } from '@deck.gl/core/typed/controllers/controller';
+import { useRef } from 'react';
 
 /* eslint-disable-next-line */
 export interface DeckglWrapperProps {
@@ -39,9 +49,24 @@ export function DeckglWrapper({
   const dimensionMode = useAppSelector(selectDimensionMode);
   const colors = useAppSelector(selectAllColors);
   const pickableState = useAppSelector(selectPickableState);
+  const terrainState = useAppSelector(selectTerrainState);
 
-  const getLayer = () =>
-    renderVehicleLayer(
+  const mapRef = useRef<MaplibreMapRef | MapboxMapRef>(null);
+
+  const getLayer = () => {
+    if (terrainState) {
+      for (const vehicle of vehicles) {
+        const mapboxElevation = mapRef.current?.queryTerrainElevation({
+          lng: vehicle.longitude,
+          lat: vehicle.latitude,
+        });
+        if (typeof mapboxElevation === 'number') {
+          vehicle.elevation = mapboxElevation;
+        }
+      }
+    }
+
+    return renderVehicleLayer(
       vehicles,
       sizeMode,
       size,
@@ -54,16 +79,63 @@ export function DeckglWrapper({
       },
       ...colors
     );
+  };
+
+  const onViewStateChangeHandler = ({
+    viewState,
+  }: ViewStateChangeParameters) => {
+    const { latitude, longitude, zoom, bearing, pitch } = viewState;
+    let mapboxElevation = 0;
+    if (terrainState) {
+      const center = mapRef.current?.getCenter();
+      if (center) {
+        const result = mapRef.current?.queryTerrainElevation(center);
+        if (typeof result === 'number') {
+          mapboxElevation = result;
+        }
+      }
+    }
+
+    dispatch(
+      mapActions.setMapState({
+        latitude,
+        longitude,
+        zoom,
+        bearing,
+        pitch,
+        position: [0, 0, mapboxElevation],
+      })
+    );
+  };
 
   return (
     <StyledMapContainer>
       <DeckGL
-        initialViewState={{ ...viewState }}
+        viewState={{ ...viewState }}
+        onViewStateChange={onViewStateChangeHandler}
         controller
         layers={[getLayer()]}
       >
         {Map && (
-          <Map mapboxAccessToken={mapboxAccessToken} mapStyle={mapStyle} />
+          <Map
+            // @ts-expect-error Maplibre & Mapbox types are different
+            ref={mapRef}
+            mapboxAccessToken={mapboxAccessToken}
+            mapStyle={mapStyle}
+            terrain={
+              terrainState
+                ? { source: 'mapbox-dem', exaggeration: 1 }
+                : undefined
+            }
+          >
+            <Source
+              id="mapbox-dem"
+              type="raster-dem"
+              url="mapbox://mapbox.mapbox-terrain-dem-v1"
+              tileSize={512}
+              maxzoom={14}
+            />
+          </Map>
         )}
       </DeckGL>
     </StyledMapContainer>

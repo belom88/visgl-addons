@@ -69,6 +69,12 @@ export const useMapbox = (
     isLoadingRef.current = true;
 
     newMap.on('style.load', () => {
+      newMap.addSource('mapbox-dem', {
+        type: 'raster-dem',
+        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+        tileSize: 512,
+        maxzoom: 14,
+      });
       setMap(newMap);
     });
   }, [

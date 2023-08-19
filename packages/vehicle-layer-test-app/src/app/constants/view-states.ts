@@ -17,4 +17,5 @@ export const anfieldViewState = {
 export const initialViewState = {
   ...sfViewState,
   maxZoom: 25,
+  position: [0, 0, 0],
 };

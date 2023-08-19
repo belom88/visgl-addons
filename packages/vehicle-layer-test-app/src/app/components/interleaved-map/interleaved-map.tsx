@@ -12,6 +12,7 @@ import {
   selectScale,
   selectSize,
   selectSizeMode,
+  selectTerrainState,
 } from '../../redux/slices/layer-props.slice';
 import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
@@ -50,7 +51,20 @@ export function InterleavedMap({
   const vehicleScale = useAppSelector(selectScale);
   const dimensionMode = useAppSelector(selectDimensionMode);
   const pickableState = useAppSelector(selectPickableState);
+  const terrainState = useAppSelector(selectTerrainState);
   const colors = useAppSelector(selectAllColors);
+
+  useEffect(() => {
+    if (!map || baseMapProviderId !== BaseMapProviderId.mapbox2) {
+      return;
+    }
+    if (terrainState) {
+      // add the DEM source as a terrain layer with exaggerated height
+      map.setTerrain({ source: 'mapbox-dem', exaggeration: 1 });
+    } else {
+      map.setTerrain({ source: '' });
+    }
+  }, [map, baseMapProviderId, terrainState]);
 
   useEffect(() => {
     if (!map) {

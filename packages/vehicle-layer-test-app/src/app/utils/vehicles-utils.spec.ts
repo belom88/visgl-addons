@@ -50,6 +50,7 @@ describe('utils/vehicles-utils', () => {
       expect(result).toEqual([
         {
           bearing: 76.46523999104141,
+          elevation: -0.000005098815289905706,
           latitude: 37.79544914424243,
           longitude: -122.39689889903744,
           routeColor: '005B95',

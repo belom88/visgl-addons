@@ -27,7 +27,11 @@ export const renderVehicleLayer = (
   return new VehicleLayer<Vehicle>({
     id: 'transit-model-vehicle-layer',
     data: vehicles,
-    getPosition: (vehicle: Vehicle) => [vehicle.longitude, vehicle.latitude],
+    getPosition: (vehicle: Vehicle) => [
+      vehicle.longitude,
+      vehicle.latitude,
+      vehicle.elevation,
+    ],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
     getColor: commonColor,
     get2dForegroundColor: foregroundColor2d,
@@ -66,7 +70,11 @@ export const getMapboxLayer = (
     // @ts-expect-error maplibre and mapbox types are not compatible
     type: VehicleLayer,
     data: vehicles,
-    getPosition: (vehicle: Vehicle) => [vehicle.longitude, vehicle.latitude],
+    getPosition: (vehicle: Vehicle) => [
+      vehicle.longitude,
+      vehicle.latitude,
+      vehicle.elevation,
+    ],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
     sizeMode,
     size,
