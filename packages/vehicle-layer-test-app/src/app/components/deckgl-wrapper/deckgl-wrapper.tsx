@@ -1,5 +1,12 @@
-import { type Map as MaplibreMap } from 'react-map-gl/maplibre';
-import { Source, type Map as MapboxMap, MapRef } from 'react-map-gl';
+import {
+  type Map as MaplibreMap,
+  MapRef as MaplibreMapRef,
+} from 'react-map-gl/maplibre';
+import {
+  Source,
+  type Map as MapboxMap,
+  MapRef as MapboxMapRef,
+} from 'react-map-gl';
 import { DeckGL } from '@deck.gl/react/typed';
 
 import { Vehicle } from '../../utils/vehicles-utils';
@@ -44,7 +51,7 @@ export function DeckglWrapper({
   const pickableState = useAppSelector(selectPickableState);
   const terrainState = useAppSelector(selectTerrainState);
 
-  const mapRef = useRef<MapRef>(null);
+  const mapRef = useRef<MaplibreMapRef | MapboxMapRef>(null);
 
   const getLayer = () => {
     if (terrainState) {
@@ -111,6 +118,7 @@ export function DeckglWrapper({
       >
         {Map && (
           <Map
+            // @ts-expect-error Maplibre & Mapbox types are different
             ref={mapRef}
             mapboxAccessToken={mapboxAccessToken}
             mapStyle={mapStyle}
