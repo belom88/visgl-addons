@@ -18,12 +18,15 @@ export interface GeojsonRouteProperties {
 
 export type GeojsonRouteFeature = Feature<LineString, GeojsonRouteProperties>;
 
-export type GeojsonRoute = FeatureCollection<LineString, GeojsonRouteProperties>;
+export type GeojsonRoute = FeatureCollection<
+  LineString,
+  GeojsonRouteProperties
+>;
 
-export const loadRoutes = async (): Promise<GeojsonRouteFeature[]> => {
-  const routesJson: GeojsonRoute = await load(
-    '/sf_routes_3d.geojson',
-    _GeoJSONLoader
-  );
+const loadRoutes = async (url: string): Promise<GeojsonRouteFeature[]> => {
+  const routesJson: GeojsonRoute = await load(url, _GeoJSONLoader);
   return routesJson.features;
 };
+
+export const loadRoutes2d = () => loadRoutes('/sf_routes.geojson');
+export const loadRoutes3d = () => loadRoutes('/sf_routes_3d.geojson');

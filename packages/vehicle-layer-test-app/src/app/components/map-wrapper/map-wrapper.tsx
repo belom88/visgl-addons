@@ -10,10 +10,14 @@ import ArcgisWrapper from '../arcgis-wrapper/arcgis-wrapper';
 
 import {
   selectAnimationState,
+  selectTerrainState,
   selectUseCase,
   selectVehiclesCountValue,
 } from '../../redux/slices/layer-props.slice';
-import { selectAllRoutes } from '../../redux/slices/routes.slice';
+import {
+  selectAllRoutes2d,
+  selectAllRoutes3d,
+} from '../../redux/slices/routes.slice';
 import { GeojsonRouteFeature } from '../../utils/load-routes';
 import {
   Vehicle,
@@ -49,9 +53,11 @@ export function MapWrapper(props: MapWrapperProps) {
   const animationStateRef = useRef<boolean>(true);
   animationStateRef.current = animationState;
 
-  const routes: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes);
-  const routesRef = useRef<GeojsonRouteFeature[]>(routes);
-  routesRef.current = routes;
+  const terrainState = useAppSelector(selectTerrainState);
+
+  const routes2d: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes2d);
+  const routes3d: GeojsonRouteFeature[] = useAppSelector(selectAllRoutes3d);
+  const routesRef = useRef<GeojsonRouteFeature[]>(routes2d);
 
   const sfVehiclesRef = useRef<SfVehicle[]>([]);
   const anfieldVehiclesRef = useRef<Vehicle[]>(createAnfieldVehicles());
@@ -103,15 +109,33 @@ export function MapWrapper(props: MapWrapperProps) {
     if (!animationStarted.current) {
       animateLayer();
     }
-  }, [routes, animateLayer]);
+  }, [animateLayer]);
+
+  useEffect(() => {
+    if (terrainState) {
+      routesRef.current = routes3d;
+    } else {
+      routesRef.current = routes2d;
+    }
+  }, [routes2d, routes3d, terrainState]);
 
   useEffect(() => {
     if (useCase === UseCaseId.SF_TRANSIT) {
-      sfVehiclesRef.current = createSfVehicles(vehiclesCount, routes);
+      sfVehiclesRef.current = createSfVehicles(
+        vehiclesCount,
+        terrainState ? routes3d : routes2d
+      );
     } else {
       sfVehiclesRef.current = [];
     }
-  }, [vehiclesCount, routes, animationState, useCase]);
+  }, [
+    vehiclesCount,
+    routes2d,
+    routes3d,
+    terrainState,
+    animationState,
+    useCase,
+  ]);
 
   useEffect(() => {
     if (useCase === UseCaseId.SF_TRANSIT) {

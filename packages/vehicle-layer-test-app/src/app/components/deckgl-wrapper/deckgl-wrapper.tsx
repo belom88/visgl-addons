@@ -46,8 +46,20 @@ export function DeckglWrapper({
 
   const mapRef = useRef<MapRef>(null);
 
-  const getLayer = () =>
-    renderVehicleLayer(
+  const getLayer = () => {
+    if (terrainState) {
+      for (const vehicle of vehicles) {
+        const mapboxElevation = mapRef.current?.queryTerrainElevation({
+          lng: vehicle.longitude,
+          lat: vehicle.latitude,
+        });
+        if (typeof mapboxElevation === 'number') {
+          vehicle.elevation = mapboxElevation;
+        }
+      }
+    }
+
+    return renderVehicleLayer(
       vehicles,
       sizeMode,
       size,
@@ -60,17 +72,20 @@ export function DeckglWrapper({
       },
       ...colors
     );
+  };
 
   const onViewStateChangeHandler = ({
     viewState,
   }: ViewStateChangeParameters) => {
     const { latitude, longitude, zoom, bearing, pitch } = viewState;
     let mapboxElevation = 0;
-    const center = mapRef.current?.getCenter();
-    if (center) {
-      const result = mapRef.current?.queryTerrainElevation(center);
-      if (typeof result === 'number') {
-        mapboxElevation = result;
+    if (terrainState) {
+      const center = mapRef.current?.getCenter();
+      if (center) {
+        const result = mapRef.current?.queryTerrainElevation(center);
+        if (typeof result === 'number') {
+          mapboxElevation = result;
+        }
       }
     }
 
@@ -89,7 +104,6 @@ export function DeckglWrapper({
   return (
     <StyledMapContainer>
       <DeckGL
-        // initialViewState={{ ...viewState }}
         viewState={{ ...viewState }}
         onViewStateChange={onViewStateChangeHandler}
         controller

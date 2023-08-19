@@ -31,6 +31,7 @@ describe('map reducer', () => {
       maxZoom: 25,
       bearing: 0,
       pitch: 50,
+      position: [0, 0, 0],
     });
   });
 

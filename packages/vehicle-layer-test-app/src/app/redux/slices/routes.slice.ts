@@ -6,53 +6,88 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import { GeojsonRouteFeature, loadRoutes } from '../../utils/load-routes';
+import {
+  GeojsonRouteFeature,
+  loadRoutes2d,
+  loadRoutes3d,
+} from '../../utils/load-routes';
 import { RequestStatus } from '../../types';
 
 export const ROUTES_FEATURE_KEY = 'routes';
 
-export interface RoutesState extends EntityState<GeojsonRouteFeature> {
+export interface RoutesDimensionState extends EntityState<GeojsonRouteFeature> {
   loadingStatus: RequestStatus;
   error: string | null;
 }
 
-export const routesAdapter = createEntityAdapter<GeojsonRouteFeature>();
+export interface RoutesState {
+  routes2d: RoutesDimensionState;
+  routes3d: RoutesDimensionState;
+}
 
-export const getRoutes = createAsyncThunk(
-  `${ROUTES_FEATURE_KEY}/getRoutes`,
+export const routes2dAdapter = createEntityAdapter<GeojsonRouteFeature>();
+export const routes3dAdapter = createEntityAdapter<GeojsonRouteFeature>();
+
+export const getRoutes2d = createAsyncThunk(
+  `${ROUTES_FEATURE_KEY}/getRoutes2d`,
   async () => {
-    const routes = await loadRoutes();
+    const routes = await loadRoutes2d();
     return routes;
   }
 );
 
-export const initialRoutesState: RoutesState = routesAdapter.getInitialState({
-  loadingStatus: RequestStatus.IDLE,
-  error: null,
-});
+export const getRoutes3d = createAsyncThunk(
+  `${ROUTES_FEATURE_KEY}/getRoutes3d`,
+  async () => {
+    const routes = await loadRoutes3d();
+    return routes;
+  }
+);
+
+export const initialRoutesState: RoutesState = {
+  routes2d: routes2dAdapter.getInitialState({
+    loadingStatus: RequestStatus.IDLE,
+    error: null,
+  }),
+  routes3d: routes3dAdapter.getInitialState({
+    loadingStatus: RequestStatus.IDLE,
+    error: null,
+  }),
+};
 
 export const routesSlice = createSlice({
   name: ROUTES_FEATURE_KEY,
   initialState: initialRoutesState,
-  reducers: {
-    add: routesAdapter.addOne,
-    remove: routesAdapter.removeOne,
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getRoutes.pending, (state: RoutesState) => {
-        state.loadingStatus = RequestStatus.LOADING;
+      .addCase(getRoutes2d.pending, (state: RoutesState) => {
+        state.routes2d.loadingStatus = RequestStatus.LOADING;
       })
       .addCase(
-        getRoutes.fulfilled,
+        getRoutes2d.fulfilled,
         (state: RoutesState, action: PayloadAction<GeojsonRouteFeature[]>) => {
-          routesAdapter.setAll(state, action.payload);
-          state.loadingStatus = RequestStatus.SUCCEDED;
+          routes2dAdapter.setAll(state.routes2d, action.payload);
+          state.routes2d.loadingStatus = RequestStatus.SUCCEDED;
         }
       )
-      .addCase(getRoutes.rejected, (state: RoutesState, action) => {
-        state.loadingStatus = RequestStatus.FAILED;
-        state.error = action.error.message || null;
+      .addCase(getRoutes2d.rejected, (state: RoutesState, action) => {
+        state.routes2d.loadingStatus = RequestStatus.FAILED;
+        state.routes2d.error = action.error.message || null;
+      })
+      .addCase(getRoutes3d.pending, (state: RoutesState) => {
+        state.routes3d.loadingStatus = RequestStatus.LOADING;
+      })
+      .addCase(
+        getRoutes3d.fulfilled,
+        (state: RoutesState, action: PayloadAction<GeojsonRouteFeature[]>) => {
+          routes3dAdapter.setAll(state.routes3d, action.payload);
+          state.routes3d.loadingStatus = RequestStatus.SUCCEDED;
+        }
+      )
+      .addCase(getRoutes3d.rejected, (state: RoutesState, action) => {
+        state.routes3d.loadingStatus = RequestStatus.FAILED;
+        state.routes3d.error = action.error.message || null;
       });
   },
 });
@@ -96,15 +131,35 @@ export const routesActions = routesSlice.actions;
  *
  * See: https://react-redux.js.org/next/api/hooks#useselector
  */
-const { selectAll, selectEntities } = routesAdapter.getSelectors();
+const { selectAll: selectRoutes2dAll, selectEntities: selectRoute2dEntities } =
+  routes2dAdapter.getSelectors();
+const { selectAll: selectRoutes3dAll, selectEntities: selectRoute3dEntities } =
+  routes3dAdapter.getSelectors();
 
 export const getRoutesState = (rootState: {
   [ROUTES_FEATURE_KEY]: RoutesState;
 }): RoutesState => rootState[ROUTES_FEATURE_KEY];
 
-export const selectAllRoutes = createSelector(getRoutesState, selectAll);
+const getRoute2dState = (rootState: {
+  [ROUTES_FEATURE_KEY]: RoutesState;
+}): RoutesDimensionState => rootState[ROUTES_FEATURE_KEY].routes2d;
+export const selectAllRoutes2d = createSelector(
+  getRoute2dState,
+  selectRoutes2dAll
+);
+export const selectRoutes2dEntities = createSelector(
+  getRoute2dState,
+  selectRoute2dEntities
+);
 
-export const selectRoutesEntities = createSelector(
-  getRoutesState,
-  selectEntities
+const getRoute3dState = (rootState: {
+  [ROUTES_FEATURE_KEY]: RoutesState;
+}): RoutesDimensionState => rootState[ROUTES_FEATURE_KEY].routes3d;
+export const selectAllRoutes3d = createSelector(
+  getRoute3dState,
+  selectRoutes3dAll
+);
+export const selectRoutes3dEntities = createSelector(
+  getRoute3dState,
+  selectRoute3dEntities
 );
