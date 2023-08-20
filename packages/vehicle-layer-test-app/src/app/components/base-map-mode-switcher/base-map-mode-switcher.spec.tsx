@@ -18,6 +18,12 @@ vi.mock('@deck.gl/mesh-layers', () => {
   return { ScenegraphLayer, ScenegraphLayerProps };
 });
 
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
+
 describe('BaseMapModeSwitcher', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithProviders(<BaseMapModeSwitcher />);

@@ -1,3 +1,5 @@
+import { type Map as MaplibreMap } from 'react-map-gl/maplibre';
+import { type Map as MapboxMap } from 'react-map-gl';
 import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
 
 export enum RequestStatus {
@@ -17,6 +19,30 @@ export enum PopoverId {
 export type BaseMapProvider = {
   name: string;
   id: string;
+};
+
+export type MapboxTerrainProfile = {
+  id: string;
+  type: 'raster-dem';
+  url: string;
+  tileSize: number;
+  maxZoom: number;
+};
+
+export type MaplibreTerrainProfile = {
+  id: string;
+  type: 'raster-dem';
+  tiles: string[];
+  encoding: 'terrarium';
+  tileSize: number;
+  maxzoom: number;
+};
+
+export type BaseMapProviderProps = {
+  Map: typeof MaplibreMap | typeof MapboxMap;
+  mapStyle: string;
+  accessToken?: string;
+  terrainProps: MapboxTerrainProfile | MaplibreTerrainProfile;
 };
 
 export enum BaseMapMode {

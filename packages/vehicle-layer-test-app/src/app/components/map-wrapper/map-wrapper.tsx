@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Map as MaplibreMap } from 'react-map-gl/maplibre';
-import { Map as MapboxMap } from 'react-map-gl';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import { createDeckglWith } from '../deckgl-wrapper/deckgl-wrapper';
@@ -38,8 +36,6 @@ import Unsupported from '../unsupported/unsupported';
 import { calculateCurrentFps, updateAverageFps } from '../../utils/fps-utils';
 import { mapActions } from '../../redux/slices/map.slice';
 import { anfieldViewState, sfViewState } from '../../constants/view-states';
-
-const mapboxAccessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
 /* eslint-disable-next-line */
 export interface MapWrapperProps {}
@@ -154,13 +150,9 @@ export function MapWrapper(props: MapWrapperProps) {
   const DeckglComponent = useMemo(() => {
     switch (mapProvider.id) {
       case BaseMapProviderId.maplibre:
-        return createDeckglWith(MaplibreMap);
+        return createDeckglWith(mapProvider.id);
       case BaseMapProviderId.mapbox2:
-        return createDeckglWith(
-          MapboxMap,
-          mapboxAccessToken,
-          'mapbox://styles/mapbox/streets-v12'
-        );
+        return createDeckglWith(mapProvider.id);
       case BaseMapProviderId.googleMaps:
         return createGoogleMapWith(false);
       case BaseMapProviderId.arcgis:
@@ -175,10 +167,7 @@ export function MapWrapper(props: MapWrapperProps) {
       case BaseMapProviderId.maplibre:
         return createInterleavedContainerWith(mapProvider.id);
       case BaseMapProviderId.mapbox2:
-        return createInterleavedContainerWith(
-          mapProvider.id,
-          'mapbox://styles/mapbox/streets-v12'
-        );
+        return createInterleavedContainerWith(mapProvider.id);
       case BaseMapProviderId.googleMaps:
         return createGoogleMapWith(true);
       case BaseMapProviderId.arcgis:

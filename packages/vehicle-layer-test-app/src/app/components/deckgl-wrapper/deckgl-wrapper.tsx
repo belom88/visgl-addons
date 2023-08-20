@@ -1,12 +1,8 @@
 import {
-  type Map as MaplibreMap,
+  Source as MaplibreSource,
   MapRef as MaplibreMapRef,
 } from 'react-map-gl/maplibre';
-import {
-  Source,
-  type Map as MapboxMap,
-  MapRef as MapboxMapRef,
-} from 'react-map-gl';
+import { Source as MapboxSource, MapRef as MapboxMapRef } from 'react-map-gl';
 import { DeckGL } from '@deck.gl/react/typed';
 
 import { Vehicle } from '../../utils/vehicles-utils';
@@ -25,22 +21,25 @@ import {
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
 import { ViewStateChangeParameters } from '@deck.gl/core/typed/controllers/controller';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
+import {
+  BaseMapProviderId,
+  MAP_PROVIDER_PROPERTIES,
+} from '../../constants/base-map-providers';
 
-/* eslint-disable-next-line */
 export interface DeckglWrapperProps {
   vehicles: Vehicle[];
-  Map?: typeof MaplibreMap | typeof MapboxMap;
-  mapboxAccessToken?: string;
-  mapStyle?: string;
+}
+
+export interface DeckglWrapperInternalProps {
+  vehicles: Vehicle[];
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2;
 }
 
 export function DeckglWrapper({
   vehicles,
-  Map,
-  mapboxAccessToken,
-  mapStyle = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-}: DeckglWrapperProps) {
+  baseMapProviderId,
+}: DeckglWrapperInternalProps) {
   const dispatch = useAppDispatch();
   const viewState = useAppSelector(selectMapState);
   const sizeMode = useAppSelector(selectSizeMode);
@@ -53,8 +52,13 @@ export function DeckglWrapper({
 
   const mapRef = useRef<MaplibreMapRef | MapboxMapRef>(null);
 
+  const mapProviderProps = useMemo(
+    () => MAP_PROVIDER_PROPERTIES[baseMapProviderId],
+    [baseMapProviderId]
+  );
+
   const getLayer = () => {
-    if (terrainState) {
+    if (terrainState && baseMapProviderId === BaseMapProviderId.mapbox2) {
       for (const vehicle of vehicles) {
         const mapboxElevation = mapRef.current?.queryTerrainElevation({
           lng: vehicle.longitude,
@@ -85,14 +89,20 @@ export function DeckglWrapper({
     viewState,
   }: ViewStateChangeParameters) => {
     const { latitude, longitude, zoom, bearing, pitch } = viewState;
-    let mapboxElevation = 0;
+    let extraElevation = 0;
     if (terrainState) {
-      const center = mapRef.current?.getCenter();
-      if (center) {
-        const result = mapRef.current?.queryTerrainElevation(center);
-        if (typeof result === 'number') {
-          mapboxElevation = result;
+      if (baseMapProviderId === BaseMapProviderId.mapbox2) {
+        const center = mapRef.current?.getCenter();
+        if (center) {
+          const result = mapRef.current?.queryTerrainElevation(center);
+          if (typeof result === 'number') {
+            extraElevation = result;
+          }
         }
+      } else if (baseMapProviderId === BaseMapProviderId.maplibre) {
+        const map = mapRef.current?.getMap();
+        // @ts-expect-error transform is not typed
+        extraElevation = map?.transform.elevation || 0;
       }
     }
 
@@ -103,7 +113,7 @@ export function DeckglWrapper({
         zoom,
         bearing,
         pitch,
-        position: [0, 0, mapboxElevation],
+        position: [0, 0, extraElevation],
       })
     );
   };
@@ -116,44 +126,49 @@ export function DeckglWrapper({
         controller
         layers={[getLayer()]}
       >
-        {Map && (
-          <Map
-            // @ts-expect-error Maplibre & Mapbox types are different
-            ref={mapRef}
-            mapboxAccessToken={mapboxAccessToken}
-            mapStyle={mapStyle}
-            terrain={
-              terrainState
-                ? { source: 'mapbox-dem', exaggeration: 1 }
-                : undefined
-            }
-          >
-            <Source
-              id="mapbox-dem"
-              type="raster-dem"
+        <mapProviderProps.Map
+          // @ts-expect-error Maplibre & Mapbox types are different
+          ref={mapRef}
+          mapboxAccessToken={mapProviderProps.accessToken}
+          mapStyle={mapProviderProps.mapStyle}
+          terrain={
+            terrainState
+              ? { source: 'dem-data-source', exaggeration: 1 }
+              : undefined
+          }
+        >
+          {baseMapProviderId === BaseMapProviderId.maplibre && (
+            <MaplibreSource
+              id={mapProviderProps.terrainProps.id}
+              type={mapProviderProps.terrainProps.type}
+              tiles={[
+                'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png',
+              ]}
+              encoding="terrarium"
+              tileSize={256}
+              maxzoom={12}
+            />
+          )}
+          {baseMapProviderId === BaseMapProviderId.mapbox2 && (
+            <MapboxSource
+              id={mapProviderProps.terrainProps.id}
+              type={mapProviderProps.terrainProps.type}
               url="mapbox://mapbox.mapbox-terrain-dem-v1"
               tileSize={512}
               maxzoom={14}
             />
-          </Map>
-        )}
+          )}
+        </mapProviderProps.Map>
       </DeckGL>
     </StyledMapContainer>
   );
 }
 
 export const createDeckglWith = (
-  Map: typeof MaplibreMap | typeof MapboxMap,
-  mapboxAccessToken?: string,
-  mapStyle?: string
+  baseMapProviderId: BaseMapProviderId.mapbox2 | BaseMapProviderId.maplibre
 ) => {
   return (props: DeckglWrapperProps) => (
-    <DeckglWrapper
-      {...props}
-      Map={Map}
-      mapboxAccessToken={mapboxAccessToken}
-      mapStyle={mapStyle}
-    />
+    <DeckglWrapper {...props} baseMapProviderId={baseMapProviderId} />
   );
 };
 
