@@ -16,6 +16,9 @@ import {
 } from '../../redux/slices/layer-props.slice';
 import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
+// import { Deck } from '@deck.gl/core/typed';
+// import { mapActions, selectMapState } from '../../redux/slices/map.slice';
+// import { ViewStateChangeParameters } from '@deck.gl/core/typed/controllers/controller';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
@@ -60,7 +63,7 @@ export function InterleavedMap({
     }
     if (terrainState) {
       // add the DEM source as a terrain layer with exaggerated height
-      map.setTerrain({ source: 'mapbox-dem', exaggeration: 1 });
+      map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
     } else {
       map.setTerrain({ source: '' });
     }
@@ -80,29 +83,41 @@ export function InterleavedMap({
       firstLabelLayerId = getLabelLayerId(map);
     }
     const [commonColor, foregroundColor2d, backgroundColor2d, color3D] = colors;
-    map.addLayer(
-      // @ts-expect-error maplibre and mapbox types are not compatible
-      getMapboxLayer(
-        vehicles,
-        sizeMode,
-        size,
-        vehicleScale,
-        dimensionMode,
-        pickableState,
-        (pickingInfo) => {
-          dispatch(appActions.setPickingData(pickingInfo.object));
-          return true;
-        },
-        commonColor,
-        foregroundColor2d,
-        backgroundColor2d,
-        color3D
-      ),
-      firstLabelLayerId
+
+    if (terrainState) {
+      for (const vehicle of vehicles) {
+        const mapboxElevation = map?.queryTerrainElevation({
+          lng: vehicle.longitude,
+          lat: vehicle.latitude,
+        });
+        if (typeof mapboxElevation === 'number') {
+          vehicle.elevation = mapboxElevation;
+        }
+      }
+    }
+
+    const mapboxLayer = getMapboxLayer(
+      vehicles,
+      sizeMode,
+      size,
+      vehicleScale,
+      dimensionMode,
+      pickableState,
+      (pickingInfo) => {
+        dispatch(appActions.setPickingData(pickingInfo.object));
+        return true;
+      },
+      commonColor,
+      foregroundColor2d,
+      backgroundColor2d,
+      color3D
     );
+    // @ts-expect-error maplibre and mapbox types are not compatible
+    map.addLayer(mapboxLayer, firstLabelLayerId);
   }, [
     vehicles,
     map,
+    terrainState,
     sizeMode,
     size,
     vehicleScale,

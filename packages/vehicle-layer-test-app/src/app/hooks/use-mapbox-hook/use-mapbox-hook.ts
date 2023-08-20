@@ -73,7 +73,7 @@ export const useMapbox = (
         type: 'raster-dem',
         url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
         tileSize: 512,
-        maxzoom: 14,
+        maxzoom: 25,
       });
       setMap(newMap);
     });
