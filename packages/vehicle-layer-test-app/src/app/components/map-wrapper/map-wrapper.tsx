@@ -167,10 +167,7 @@ export function MapWrapper(props: MapWrapperProps) {
       case BaseMapProviderId.maplibre:
         return createInterleavedContainerWith(mapProvider.id);
       case BaseMapProviderId.mapbox2:
-        return createInterleavedContainerWith(
-          mapProvider.id,
-          'mapbox://styles/mapbox/streets-v12'
-        );
+        return createInterleavedContainerWith(mapProvider.id);
       case BaseMapProviderId.googleMaps:
         return createGoogleMapWith(true);
       case BaseMapProviderId.arcgis:
