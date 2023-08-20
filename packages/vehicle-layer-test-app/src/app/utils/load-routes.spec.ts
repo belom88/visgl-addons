@@ -16,7 +16,6 @@ vi.mock('@deck.gl/mesh-layers', () => {
   const ScenegraphLayerProps = {};
   return { ScenegraphLayer, ScenegraphLayerProps };
 });
-
 vi.mock('@loaders.gl/core', () => {
   const load = vi
     .fn()
@@ -24,6 +23,11 @@ vi.mock('@loaders.gl/core', () => {
       Promise.resolve({ type: 'FeatureCollection', features: [ROUTE_STUB] })
     );
   return { load };
+});
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
 });
 
 describe('utils/load-routes', () => {

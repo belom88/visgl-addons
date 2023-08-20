@@ -8,6 +8,12 @@ vi.mock('@deck.gl/layers', () => {
   return { IconLayer, IconLayerProps };
 });
 
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
+
 describe('utils/vehicles-utils', () => {
   describe('createVehicles', () => {
     it('should not create vehicles', () => {

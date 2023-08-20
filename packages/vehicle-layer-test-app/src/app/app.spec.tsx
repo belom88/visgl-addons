@@ -23,6 +23,12 @@ vi.mock('./pages/home/home', () => {
   return { default: vi.fn() };
 });
 
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
+
 describe('App', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithProviders(

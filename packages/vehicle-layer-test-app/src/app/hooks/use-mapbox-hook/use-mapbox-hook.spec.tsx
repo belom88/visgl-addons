@@ -27,6 +27,12 @@ vi.mock('maplibre-gl', () => {
   return { Map };
 });
 
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
+
 describe('useMapbox', () => {
   it('should render successfully', () => {
     const ref = React.createRef<HTMLDivElement>();

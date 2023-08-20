@@ -27,6 +27,12 @@ vi.mock('@deck.gl/arcgis', () => {
   return { loadArcGISModules };
 });
 
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
+
 describe('ArcgisWrapper', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithProviders(

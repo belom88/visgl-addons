@@ -22,15 +22,17 @@ vi.mock('@deck.gl/react', () => {
 });
 vi.mock('react-map-gl/maplibre', () => {
   const Map = vi.fn();
-  return { Map };
+  const Source = vi.fn();
+  return { Map, Source };
 });
-vi.importMock('@belom88/vehicle-layer');
 vi.mock('maplibre-gl', () => {
   const Map = vi.fn().mockReturnValue({
     on: vi.fn(),
   });
-  return { Map };
+  const Source = vi.fn();
+  return { Map, Source };
 });
+vi.importMock('@belom88/vehicle-layer');
 
 vi.mock('@deck.gl/arcgis', () => {
   const DeckRenderer = vi.fn();

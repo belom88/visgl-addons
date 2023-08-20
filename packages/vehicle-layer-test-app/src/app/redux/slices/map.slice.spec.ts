@@ -21,6 +21,11 @@ vi.mock('@deck.gl/mesh-layers', () => {
   const ScenegraphLayerProps = {};
   return { ScenegraphLayer, ScenegraphLayerProps };
 });
+vi.mock('react-map-gl/maplibre', () => {
+  const Map = vi.fn();
+  const Source = vi.fn();
+  return { Map, Source };
+});
 
 describe('map reducer', () => {
   it('should handle initial state', () => {
