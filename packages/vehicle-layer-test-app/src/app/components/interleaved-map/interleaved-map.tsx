@@ -1,9 +1,12 @@
 import { Map as MapboxMap } from 'mapbox-gl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { Vehicle } from '../../utils/vehicles-utils';
 import { useMapbox } from '../../hooks/use-mapbox-hook/use-mapbox-hook';
 import { StyledMapContainer } from '../common-styled';
-import { BaseMapProviderId } from '../../constants/base-map-providers';
+import {
+  BaseMapProviderId,
+  MAP_PROVIDER_PROPERTIES,
+} from '../../constants/base-map-providers';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectAllColors,
@@ -16,17 +19,16 @@ import {
 } from '../../redux/slices/layer-props.slice';
 import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
-// import { Deck } from '@deck.gl/core/typed';
-// import { mapActions, selectMapState } from '../../redux/slices/map.slice';
-// import { ViewStateChangeParameters } from '@deck.gl/core/typed/controllers/controller';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
-/* eslint-disable-next-line */
 export interface InterleavedMapProps {
   vehicles: Vehicle[];
-  baseMapProviderId?: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2;
-  mapStyle?: string;
+}
+
+export interface InterleavedMapInternalProps {
+  vehicles: Vehicle[];
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2;
 }
 
 export const getLabelLayerId = (map: MapboxMap): string | undefined => {
@@ -44,11 +46,10 @@ export const getLabelLayerId = (map: MapboxMap): string | undefined => {
 export function InterleavedMap({
   vehicles,
   baseMapProviderId,
-  mapStyle,
-}: InterleavedMapProps) {
+}: InterleavedMapInternalProps) {
   const dispatch = useAppDispatch();
   const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map = useMapbox(mapContainer, baseMapProviderId, mapStyle);
+  const map = useMapbox(mapContainer, baseMapProviderId);
   const sizeMode = useAppSelector(selectSizeMode);
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
@@ -57,17 +58,26 @@ export function InterleavedMap({
   const terrainState = useAppSelector(selectTerrainState);
   const colors = useAppSelector(selectAllColors);
 
+  const mapProviderProps = useMemo(
+    () => MAP_PROVIDER_PROPERTIES[baseMapProviderId],
+    [baseMapProviderId]
+  );
+
   useEffect(() => {
-    if (!map || baseMapProviderId !== BaseMapProviderId.mapbox2) {
+    if (!map) {
       return;
     }
     if (terrainState) {
       // add the DEM source as a terrain layer with exaggerated height
-      map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+      map.setTerrain({
+        source: mapProviderProps.terrainProps.id,
+        exaggeration: 1,
+      });
     } else {
-      map.setTerrain({ source: '' });
+      // @ts-expect-error setTerrain expects properties
+      map.setTerrain();
     }
-  }, [map, baseMapProviderId, terrainState]);
+  }, [map, baseMapProviderId, terrainState, mapProviderProps]);
 
   useEffect(() => {
     if (!map) {
@@ -84,7 +94,7 @@ export function InterleavedMap({
     }
     const [commonColor, foregroundColor2d, backgroundColor2d, color3D] = colors;
 
-    if (terrainState) {
+    if (terrainState && baseMapProviderId === BaseMapProviderId.mapbox2) {
       for (const vehicle of vehicles) {
         const mapboxElevation = map?.queryTerrainElevation({
           lng: vehicle.longitude,
@@ -125,6 +135,7 @@ export function InterleavedMap({
     colors,
     dispatch,
     pickableState,
+    baseMapProviderId,
   ]);
 
   return (
@@ -137,15 +148,10 @@ export function InterleavedMap({
 }
 
 export const createInterleavedContainerWith = (
-  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2,
-  mapStyle?: string
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2
 ) => {
   return (props: InterleavedMapProps) => (
-    <InterleavedMap
-      {...props}
-      baseMapProviderId={baseMapProviderId}
-      mapStyle={mapStyle}
-    />
+    <InterleavedMap {...props} baseMapProviderId={baseMapProviderId} />
   );
 };
 

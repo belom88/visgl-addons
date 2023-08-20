@@ -1,21 +1,28 @@
 import { Map as MaplibreMap } from 'maplibre-gl';
 import mapboxgl, { LngLatLike, Map as MapboxMap } from 'mapbox-gl';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState, useMemo } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { selectMapState } from '../../redux/slices/map.slice';
-import { BaseMapProviderId } from '../../constants/base-map-providers';
+import {
+  BaseMapProviderId,
+  MAP_PROVIDER_PROPERTIES,
+} from '../../constants/base-map-providers';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
 export const useMapbox = (
   mapContainer: MutableRefObject<null | HTMLDivElement>,
-  baseMapProviderId?: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2,
-  mapStyle = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2
 ): MaplibreMap | MapboxMap | null => {
   const [map, setMap] = useState<MaplibreMap | MapboxMap | null>(null);
   const { longitude, latitude, zoom, pitch, bearing } =
     useAppSelector(selectMapState);
   const isLoadingRef = useRef<boolean>(false);
+
+  const mapProviderProps = useMemo(
+    () => MAP_PROVIDER_PROPERTIES[baseMapProviderId],
+    [baseMapProviderId]
+  );
 
   useEffect(() => {
     return () => {
@@ -53,7 +60,7 @@ export const useMapbox = (
       bearing: number;
     } = {
       container: mapContainer.current,
-      style: mapStyle,
+      style: mapProviderProps.mapStyle,
       center: [longitude, latitude],
       zoom,
       pitch,
@@ -69,12 +76,10 @@ export const useMapbox = (
     isLoadingRef.current = true;
 
     newMap.on('style.load', () => {
-      newMap.addSource('mapbox-dem', {
-        type: 'raster-dem',
-        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
-        tileSize: 512,
-        maxzoom: 25,
-      });
+      newMap.addSource(
+        mapProviderProps.terrainProps.id,
+        mapProviderProps.terrainProps
+      );
       setMap(newMap);
     });
   }, [
@@ -85,7 +90,7 @@ export const useMapbox = (
     bearing,
     pitch,
     baseMapProviderId,
-    mapStyle,
+    mapProviderProps,
     map,
   ]);
 
