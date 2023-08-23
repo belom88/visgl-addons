@@ -7,7 +7,10 @@ import {
 } from '@mui/material';
 import { theme } from '../../theme/header-radio-theme';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { appActions, selectBaseMapMode } from '../../redux/slices/app.slice';
+import {
+  selectBaseMapMode,
+  setBaseMapMode,
+} from '../../redux/slices/app.slice';
 import { BaseMapMode } from '../../types';
 
 /* eslint-disable-next-line */
@@ -21,9 +24,7 @@ export function BaseMapModeSwitcher(props: BaseMapModeSwitcherProps) {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     dispatch(
-      appActions.setBaseMapMode(
-        (event.target as HTMLInputElement).value as BaseMapMode
-      )
+      setBaseMapMode((event.target as HTMLInputElement).value as BaseMapMode)
     );
   };
 

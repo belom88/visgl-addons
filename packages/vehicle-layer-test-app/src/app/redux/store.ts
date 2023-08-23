@@ -14,6 +14,10 @@ import {
   testCasesReducer,
 } from './slices/test-cases.slice';
 import { MAP_FEATURE_KEY, mapReducer } from './slices/map.slice';
+import {
+  NOTIFICATIONS_FEATURE_KEY,
+  notificationsReducer,
+} from './slices/notifications.slice';
 
 const rootReducer = combineReducers({
   [ROUTES_FEATURE_KEY]: routesReducer,
@@ -21,6 +25,7 @@ const rootReducer = combineReducers({
   [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
   [TEST_CASES_FEATURE_KEY]: testCasesReducer,
   [MAP_FEATURE_KEY]: mapReducer,
+  [NOTIFICATIONS_FEATURE_KEY]: notificationsReducer,
 });
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({

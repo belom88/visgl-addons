@@ -1,4 +1,4 @@
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../utils/test-utils';
 import BaseMapModeSwitcher from './base-map-mode-switcher';
 import { BaseMapMode } from '../../types';
@@ -46,7 +46,7 @@ describe('BaseMapModeSwitcher', () => {
         BaseMapMode.INTERLEAVED
       ) as HTMLInputElement;
       act(() => fireEvent.click(baseMapInput));
-      expect(baseMapInput.checked).toBeTruthy();
+      await waitFor(() => expect(baseMapInput.checked).toBeTruthy());
     });
   });
 });

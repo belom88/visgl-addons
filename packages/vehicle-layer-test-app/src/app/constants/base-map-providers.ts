@@ -33,7 +33,7 @@ export const MAP_PROVIDER_PROPERTIES: Record<
       ],
       encoding: 'terrarium',
       tileSize: 256,
-      maxzoom: 12,
+      maxzoom: 25,
     },
   },
   [BaseMapProviderId.mapbox2]: {

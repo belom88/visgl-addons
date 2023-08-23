@@ -1,8 +1,20 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+  ThunkDispatch,
+} from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { BaseMapMode, BaseMapProvider, PopoverId } from '../../types';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 import { Vehicle } from '../../utils/vehicles-utils';
+import { getNotification } from './utils/state-notificatons-utils';
+import {
+  getNewNotificationId,
+  notificationsActions,
+} from './notifications.slice';
 
 export const APP_FEATURE_KEY = 'app';
 
@@ -22,19 +34,65 @@ export const initialState: AppState = {
   pickingData: null,
 };
 
+type ThunkArgs =
+  | { type: 'baseMapProvider'; value: BaseMapProvider }
+  | { type: 'baseMapMode'; value: BaseMapMode };
+const setNotifications = (
+  args: ThunkArgs,
+  getState: () => RootState,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+) => {
+  const { type, value } = args;
+  const state: RootState = getState() as RootState;
+  const notification = getNotification({
+    ...state,
+    [APP_FEATURE_KEY]: { ...state[APP_FEATURE_KEY], [type]: value },
+  });
+
+  if (notification) {
+    dispatch(
+      notificationsActions.add({
+        id: getNewNotificationId(),
+        ...notification,
+      })
+    );
+  }
+};
+
+export const setMapProvider = createAsyncThunk(
+  `${APP_FEATURE_KEY}/setMapProvider`,
+  async (
+    baseMapProvider: BaseMapProvider,
+    { getState, dispatch }
+  ): Promise<BaseMapProvider> => {
+    setNotifications(
+      { type: 'baseMapProvider', value: baseMapProvider },
+      getState as () => RootState,
+      dispatch
+    );
+    return baseMapProvider;
+  }
+);
+
+export const setBaseMapMode = createAsyncThunk(
+  `${APP_FEATURE_KEY}/setBaseMapMode`,
+  async (
+    baseMapMode: BaseMapMode,
+    { getState, dispatch }
+  ): Promise<BaseMapMode> => {
+    setNotifications(
+      { type: 'baseMapMode', value: baseMapMode },
+      getState as () => RootState,
+      dispatch
+    );
+    return baseMapMode;
+  }
+);
+
 export const appSlice = createSlice({
   name: APP_FEATURE_KEY,
   initialState,
   reducers: {
-    setMapProvider: (
-      state: AppState,
-      action: PayloadAction<BaseMapProvider>
-    ) => {
-      state.baseMapProvider = action.payload;
-    },
-    setBaseMapMode: (state: AppState, action: PayloadAction<BaseMapMode>) => {
-      state.baseMapMode = action.payload;
-    },
     setFps: (state: AppState, action: PayloadAction<number>) => {
       state.fps = action.payload;
     },
@@ -54,6 +112,20 @@ export const appSlice = createSlice({
     closePopover: (state: AppState) => {
       state.openedPopoverId = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      setMapProvider.fulfilled,
+      (state: AppState, action: PayloadAction<BaseMapProvider>) => {
+        state.baseMapProvider = action.payload;
+      }
+    );
+    builder.addCase(
+      setBaseMapMode.fulfilled,
+      (state: AppState, action: PayloadAction<BaseMapMode>) => {
+        state.baseMapMode = action.payload;
+      }
+    );
   },
 });
 

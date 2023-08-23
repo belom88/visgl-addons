@@ -1,7 +1,6 @@
 import { RequestStatus } from '../../types';
 import { ROUTE_STUB } from '../../utils/test-utils';
 import {
-  getRoutes,
   getRoutes2d,
   routes2dAdapter,
   routes3dAdapter,
