@@ -6,12 +6,15 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
+import { UseCaseId } from '../../../types';
 
 /* eslint-disable-next-line */
 export interface ScenePropsProps {
+  useCase: UseCaseId;
   animationState: boolean;
   pickableState: boolean;
   terrainState: boolean;
+  disableTerrain: boolean;
   vehiclesCount: number;
   vehiclesCountMin: number;
   vehiclesCountMax: number;
@@ -22,9 +25,11 @@ export interface ScenePropsProps {
 }
 
 export function SceneProps({
+  useCase,
   animationState,
   pickableState,
   terrainState,
+  disableTerrain,
   vehiclesCount,
   vehiclesCountMin,
   vehiclesCountMax,
@@ -39,17 +44,19 @@ export function SceneProps({
         Scene Properties
       </Typography>
       <Divider />
-      <Stack spacing={2} direction="row" alignItems={'center'}>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={animationState}
-              onChange={onAnimationStateChange}
-            />
-          }
-          label="Animation"
-        />
-      </Stack>
+      {useCase === UseCaseId.SF_TRANSIT && (
+        <Stack spacing={2} direction="row" alignItems={'center'}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={animationState}
+                onChange={onAnimationStateChange}
+              />
+            }
+            label="Animation"
+          />
+        </Stack>
+      )}
       <Stack spacing={2} direction="row" alignItems={'center'}>
         <FormControlLabel
           control={
@@ -60,6 +67,7 @@ export function SceneProps({
       </Stack>
       <Stack spacing={2} direction="row" alignItems={'center'}>
         <FormControlLabel
+          disabled={disableTerrain}
           control={
             <Switch checked={terrainState} onChange={onTerrainStateChange} />
           }

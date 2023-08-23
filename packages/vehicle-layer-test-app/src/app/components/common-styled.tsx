@@ -27,10 +27,10 @@ export const StyledBottomRightContainer = muiStyled(Box)`
   z-index: 1;
 `;
 
-export const StyledMainPaper = muiStyled(Paper)<{ bgColor?: string }>`
+export const StyledMainPaper = muiStyled(Paper)<{ bgcolor?: string }>`
   padding: ${({ theme }) => theme.spacing(1)};
   textalign: 'center';
-  background-color: ${({ theme, bgColor }) =>
-    bgColor || theme.palette.background.paper};
+  background-color: ${({ theme, bgcolor }) =>
+    bgcolor || theme.palette.background.paper};
   color:  ${({ theme, color }) => color || theme.palette.text.primary};
 `;

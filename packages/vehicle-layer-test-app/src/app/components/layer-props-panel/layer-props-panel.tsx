@@ -23,6 +23,8 @@ import { PopoverId, UseCaseId } from '../../types';
 import * as d3 from 'd3';
 import { SizeMode } from '@belom88/vehicle-layer';
 import { StyledBottomRightContainer, StyledMainPaper } from '../common-styled';
+import { selectMapProvider } from '../../redux/slices/app.slice';
+import { BaseMapProviderId } from '../../constants/base-map-providers';
 
 const StyledContentContainer = styled(Box)`
   max-height: calc(100vh - 200px);
@@ -60,6 +62,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const pickableState = useAppSelector(selectPickableState);
   const terrainState = useAppSelector(selectTerrainState);
   const dimensionMode = useAppSelector(selectDimensionMode);
+  const baseMapProvider = useAppSelector(selectMapProvider);
 
   const vehicleCommonColor = useAppSelector((state) =>
     selectVehicleColor(state, PopoverId.VEHICLE_LAYER_COMMON_COLOR)
@@ -88,6 +91,13 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
   const d2BackgroundHexColor = useMemo(
     () => rgbToHex(vehicle2dBackgroundColor),
     [vehicle2dBackgroundColor]
+  );
+
+  const disableTerrain = useMemo(
+    () =>
+      baseMapProvider.id === BaseMapProviderId.googleMaps ||
+      baseMapProvider.id === BaseMapProviderId.arcgis,
+    [baseMapProvider]
   );
 
   const dispatch = useAppDispatch();
@@ -131,11 +141,13 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
           </Tabs>
         </Box>
         <StyledContentContainer>
-          {useCase === UseCaseId.SF_TRANSIT && (
+          {
             <SceneProps
+              useCase={useCase}
               animationState={animationState}
               pickableState={pickableState}
               terrainState={terrainState}
+              disableTerrain={disableTerrain}
               vehiclesCount={vehiclesCount}
               vehiclesCountMin={vehiclesCountMin}
               vehiclesCountMax={vehiclesCountMax}
@@ -148,7 +160,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
               onTerrainStateChange={() => dispatch(toggleTerrain())}
               onVehiclesCountChange={onVehiclesCountChange}
             />
-          )}
+          }
           <VehicleLayerProps
             sizeMode={sizeMode}
             size={size}

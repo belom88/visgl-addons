@@ -49,7 +49,7 @@ export function PickingInfo(props: PickingInfoProps) {
     <StyledBottomRightContainer>
       <StyledMainPaper
         elevation={2}
-        bgColor={routeColor}
+        bgcolor={routeColor}
         color={routeTextColor}
       >
         <Stack

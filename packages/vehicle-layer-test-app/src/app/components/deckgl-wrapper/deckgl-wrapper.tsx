@@ -58,20 +58,25 @@ export function DeckglWrapper({
   );
 
   const getLayer = () => {
+    let transformedVehicles: Vehicle[] = vehicles;
     if (terrainState && baseMapProviderId === BaseMapProviderId.mapbox2) {
+      transformedVehicles = [];
       for (const vehicle of vehicles) {
+        let transformedVehicle = vehicle;
         const mapboxElevation = mapRef.current?.queryTerrainElevation({
           lng: vehicle.longitude,
           lat: vehicle.latitude,
         });
         if (typeof mapboxElevation === 'number') {
-          vehicle.elevation = mapboxElevation;
+          transformedVehicle = { ...vehicle };
+          transformedVehicle.elevation = mapboxElevation;
         }
+        transformedVehicles.push(transformedVehicle);
       }
     }
 
     return renderVehicleLayer(
-      vehicles,
+      transformedVehicles,
       sizeMode,
       size,
       vehicleScale,
@@ -81,6 +86,7 @@ export function DeckglWrapper({
         dispatch(appActions.setPickingData(pickingInfo.object));
         return true;
       },
+      terrainState,
       ...colors
     );
   };

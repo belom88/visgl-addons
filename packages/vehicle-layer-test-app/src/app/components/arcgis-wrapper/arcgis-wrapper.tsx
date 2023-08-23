@@ -47,6 +47,7 @@ export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
           dispatch(appActions.setPickingData(pickingInfo.object));
           return true;
         },
+        false,
         ...colors
       ),
     ];

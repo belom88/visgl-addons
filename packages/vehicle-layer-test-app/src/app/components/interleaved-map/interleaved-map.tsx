@@ -117,6 +117,7 @@ export function InterleavedMap({
         dispatch(appActions.setPickingData(pickingInfo.object));
         return true;
       },
+      terrainState,
       commonColor,
       foregroundColor2d,
       backgroundColor2d,
