@@ -145,9 +145,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
               onPickingChange={() =>
                 dispatch(layerPropsActions.togglePicking())
               }
-              onTerrainStateChange={() =>
-                dispatch(toggleTerrain())
-              }
+              onTerrainStateChange={() => dispatch(toggleTerrain())}
               onVehiclesCountChange={onVehiclesCountChange}
             />
           )}
