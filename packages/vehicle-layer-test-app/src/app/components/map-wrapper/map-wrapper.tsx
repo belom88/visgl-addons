@@ -145,7 +145,7 @@ export function MapWrapper(props: MapWrapperProps) {
     dispatch(appActions.resetFps());
     fpsRef.current = { value: 60, count: 1 };
     setAnimatedVehicles([]);
-  }, [baseMapMode, mapProvider, vehiclesCount, fpsRef, dispatch]);
+  }, [baseMapMode, mapProvider, terrainState, vehiclesCount, fpsRef, dispatch]);
 
   const DeckglComponent = useMemo(() => {
     switch (mapProvider.id) {

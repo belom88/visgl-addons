@@ -21,6 +21,10 @@ import {
   testCasesReducer,
 } from '../redux/slices/test-cases.slice';
 import { MAP_FEATURE_KEY, mapReducer } from '../redux/slices/map.slice';
+import {
+  NOTIFICATIONS_FEATURE_KEY,
+  notificationsReducer,
+} from '../redux/slices/notifications.slice';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -71,6 +75,7 @@ export function renderWithProviders(
         [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
         [TEST_CASES_FEATURE_KEY]: testCasesReducer,
         [MAP_FEATURE_KEY]: mapReducer,
+        [NOTIFICATIONS_FEATURE_KEY]: notificationsReducer,
       },
       preloadedState,
     }),
@@ -95,6 +100,7 @@ export const createStoreWith = (
       [LAYER_PROPS_FEATURE_KEY]: layerPropsReducer,
       [TEST_CASES_FEATURE_KEY]: testCasesReducer,
       [MAP_FEATURE_KEY]: mapReducer,
+      [NOTIFICATIONS_FEATURE_KEY]: notificationsReducer,
     },
     preloadedState,
   });

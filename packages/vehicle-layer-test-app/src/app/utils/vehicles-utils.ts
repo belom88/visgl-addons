@@ -160,7 +160,7 @@ export const createAnfieldVehicles = (): Vehicle[] => {
     {
       latitude: 53.43185529968051,
       longitude: -2.9577037905967574,
-      elevation: 0,
+      elevation: 53.6,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.TransitBus,
       routeShortName: 'N/A',
@@ -173,7 +173,7 @@ export const createAnfieldVehicles = (): Vehicle[] => {
     {
       latitude: 53.431755073582494,
       longitude: -2.9578708705967136,
-      elevation: 0,
+      elevation: 53.6,
       bearing: -51.94099460927194,
       vehilceType: VehicleType.Tram,
       routeShortName: 'N/A',

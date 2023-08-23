@@ -1,8 +1,20 @@
-import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  PayloadAction,
+  ThunkDispatch,
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { LayerPropsEdited, PopoverId, UseCaseId } from '../../types';
 import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
 import { setAnimation } from './utils/layer-props-slice-utils';
+import { getNotification } from './utils/state-notificatons-utils';
+import {
+  getNewNotificationId,
+  notificationsActions,
+} from './notifications.slice';
 
 export const LAYER_PROPS_FEATURE_KEY = 'layerProps';
 
@@ -20,6 +32,47 @@ export const initialLayerPropsState: LayerPropsState = {
   scale: 1,
   dimensionMode: '3D',
 };
+
+const setNotifications = (
+  terrain: boolean,
+  getState: () => RootState,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+) => {
+  const state: RootState = getState() as RootState;
+  const notification = getNotification({
+    ...state,
+    [LAYER_PROPS_FEATURE_KEY]: { ...state[LAYER_PROPS_FEATURE_KEY], terrain },
+  });
+
+  if (notification) {
+    dispatch(
+      notificationsActions.add({
+        id: getNewNotificationId(),
+        ...notification,
+      })
+    );
+  }
+};
+
+export const toggleTerrain = createAsyncThunk<void>(
+  `${LAYER_PROPS_FEATURE_KEY}/toggleTerrain`,
+  async (_, { getState, dispatch }): Promise<void> => {
+    const state = getState() as RootState;
+    setNotifications(
+      !state[LAYER_PROPS_FEATURE_KEY].terrain,
+      getState as () => RootState,
+      dispatch
+    );
+  }
+);
+
+export const setTerrain = createAsyncThunk(
+  `${LAYER_PROPS_FEATURE_KEY}/setTerrain`,
+  async (terrain: boolean, { getState, dispatch }): Promise<boolean> => {
+    setNotifications(terrain, getState as () => RootState, dispatch);
+    return terrain;
+  }
+);
 
 export const layerPropsSlice = createSlice({
   name: LAYER_PROPS_FEATURE_KEY,
@@ -46,12 +99,6 @@ export const layerPropsSlice = createSlice({
     },
     setPicking: (state: LayerPropsState, action: PayloadAction<boolean>) => {
       state.pickable = action.payload;
-    },
-    toggleTerrain: (state: LayerPropsState) => {
-      state.terrain = !state.terrain;
-    },
-    setTerrain: (state: LayerPropsState, action: PayloadAction<boolean>) => {
-      state.terrain = action.payload;
     },
     setSizeMode: (state: LayerPropsState, action: PayloadAction<SizeMode>) => {
       state.sizeMode = action.payload;
@@ -93,6 +140,17 @@ export const layerPropsSlice = createSlice({
           state.commonColor = action.payload.color;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(toggleTerrain.fulfilled, (state: LayerPropsState) => {
+      state.terrain = !state.terrain;
+    });
+    builder.addCase(
+      setTerrain.fulfilled,
+      (state: LayerPropsState, action: PayloadAction<boolean>) => {
+        state.terrain = action.payload;
+      }
+    );
   },
 });
 

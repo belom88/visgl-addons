@@ -14,6 +14,7 @@ import {
   selectVehicleColor,
   selectVehiclesCountMinMax,
   selectVehiclesCountValue,
+  toggleTerrain,
 } from '../../redux/slices/layer-props.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import SceneProps from './scene-props/scene-props';
@@ -144,9 +145,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
               onPickingChange={() =>
                 dispatch(layerPropsActions.togglePicking())
               }
-              onTerrainStateChange={() =>
-                dispatch(layerPropsActions.toggleTerrain())
-              }
+              onTerrainStateChange={() => dispatch(toggleTerrain())}
               onVehiclesCountChange={onVehiclesCountChange}
             />
           )}

@@ -3,11 +3,12 @@ import { BaseMapMode } from '../../types';
 import { createStoreWith } from '../../utils/test-utils';
 import {
   APP_FEATURE_KEY,
-  appActions,
   appReducer,
   selectBaseMapMode,
   selectMapProvider,
   initialState,
+  setMapProvider,
+  setBaseMapMode,
 } from './app.slice';
 
 vi.mock('@deck.gl/core', () => {
@@ -46,7 +47,7 @@ describe('app reducer', () => {
   it('should set map provider', () => {
     const state = appReducer(
       undefined,
-      appActions.setMapProvider(BASE_MAP_PROVIDERS[2])
+      setMapProvider.fulfilled(BASE_MAP_PROVIDERS[2], '', BASE_MAP_PROVIDERS[2])
     );
 
     expect(state).toEqual(
@@ -72,7 +73,11 @@ describe('app reducer', () => {
   it('should set base map mode', () => {
     const state = appReducer(
       undefined,
-      appActions.setBaseMapMode(BaseMapMode.INTERLEAVED)
+      setBaseMapMode.fulfilled(
+        BaseMapMode.INTERLEAVED,
+        '',
+        BaseMapMode.INTERLEAVED
+      )
     );
 
     expect(state).toEqual(
