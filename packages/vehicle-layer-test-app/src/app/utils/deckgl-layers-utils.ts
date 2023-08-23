@@ -19,6 +19,7 @@ export const renderVehicleLayer = (
   dimensionMode: DimensionMode,
   pickable: boolean,
   onClick: (info: PickingInfo) => boolean,
+  showElevation = false,
   commonColor?: [number, number, number],
   foregroundColor2d?: [number, number, number],
   backgroundColor2d?: [number, number, number],
@@ -30,7 +31,7 @@ export const renderVehicleLayer = (
     getPosition: (vehicle: Vehicle) => [
       vehicle.longitude,
       vehicle.latitude,
-      vehicle.elevation,
+      showElevation ? vehicle.elevation : 0,
     ],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
     getColor: commonColor,
@@ -60,6 +61,7 @@ export const getMapboxLayer = (
   dimensionMode: DimensionMode,
   pickable: boolean,
   onClick: (info: PickingInfo) => boolean,
+  showElevation = false,
   commonColor?: [number, number, number],
   foregroundColor2d?: [number, number, number],
   backgroundColor2d?: [number, number, number],
@@ -73,7 +75,7 @@ export const getMapboxLayer = (
     getPosition: (vehicle: Vehicle) => [
       vehicle.longitude,
       vehicle.latitude,
-      vehicle.elevation,
+      showElevation ? vehicle.elevation : 0,
     ],
     getBearing: (vehicle: Vehicle) => vehicle.bearing,
     sizeMode,

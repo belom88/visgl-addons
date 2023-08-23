@@ -68,6 +68,7 @@ export function GoogleMapsWrapper({
         dispatch(appActions.setPickingData(pickingInfo.object));
         return true;
       },
+      false,
       ...colors
     );
     overlay.setProps({

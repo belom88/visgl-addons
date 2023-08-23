@@ -8,13 +8,17 @@ import {
 } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { BaseMapMode, BaseMapProvider, PopoverId } from '../../types';
-import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
+import {
+  BASE_MAP_PROVIDERS,
+  BaseMapProviderId,
+} from '../../constants/base-map-providers';
 import { Vehicle } from '../../utils/vehicles-utils';
 import { getNotification } from './utils/state-notificatons-utils';
 import {
   getNewNotificationId,
   notificationsActions,
 } from './notifications.slice';
+import { setTerrain } from './layer-props.slice';
 
 export const APP_FEATURE_KEY = 'app';
 
@@ -70,6 +74,12 @@ export const setMapProvider = createAsyncThunk(
       getState as () => RootState,
       dispatch
     );
+    if (
+      baseMapProvider.id === BaseMapProviderId.arcgis ||
+      baseMapProvider.id === BaseMapProviderId.googleMaps
+    ) {
+      dispatch(setTerrain(false));
+    }
     return baseMapProvider;
   }
 );
@@ -100,7 +110,6 @@ export const appSlice = createSlice({
       state.fps = 60;
     },
     setPickingData: (state: AppState, action: PayloadAction<Vehicle>) => {
-      console.log(action.payload);
       state.pickingData = action.payload;
     },
     resetPickingData: (state: AppState) => {
