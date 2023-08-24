@@ -38,10 +38,10 @@ export interface VehicleLayerPropsProps {
   size: number;
   vehicleScale: number;
   dimensionMode: '2D' | '3D';
-  commonHexColor: string;
-  d3HexColor: string;
-  d2ForegroundHexColor: string;
-  d2BackgroundHexColor: string;
+  vehicleCommonColor?: [number, number, number];
+  vehicle3dColor?: [number, number, number];
+  vehicle2dForegroundColor?: [number, number, number];
+  vehicle2dBackgroundColor?: [number, number, number];
   onSizeModeChange: (value: SizeMode) => void;
   onSizeChange: (value: number) => void;
   onScaleChange: (value: number) => void;
@@ -57,10 +57,10 @@ export function VehicleLayerProps({
   size,
   vehicleScale,
   dimensionMode,
-  commonHexColor,
-  d3HexColor,
-  d2ForegroundHexColor,
-  d2BackgroundHexColor,
+  vehicleCommonColor,
+  vehicle3dColor,
+  vehicle2dForegroundColor,
+  vehicle2dBackgroundColor,
   onSizeModeChange,
   onSizeChange,
   onScaleChange,
@@ -187,7 +187,7 @@ export function VehicleLayerProps({
       </Stack>
       <Stack direction="row" alignItems={'center'}>
         <ColorPicker
-          value={commonHexColor}
+          value={vehicleCommonColor}
           popoverId={PopoverId.VEHICLE_LAYER_COMMON_COLOR}
           Icon={ColorLensOutlinedIcon}
           onColorChange={(value: ColorResult) =>
@@ -199,7 +199,7 @@ export function VehicleLayerProps({
         {dimensionMode === '2D' && (
           <>
             <ColorPicker
-              value={d2ForegroundHexColor}
+              value={vehicle2dForegroundColor}
               popoverId={PopoverId.VEHICLE_LAYER_2D_FOREGROUND}
               Icon={OpacityIcon}
               onColorChange={(value: ColorResult) =>
@@ -212,7 +212,7 @@ export function VehicleLayerProps({
               get2dForegroundColor
             </ColorPicker>
             <ColorPicker
-              value={d2BackgroundHexColor}
+              value={vehicle2dBackgroundColor}
               popoverId={PopoverId.VEHICLE_LAYER_2D_BACKGROUND}
               Icon={FormatColorFillIcon}
               onColorChange={(value: ColorResult) =>
@@ -228,7 +228,7 @@ export function VehicleLayerProps({
         )}
         {dimensionMode === '3D' && (
           <ColorPicker
-            value={d3HexColor}
+            value={vehicle3dColor}
             popoverId={PopoverId.VEHICLE_LAYER_3D_COLOR}
             Icon={OpacityIcon}
             onColorChange={(value: ColorResult) =>

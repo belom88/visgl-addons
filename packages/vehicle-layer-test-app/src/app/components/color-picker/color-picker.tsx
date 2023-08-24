@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useMemo, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { ColorResult } from '@uiw/color-convert';
 import Colorful from '@uiw/react-color-colorful';
+import * as d3 from 'd3';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { appActions, selectOpenedMenuId } from '../../redux/slices/app.slice';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
@@ -19,9 +20,22 @@ const StyledColorButton = styled(Button)`
   text-transform: none;
 `;
 
+const StyledPopover = styled(Popover)(({ theme }) => ({
+  '& .MuiPopover-paper': {
+    borderRadius: '8px',
+  },
+}));
+
+const rgbToHex = (rgb?: [number, number, number]): string => {
+  if (!rgb) {
+    return '#FFF';
+  }
+  return d3.rgb(...rgb).formatHex();
+};
+
 /* eslint-disable-next-line */
 export interface ColorPickerProps {
-  value: string;
+  value?: [number, number, number];
   popoverId: PopoverId;
   Icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
     muiName: string;
@@ -50,6 +64,14 @@ export function ColorPicker({
     setAnchorEl(null);
   };
 
+  const hexValue = useMemo(() => rgbToHex(value), [value]);
+  const isValueLight = useMemo(() => {
+    if (!value) {
+      return true;
+    }
+    return 255 * 3 - value[0] - value[1] - value[2] < 100;
+  }, [value]);
+
   return (
     <>
       <StyledColorButton
@@ -60,13 +82,13 @@ export function ColorPicker({
         onClick={onClickHandler}
       >
         <Stack direction="row" spacing={1} alignItems={'center'}>
-          <Avatar sx={{ bgcolor: value }}>
-            <Icon />
+          <Avatar sx={{ bgcolor: hexValue }}>
+            <Icon color={isValueLight ? 'primary' : undefined} />
           </Avatar>
           <Typography>{children}</Typography>
         </Stack>
       </StyledColorButton>
-      <Popover
+      <StyledPopover
         id={`menu-${popoverId}`}
         anchorEl={anchorEl}
         open={openedPopoverId === popoverId}
@@ -79,9 +101,10 @@ export function ColorPicker({
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        slotProps={{ paper: {} }}
       >
-        <Colorful color={value} onChange={onColorChange} />
-      </Popover>
+        <Colorful disableAlpha color={hexValue} onChange={onColorChange} />
+      </StyledPopover>
     </>
   );
 }
