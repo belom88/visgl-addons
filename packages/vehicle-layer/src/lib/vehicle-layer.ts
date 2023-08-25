@@ -5,6 +5,7 @@ import {
   CompositeLayer,
   Layer,
   LayersList,
+  UpdateParameters,
   WebMercatorViewport,
 } from '@deck.gl/core/typed';
 import {
@@ -77,6 +78,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     getVehicleType: undefined,
   };
 
+  /** Track bearing viewport to keep 2D vechicle icon always up */
+  viewportBearing = 0;
+
   private calculateBearing(
     vehicle: TProps,
     objectInfo: AccessorContext<TProps>
@@ -139,6 +143,23 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     });
   }
 
+  override shouldUpdateState(params: UpdateParameters<this>): boolean {
+    const {
+      changeFlags: { viewportChanged },
+      context: { viewport },
+      props: { dimensionMode },
+    } = params;
+    if (
+      viewportChanged &&
+      dimensionMode === '2D' &&
+      (viewport as WebMercatorViewport)?.bearing !== this.viewportBearing
+    ) {
+      this.viewportBearing = (viewport as WebMercatorViewport)?.bearing;
+      return true;
+    }
+    return super.shouldUpdateState(params);
+  }
+
   private getVehicleTypeIconLayer(
     vehicleType: VehicleType,
     data: TProps[],
@@ -177,7 +198,6 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       billboard: false,
       updateTriggers: {
         ...this.props.updateTriggers,
-        getAngle: [viewportBearing],
       },
       parameters: {
         depthTest: false,
