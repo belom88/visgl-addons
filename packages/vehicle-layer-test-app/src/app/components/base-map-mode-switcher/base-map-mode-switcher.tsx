@@ -1,3 +1,4 @@
+import { Fragment, useMemo } from 'react';
 import {
   FormControl,
   FormControlLabel,
@@ -14,9 +15,15 @@ import {
 import { BaseMapMode } from '../../types';
 
 /* eslint-disable-next-line */
-export interface BaseMapModeSwitcherProps {}
+export interface BaseMapModeSwitcherProps {
+  useDarkTheme?: boolean;
+  direction?: 'row' | 'column';
+}
 
-export function BaseMapModeSwitcher(props: BaseMapModeSwitcherProps) {
+export function BaseMapModeSwitcher({
+  useDarkTheme = true,
+  direction = 'row',
+}: BaseMapModeSwitcherProps) {
   const dispatch = useAppDispatch();
   const baseMapMode = useAppSelector(selectBaseMapMode);
 
@@ -28,29 +35,41 @@ export function BaseMapModeSwitcher(props: BaseMapModeSwitcherProps) {
     );
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <FormControl>
-        <RadioGroup
-          row
-          name="size-mode-radio-buttons-group"
-          value={baseMapMode}
-          onChange={onBaseMapChangeHandler}
-        >
-          <FormControlLabel
-            value={BaseMapMode.OVERLAID}
-            control={<Radio />}
-            label="Overlaid"
-          />
-          <FormControlLabel
-            value={BaseMapMode.INTERLEAVED}
-            control={<Radio />}
-            label="Interleaved"
-          />
-        </RadioGroup>
-      </FormControl>
-    </ThemeProvider>
+  const ThemeWrapper = useMemo(() => {
+    if (useDarkTheme) {
+      return ThemeProvider;
+    }
+    return Fragment;
+  }, [useDarkTheme]);
+
+  const renderForm = () => (
+    <FormControl>
+      <RadioGroup
+        row={direction === 'row'}
+        name="size-mode-radio-buttons-group"
+        value={baseMapMode}
+        onChange={onBaseMapChangeHandler}
+      >
+        <FormControlLabel
+          value={BaseMapMode.OVERLAID}
+          control={<Radio />}
+          label="Overlaid"
+        />
+        <FormControlLabel
+          value={BaseMapMode.INTERLEAVED}
+          control={<Radio />}
+          label="Interleaved"
+        />
+      </RadioGroup>
+    </FormControl>
   );
+
+  const form = renderForm();
+  if (useDarkTheme) {
+    return <ThemeWrapper theme={theme}>{form}</ThemeWrapper>;
+  } else {
+    return form;
+  }
 }
 
 export default BaseMapModeSwitcher;

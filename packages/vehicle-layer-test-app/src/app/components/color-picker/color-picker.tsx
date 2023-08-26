@@ -16,9 +16,10 @@ import { appActions, selectOpenedMenuId } from '../../redux/slices/app.slice';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { PopoverId } from '../../types';
 
-const StyledColorButton = styled(Button)`
-  text-transform: none;
-`;
+const StyledColorButton = styled(Button)(({ theme }) => ({
+  textTransform: 'none',
+  color: theme.palette.text.primary,
+}));
 
 const StyledPopover = styled(Popover)(({ theme }) => ({
   '& .MuiPopover-paper': {
@@ -78,7 +79,6 @@ export function ColorPicker({
         aria-describedby={
           openedPopoverId === popoverId ? `menu-${popoverId}` : undefined
         }
-        color="secondary"
         onClick={onClickHandler}
       >
         <Stack direction="row" spacing={1} alignItems={'center'}>

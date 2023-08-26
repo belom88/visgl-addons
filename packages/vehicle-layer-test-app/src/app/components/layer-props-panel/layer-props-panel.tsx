@@ -237,7 +237,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
             >
               <StyledOpenPanelButton
                 variant="contained"
-                aria-label="open test cases panel"
+                aria-label="open layer properties panel"
                 onClick={() =>
                   dispatch(appActions.setLayerPropsPanelVisibility(true))
                 }

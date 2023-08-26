@@ -39,12 +39,13 @@ describe('App', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
-    const { getByText } = renderWithProviders(
+  it('should have "Vehicle Layer" as the title', () => {
+    const { getAllByText } = renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>
     );
-    expect(getByText(/VehicleLayer Testing/gi)).toBeTruthy();
+    const result = getAllByText(/Vehicle Layer/gi);
+    expect(result).toHaveLength(2);
   });
 });
