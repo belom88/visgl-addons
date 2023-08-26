@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
+  appActions,
   selectPikckingData,
   setMapProvider,
 } from '../../redux/slices/app.slice';
@@ -21,6 +23,8 @@ export function Home(props: HomeProps) {
   const { baseMapProviderId } = useParams();
   const dispatch = useAppDispatch();
   const pickingData = useAppSelector(selectPikckingData);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const baseMapProvider = BASE_MAP_PROVIDERS.find(
@@ -30,6 +34,13 @@ export function Home(props: HomeProps) {
       dispatch(setMapProvider(baseMapProvider));
     }
   }, [baseMapProviderId, dispatch]);
+
+  useEffect(() => {
+    if (isMobile) {
+      dispatch(appActions.setTestCasesPanelVisibility(false));
+      dispatch(appActions.setLayerPropsPanelVisibility(false));
+    }
+  }, [isMobile, dispatch]);
 
   return (
     <Box>

@@ -185,7 +185,7 @@ export function VehicleLayerProps({
           3D
         </Typography>
       </Stack>
-      <Stack direction="row" alignItems={'center'}>
+      <Stack direction="row" alignItems={'center'} flexWrap="wrap">
         <ColorPicker
           value={vehicleCommonColor}
           popoverId={PopoverId.VEHICLE_LAYER_COMMON_COLOR}

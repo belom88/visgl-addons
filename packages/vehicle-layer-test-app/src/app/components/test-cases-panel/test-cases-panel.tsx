@@ -7,6 +7,8 @@ import {
   Stack,
   Toolbar,
   styled,
+  Typography,
+  Avatar,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ChecklistIcon from '@mui/icons-material/Checklist';
@@ -64,7 +66,15 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
         <StyledGridContainer container spacing={2}>
           <StyledGridItem item md={3} sm={5} xs={12}>
             <StyledMainPaper>
-              <Stack direction="row" justifyContent={'end'}>
+              <Stack
+                direction="row"
+                justifyContent={'space-between'}
+                alignItems={'center'}
+              >
+                <Avatar variant="rounded">
+                  <ChecklistIcon />
+                </Avatar>{' '}
+                <Typography variant="h6">Test Cases</Typography>
                 <IconButton
                   aria-label="close"
                   onClick={() =>

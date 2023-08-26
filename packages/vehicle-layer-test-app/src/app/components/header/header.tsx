@@ -12,13 +12,22 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { selectMapProvider } from '../../redux/slices/app.slice';
-import { useAppSelector } from '../../redux/hooks';
+import {
+  appActions,
+  selectLayerPropsPanelVisibility,
+  selectMapProvider,
+  selectTestCasesPanelVisibility,
+} from '../../redux/slices/app.slice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 import BaseMapModeSwitcher from '../base-map-mode-switcher/base-map-mode-switcher';
+import { ButtonGroup, Stack } from '@mui/material';
+import { StyledOpenPanelButton } from '../common-styled';
 
 const drawerWidth = 240;
 
@@ -36,6 +45,14 @@ export interface HeaderProps {}
 export function Header(props: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const baseMapProvider = useAppSelector(selectMapProvider);
+  const dispatch = useAppDispatch();
+
+  const layerPropsPanelVisibility = useAppSelector(
+    selectLayerPropsPanelVisibility
+  );
+  const testCasesPanelVisibility = useAppSelector(
+    selectTestCasesPanelVisibility
+  );
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -43,19 +60,76 @@ export function Header(props: HeaderProps) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
-      </Typography>
+      <Stack
+        spacing={2}
+        paddingLeft={1}
+        paddingRight={1}
+        direction="row"
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
+        <Typography variant="h6" sx={{ my: 2 }}>
+          Vehicle Layer
+        </Typography>
+      </Stack>
       <Divider />
       <List>
         {BASE_MAP_PROVIDERS.map((item) => (
-          <ListItem key={item.id} disablePadding>
+          <ListItem
+            component={Link}
+            to={`/base-map/${item.id}`}
+            sx={{ color: 'text.primary' }}
+            key={item.id}
+            disablePadding
+          >
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
+      <Divider />
+      <BaseMapModeSwitcher useDarkTheme={false} direction="column" />
+      <Divider />
+      <Stack
+        direction="row"
+        justifyContent={'flex-end'}
+        spacing={1}
+        marginTop={1}
+        marginRight={1}
+      >
+        <ButtonGroup
+          variant="contained"
+          aria-label="outlined primary button group"
+        >
+          <StyledOpenPanelButton
+            color={testCasesPanelVisibility ? 'primary' : 'secondary'}
+            aria-label="open test cases panel"
+            onClick={() => {
+              if (testCasesPanelVisibility) {
+                dispatch(appActions.setTestCasesPanelVisibility(false));
+              } else {
+                dispatch(appActions.setTestCasesPanelVisibility(true));
+              }
+            }}
+          >
+            <ChecklistIcon />
+          </StyledOpenPanelButton>
+          <StyledOpenPanelButton
+            color={layerPropsPanelVisibility ? 'primary' : 'secondary'}
+            aria-label="open layer properties panel"
+            onClick={() => {
+              if (layerPropsPanelVisibility) {
+                dispatch(appActions.setLayerPropsPanelVisibility(false));
+              } else {
+                dispatch(appActions.setLayerPropsPanelVisibility(true));
+              }
+            }}
+          >
+            <SettingsIcon />
+          </StyledOpenPanelButton>
+        </ButtonGroup>
+      </Stack>
     </Box>
   );
 
@@ -74,7 +148,7 @@ export function Header(props: HeaderProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            VehicleLayer Testing
+            Vehicle Layer
           </Typography>
           <Box
             sx={{
@@ -110,7 +184,7 @@ export function Header(props: HeaderProps) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { md: 'block', lg: 'none' },
+            display: { md: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
