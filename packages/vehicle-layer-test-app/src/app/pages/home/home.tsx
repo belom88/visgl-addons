@@ -34,8 +34,8 @@ export function Home(props: HomeProps) {
   return (
     <Box>
       <Notifications />
-      <TestCasesPanel />
       <Fps />
+      <TestCasesPanel />
       {!pickingData && <LayerPropsPanel />}
       {pickingData && <PickingInfo />}
       <MapWrapper />

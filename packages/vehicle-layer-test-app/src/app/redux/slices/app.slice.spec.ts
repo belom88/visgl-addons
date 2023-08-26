@@ -40,6 +40,8 @@ describe('app reducer', () => {
       fps: 60,
       openedPopoverId: null,
       pickingData: null,
+      layerPropsPanelVisibility: true,
+      testCasesPanelVisibility: true,
     };
     expect(appReducer(undefined, { type: '' })).toEqual(expected);
   });
