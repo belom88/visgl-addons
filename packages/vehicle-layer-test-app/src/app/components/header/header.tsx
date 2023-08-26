@@ -69,17 +69,25 @@ export function Header(props: HeaderProps) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             VehicleLayer Testing
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'none', md: 'block' },
+            }}
+          >
             <BaseMapModeSwitcher />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'none', md: 'block' },
+            }}
+          >
             {BASE_MAP_PROVIDERS.map((item) => (
               <Link key={item.id} to={`/base-map/${item.id}`}>
                 <Button key={item.id} sx={{ color: '#fff' }}>
@@ -102,7 +110,7 @@ export function Header(props: HeaderProps) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { md: 'block', lg: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,

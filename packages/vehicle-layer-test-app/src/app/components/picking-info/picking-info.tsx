@@ -1,5 +1,10 @@
-import { IconButton, Stack, Typography } from '@mui/material';
-import { StyledBottomRightContainer, StyledMainPaper } from '../common-styled';
+import { IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import {
+  StyledGridContainer,
+  StyledGridItem,
+  StyledMainPaper,
+  StyledTopPanelsContainer,
+} from '../common-styled';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { appActions, selectPikckingData } from '../../redux/slices/app.slice';
@@ -46,28 +51,45 @@ export function PickingInfo(props: PickingInfoProps) {
   }, [pickingData]);
 
   return (
-    <StyledBottomRightContainer>
-      <StyledMainPaper
-        elevation={2}
-        bgcolor={routeColor}
-        color={routeTextColor}
+    <StyledTopPanelsContainer
+      sx={{
+        top: { xs: '0.5em', sm: '0.5em', md: 'initial' },
+        bottom: { xs: 'initial', sm: 'initial', md: '1.5em' },
+        right: { xs: 'initial', sm: 'initial', md: '0.5em' },
+        left: { xs: '0.5em', sm: '0.5em', md: 'initial' },
+      }}
+    >
+      <Toolbar />
+      <StyledGridContainer
+        container
+        spacing={2}
+        justifyContent={'flex-end'}
+        alignItems={'flex-end'}
       >
-        <Stack
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-        >
-          {renderRouteNumber()}
-          <IconButton
-            aria-label="close"
-            onClick={() => dispatch(appActions.resetPickingData())}
+        <StyledGridItem item md={4} sm={7} xs={12}>
+          <StyledMainPaper
+            elevation={2}
+            bgcolor={routeColor}
+            color={routeTextColor}
           >
-            <CloseOutlinedIcon />
-          </IconButton>
-        </Stack>
-        {pickingData && renderPickingData(pickingData)}
-      </StyledMainPaper>
-    </StyledBottomRightContainer>
+            <Stack
+              direction={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
+            >
+              {renderRouteNumber()}
+              <IconButton
+                aria-label="close"
+                onClick={() => dispatch(appActions.resetPickingData())}
+              >
+                <CloseOutlinedIcon />
+              </IconButton>
+            </Stack>
+            {pickingData && renderPickingData(pickingData)}
+          </StyledMainPaper>
+        </StyledGridItem>
+      </StyledGridContainer>
+    </StyledTopPanelsContainer>
   );
 }
 

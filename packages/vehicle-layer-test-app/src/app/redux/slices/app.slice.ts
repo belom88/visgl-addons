@@ -28,6 +28,8 @@ export interface AppState {
   fps: number;
   openedPopoverId: null | PopoverId;
   pickingData: null | Vehicle;
+  testCasesPanelVisibility: boolean;
+  layerPropsPanelVisibility: boolean;
 }
 
 export const initialState: AppState = {
@@ -36,6 +38,8 @@ export const initialState: AppState = {
   fps: 60,
   openedPopoverId: null,
   pickingData: null,
+  testCasesPanelVisibility: true,
+  layerPropsPanelVisibility: true,
 };
 
 type ThunkArgs =
@@ -121,6 +125,18 @@ export const appSlice = createSlice({
     closePopover: (state: AppState) => {
       state.openedPopoverId = null;
     },
+    setTestCasesPanelVisibility: (
+      state: AppState,
+      action: PayloadAction<boolean>
+    ) => {
+      state.testCasesPanelVisibility = action.payload;
+    },
+    setLayerPropsPanelVisibility: (
+      state: AppState,
+      action: PayloadAction<boolean>
+    ) => {
+      state.layerPropsPanelVisibility = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -185,5 +201,15 @@ export const selectPikckingData = createSelector(
 
 export const selectOpenedMenuId = createSelector(
   (state: RootState) => state[APP_FEATURE_KEY].openedPopoverId,
+  (result) => result
+);
+
+export const selectTestCasesPanelVisibility = createSelector(
+  (state: RootState) => state[APP_FEATURE_KEY].testCasesPanelVisibility,
+  (result) => result
+);
+
+export const selectLayerPropsPanelVisibility = createSelector(
+  (state: RootState) => state[APP_FEATURE_KEY].layerPropsPanelVisibility,
   (result) => result
 );
