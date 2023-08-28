@@ -5,11 +5,11 @@ import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 const getManualChunks = (id: string) => {
   if (id.includes('node_modules/@deck.gl')) {
-		return 'deck-gl';
-	} else if (id.includes('node_modules/@mui')) {
-		return 'mui';
-	}
-}
+    return 'deck-gl';
+  } else if (id.includes('node_modules/@mui')) {
+    return 'mui';
+  }
+};
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/vehicle-layer-test-app',
@@ -34,9 +34,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: getManualChunks
-      }
-    }
+        manualChunks: getManualChunks,
+      },
+    },
   },
 
   // Uncomment this if you are using workers.
