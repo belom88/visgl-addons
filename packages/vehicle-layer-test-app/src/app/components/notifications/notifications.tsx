@@ -4,7 +4,9 @@ import {
   notificationsActions,
   selectAllNotifications,
 } from '../../redux/slices/notifications.slice';
-import { Alert, Snackbar, styled } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { styled } from '@mui/material/styles';
 
 const StyledSnackbar = styled(Snackbar)(({ theme }) => ({
   '&.MuiSnackbar-anchorOriginTopRight': {

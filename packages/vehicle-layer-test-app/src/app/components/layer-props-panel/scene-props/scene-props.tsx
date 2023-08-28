@@ -1,11 +1,9 @@
-import {
-  Divider,
-  FormControlLabel,
-  Slider,
-  Stack,
-  Switch,
-  Typography,
-} from '@mui/material';
+import Divider from '@mui/material/Divider';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Slider from '@mui/material/Slider';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 import { UseCaseId } from '../../../types';
 
 /* eslint-disable-next-line */

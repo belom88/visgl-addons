@@ -1,13 +1,11 @@
 import { PropsWithChildren, useMemo, useState } from 'react';
-import {
-  Avatar,
-  Button,
-  Popover,
-  Stack,
-  SvgIconTypeMap,
-  Typography,
-  styled,
-} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Popover from '@mui/material/Popover';
+import { SvgIconTypeMap } from '@mui/material/SvgIcon';
 import { ColorResult } from '@uiw/color-convert';
 import Colorful from '@uiw/react-color-colorful';
 import * as d3 from 'd3';

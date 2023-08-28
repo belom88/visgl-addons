@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-
-import { createDeckglWith } from '../deckgl-wrapper/deckgl-wrapper';
-import { createInterleavedContainerWith } from '../interleaved-map/interleaved-map';
-import { createGoogleMapWith } from '../google-maps-wrapper/google-maps-wrapper';
-import ArcgisWrapper from '../arcgis-wrapper/arcgis-wrapper';
 
 import {
   selectAnimationState,
@@ -36,6 +39,45 @@ import Unsupported from '../unsupported/unsupported';
 import { calculateCurrentFps, updateAverageFps } from '../../utils/fps-utils';
 import { mapActions } from '../../redux/slices/map.slice';
 import { anfieldViewState, sfViewState } from '../../constants/view-states';
+import Loading from '../loading/loading';
+
+interface DeckglWrapperProps {
+  vehicles: Vehicle[];
+}
+const DeckglWrapper = lazy(() => import('../deckgl-wrapper/deckgl-wrapper'));
+export const createDeckglWith = (
+  baseMapProviderId: BaseMapProviderId.mapbox2 | BaseMapProviderId.maplibre
+) => {
+  return (props: DeckglWrapperProps) => {
+    return <DeckglWrapper {...props} baseMapProviderId={baseMapProviderId} />;
+  };
+};
+
+export interface InterleavedMapProps {
+  vehicles: Vehicle[];
+}
+const InterleavedMap = lazy(() => import('../interleaved-map/interleaved-map'));
+export const createInterleavedContainerWith = (
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2
+) => {
+  return (props: InterleavedMapProps) => {
+    return <InterleavedMap {...props} baseMapProviderId={baseMapProviderId} />;
+  };
+};
+const ArcgisWrapper = lazy(() => import('../arcgis-wrapper/arcgis-wrapper'));
+
+interface GoogleMapsWrapperProps {
+  vehicles: Vehicle[];
+  interleaved?: boolean;
+}
+const GoogleMapsWrapper = lazy(
+  () => import('../google-maps-wrapper/google-maps-wrapper')
+);
+const createGoogleMapWith = (interleaved: boolean) => {
+  return (props: GoogleMapsWrapperProps) => {
+    return <GoogleMapsWrapper {...props} interleaved={interleaved} />;
+  };
+};
 
 /* eslint-disable-next-line */
 export interface MapWrapperProps {}
@@ -147,7 +189,7 @@ export function MapWrapper(props: MapWrapperProps) {
     setAnimatedVehicles([]);
   }, [baseMapMode, mapProvider, terrainState, vehiclesCount, fpsRef, dispatch]);
 
-  const DeckglComponent = useMemo(() => {
+  const OverlaidComponent = useMemo(() => {
     switch (mapProvider.id) {
       case BaseMapProviderId.maplibre:
         return createDeckglWith(mapProvider.id);
@@ -179,11 +221,15 @@ export function MapWrapper(props: MapWrapperProps) {
 
   return (
     <>
-      {baseMapMode === BaseMapMode.OVERLAID && DeckglComponent && (
-        <DeckglComponent vehicles={animatedVehicles} />
+      {baseMapMode === BaseMapMode.OVERLAID && OverlaidComponent && (
+        <Suspense fallback={<Loading />}>
+          <OverlaidComponent vehicles={animatedVehicles} />
+        </Suspense>
       )}
       {baseMapMode === BaseMapMode.INTERLEAVED && InterleavedComponent && (
-        <InterleavedComponent vehicles={animatedVehicles} />
+        <Suspense fallback={<Loading />}>
+          <InterleavedComponent vehicles={animatedVehicles} />
+        </Suspense>
       )}
     </>
   );

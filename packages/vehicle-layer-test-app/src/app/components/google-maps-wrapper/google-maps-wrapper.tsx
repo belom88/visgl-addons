@@ -20,7 +20,7 @@ const googleMapsApiToken = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAP_VECTOR_ID;
 
 /* eslint-disable-next-line */
-export interface GoogleMapsWrapperProps {
+interface GoogleMapsWrapperProps {
   vehicles: Vehicle[];
   interleaved?: boolean;
 }
@@ -116,11 +116,5 @@ export function GoogleMapsWrapper({
     </Wrapper>
   );
 }
-
-export const createGoogleMapWith = (interleaved: boolean) => {
-  return (props: GoogleMapsWrapperProps) => (
-    <GoogleMapsWrapper {...props} interleaved={interleaved} />
-  );
-};
 
 export default GoogleMapsWrapper;

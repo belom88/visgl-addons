@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
-import {
-  Box,
-  IconButton,
-  Stack,
-  Tab,
-  Tabs,
-  Toolbar,
-  styled,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Toolbar from '@mui/material/Toolbar';
+import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import SettingsIcon from '@mui/icons-material/Settings';
 

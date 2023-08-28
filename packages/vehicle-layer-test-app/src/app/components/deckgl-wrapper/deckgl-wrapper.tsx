@@ -170,12 +170,4 @@ export function DeckglWrapper({
   );
 }
 
-export const createDeckglWith = (
-  baseMapProviderId: BaseMapProviderId.mapbox2 | BaseMapProviderId.maplibre
-) => {
-  return (props: DeckglWrapperProps) => (
-    <DeckglWrapper {...props} baseMapProviderId={baseMapProviderId} />
-  );
-};
-
 export default DeckglWrapper;
