@@ -1,4 +1,5 @@
-import { Paper, styled } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 import { StyledMapContainer } from '../common-styled';
 
 const StyledUnsupportedContainer = styled(StyledMapContainer)`

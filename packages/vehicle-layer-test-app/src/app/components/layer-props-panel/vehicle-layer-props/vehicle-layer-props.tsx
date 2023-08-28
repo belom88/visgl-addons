@@ -1,14 +1,12 @@
-import {
-  Divider,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Slider,
-  Stack,
-  Switch,
-  Typography,
-} from '@mui/material';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Slider from '@mui/material/Slider';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 import OpacityIcon from '@mui/icons-material/Opacity';

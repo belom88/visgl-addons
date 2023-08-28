@@ -1,4 +1,7 @@
-import { IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import {
   StyledGridContainer,
   StyledGridItem,

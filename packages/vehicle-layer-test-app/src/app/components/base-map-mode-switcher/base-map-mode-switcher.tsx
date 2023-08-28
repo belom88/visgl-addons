@@ -1,11 +1,11 @@
 import { Fragment, useMemo } from 'react';
 import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   ThemeProvider,
-} from '@mui/material';
+} from '@mui/material/styles';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 import { theme } from '../../theme/header-radio-theme';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {

@@ -22,10 +22,6 @@ import { appActions } from '../../redux/slices/app.slice';
 
 const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
-export interface InterleavedMapProps {
-  vehicles: Vehicle[];
-}
-
 export interface InterleavedMapInternalProps {
   vehicles: Vehicle[];
   baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2;
@@ -147,13 +143,5 @@ export function InterleavedMap({
     />
   );
 }
-
-export const createInterleavedContainerWith = (
-  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2
-) => {
-  return (props: InterleavedMapProps) => (
-    <InterleavedMap {...props} baseMapProviderId={baseMapProviderId} />
-  );
-};
 
 export default InterleavedMap;

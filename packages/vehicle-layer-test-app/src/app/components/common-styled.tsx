@@ -1,4 +1,8 @@
-import { Box, Grid, Paper, styled as muiStyled, Button } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import { styled as muiStyled } from '@mui/material/styles';
 import styled from 'styled-components';
 
 export const StyledMapContainer = styled.div`

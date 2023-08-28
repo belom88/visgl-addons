@@ -26,7 +26,8 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { BASE_MAP_PROVIDERS } from '../../constants/base-map-providers';
 import BaseMapModeSwitcher from '../base-map-mode-switcher/base-map-mode-switcher';
-import { ButtonGroup, Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import { StyledOpenPanelButton } from '../common-styled';
 
 const drawerWidth = 240;
