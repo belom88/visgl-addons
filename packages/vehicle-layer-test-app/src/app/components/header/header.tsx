@@ -175,7 +175,7 @@ export function Header(props: HeaderProps) {
               </Link>
             ))}
           </Box>
-          <Link to="https://github.com/belom88/visgl-addons" target='_blank'>
+          <Link to="https://github.com/belom88/visgl-addons" target="_blank">
             <IconButton aria-label="github" size="large">
               <GitHubIcon />
             </IconButton>
