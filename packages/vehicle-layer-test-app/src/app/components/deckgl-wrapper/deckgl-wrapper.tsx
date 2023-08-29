@@ -27,6 +27,30 @@ import {
   MAP_PROVIDER_PROPERTIES,
 } from '../../constants/base-map-providers';
 
+const getTerrainElevation = (
+  baseMapProviderId: BaseMapProviderId.maplibre | BaseMapProviderId.mapbox2,
+  terrainState: boolean,
+  mapRef: MaplibreMapRef | MapboxMapRef | null
+) => {
+  let extraElevation = 0;
+  if (terrainState) {
+    if (baseMapProviderId === BaseMapProviderId.mapbox2) {
+      const center = mapRef?.getCenter();
+      if (center) {
+        const result = mapRef?.queryTerrainElevation(center);
+        if (typeof result === 'number') {
+          extraElevation = result;
+        }
+      }
+    } else if (baseMapProviderId === BaseMapProviderId.maplibre) {
+      const map = mapRef?.getMap();
+      // @ts-expect-error transform is not typed
+      extraElevation = map?.transform.elevation || 0;
+    }
+  }
+  return extraElevation;
+};
+
 export interface DeckglWrapperProps {
   vehicles: Vehicle[];
 }
@@ -56,6 +80,20 @@ export function DeckglWrapper({
     () => MAP_PROVIDER_PROPERTIES[baseMapProviderId],
     [baseMapProviderId]
   );
+
+  const onSourceDataHandler = () => {
+    const extraElevation = getTerrainElevation(
+      baseMapProviderId,
+      terrainState,
+      mapRef.current
+    );
+    dispatch(
+      mapActions.setMapState({
+        ...viewState,
+        position: [0, 0, extraElevation],
+      })
+    );
+  };
 
   const getLayer = () => {
     let transformedVehicles: Vehicle[] = vehicles;
@@ -95,22 +133,11 @@ export function DeckglWrapper({
     viewState,
   }: ViewStateChangeParameters) => {
     const { latitude, longitude, zoom, bearing, pitch } = viewState;
-    let extraElevation = 0;
-    if (terrainState) {
-      if (baseMapProviderId === BaseMapProviderId.mapbox2) {
-        const center = mapRef.current?.getCenter();
-        if (center) {
-          const result = mapRef.current?.queryTerrainElevation(center);
-          if (typeof result === 'number') {
-            extraElevation = result;
-          }
-        }
-      } else if (baseMapProviderId === BaseMapProviderId.maplibre) {
-        const map = mapRef.current?.getMap();
-        // @ts-expect-error transform is not typed
-        extraElevation = map?.transform.elevation || 0;
-      }
-    }
+    const extraElevation = getTerrainElevation(
+      baseMapProviderId,
+      terrainState,
+      mapRef.current
+    );
 
     dispatch(
       mapActions.setMapState({
@@ -142,6 +169,7 @@ export function DeckglWrapper({
               ? { source: 'dem-data-source', exaggeration: 1 }
               : undefined
           }
+          onSourceData={onSourceDataHandler}
         >
           {baseMapProviderId === BaseMapProviderId.maplibre && (
             <MaplibreSource

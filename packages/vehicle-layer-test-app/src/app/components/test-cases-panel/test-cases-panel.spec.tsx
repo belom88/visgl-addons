@@ -52,7 +52,7 @@ describe('TestCasesPanel', () => {
         testCases: { selectedTestCase: TEST_CASES[1] },
       },
     });
-    const button = screen.getByLabelText('test-case-animation-5000');
+    const button = screen.getByLabelText('test-case-3d-anfield');
     expect(button.classList.contains('Mui-selected')).toBeTruthy();
   });
 });

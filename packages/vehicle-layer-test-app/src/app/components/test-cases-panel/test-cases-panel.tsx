@@ -31,6 +31,15 @@ import {
 const StyledTestCasesContainer = styled(StyledTopPanelsContainer)`
   left: 0.5em;
 `;
+
+const StyledHeaderTypography = styled(Typography)`
+  padding-left: ${({ theme }) => theme.spacing(1)};
+`;
+
+const StyledHeaderStack = styled(Stack)`
+  padding-bottom: ${({ theme }) => theme.spacing(1)};
+`;
+
 const StyledButton = styled(StyledOpenPanelButton)`
   top: 0.5em;
 `;
@@ -64,7 +73,7 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
         <StyledGridContainer container spacing={2}>
           <StyledGridItem item md={3} sm={5} xs={12}>
             <StyledMainPaper>
-              <Stack
+              <StyledHeaderStack
                 direction="row"
                 justifyContent={'space-between'}
                 alignItems={'center'}
@@ -72,7 +81,9 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
                 <Avatar variant="rounded">
                   <ChecklistIcon />
                 </Avatar>{' '}
-                <Typography variant="h6">Test Cases</Typography>
+                <StyledHeaderTypography variant="h6">
+                  Properties builds
+                </StyledHeaderTypography>
                 <IconButton
                   aria-label="close"
                   onClick={() =>
@@ -81,7 +92,7 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
                 >
                   <CloseIcon />
                 </IconButton>
-              </Stack>
+              </StyledHeaderStack>
               {/* @ts-expect-error MUI List inheritance error */}
               <StyledList component="nav" aria-label="test cases">
                 {TEST_CASES.map((testCase: TestCase) => {

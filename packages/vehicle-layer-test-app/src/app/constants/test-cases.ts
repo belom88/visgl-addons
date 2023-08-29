@@ -3,6 +3,41 @@ import { TestCase, UseCaseId } from '../types';
 
 export const TEST_CASES: TestCase[] = [
   {
+    id: 'animation-500',
+    name: 'Animation 500 blue',
+    description: 'Animated 500 vehicles. Blue color',
+    layerProps: {
+      useCase: UseCaseId.SF_TRANSIT,
+      vehiclesCountValue: 500,
+      vehiclesCountMinMax: [0, 0],
+      animated: true,
+      pickable: true,
+      terrain: false,
+      sizeMode: SizeMode.Original,
+      size: 20,
+      scale: 1,
+      dimensionMode: '3D',
+      commonColor: [66, 165, 245],
+    },
+  },
+  {
+    id: '3d-anfield',
+    name: 'Anfield 3D with terrain',
+    description: 'Anfield stadium. 3D mode with terrain',
+    layerProps: {
+      useCase: UseCaseId.ANFIELD,
+      vehiclesCountValue: 50000,
+      vehiclesCountMinMax: [0, 0],
+      animated: false,
+      pickable: false,
+      terrain: true,
+      sizeMode: SizeMode.Original,
+      size: 20,
+      scale: 1,
+      dimensionMode: '3D',
+    },
+  },
+  {
     id: 'animation-2000',
     name: 'Animation 2000',
     description: 'Animated 2000 vehicles',
