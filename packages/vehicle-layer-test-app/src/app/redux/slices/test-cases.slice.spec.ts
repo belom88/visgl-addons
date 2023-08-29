@@ -2,6 +2,7 @@ import { SizeMode } from '@belom88/vehicle-layer';
 import { TEST_CASES } from '../../constants/test-cases';
 import { createStoreWith } from '../../utils/test-utils';
 import { setTestCase, testCasesReducer } from './test-cases.slice';
+import { UseCaseId } from '../../types';
 
 vi.mock('@deck.gl/core', () => {
   const CompositeLayer = vi.fn();
@@ -54,12 +55,20 @@ describe('testCases reducer', () => {
     );
     expect(layerProps).toEqual(
       expect.objectContaining({
-        vehiclesCountValue: 5000,
-        animated: true,
+        useCase: UseCaseId.ANFIELD,
+        vehiclesCountValue: 50000,
+        vehiclesCountMinMax: [1000, 100000],
+        animated: false,
+        pickable: false,
+        terrain: true,
         sizeMode: SizeMode.Original,
+        size: 20,
         scale: 1,
-        vehiclesCountMinMax: [10, 10000],
         dimensionMode: '3D',
+        backgroundColor2d: undefined,
+        color3D: undefined,
+        commonColor: undefined,
+        foregroundColor2d: undefined,
       })
     );
   });
@@ -75,13 +84,20 @@ describe('testCases reducer', () => {
     );
     expect(layerProps).toEqual(
       expect.objectContaining({
-        vehiclesCountValue: 10000,
-        animated: true,
-        sizeMode: SizeMode.Combined,
-        size: 70,
-        scale: 1,
+        useCase: UseCaseId.SF_TRANSIT,
+        vehiclesCountValue: 2000,
         vehiclesCountMinMax: [10, 10000],
-        dimensionMode: '2D',
+        animated: true,
+        pickable: false,
+        terrain: false,
+        sizeMode: SizeMode.Original,
+        size: 20,
+        scale: 1,
+        dimensionMode: '3D',
+        backgroundColor2d: undefined,
+        color3D: undefined,
+        commonColor: undefined,
+        foregroundColor2d: undefined,
       })
     );
   });

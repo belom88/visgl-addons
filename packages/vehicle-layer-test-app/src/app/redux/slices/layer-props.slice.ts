@@ -122,7 +122,7 @@ export const layerPropsSlice = createSlice({
       state: LayerPropsState,
       action: PayloadAction<{
         popoverId: PopoverId;
-        color: [number, number, number];
+        color?: [number, number, number];
       }>
     ) => {
       switch (action.payload.popoverId) {

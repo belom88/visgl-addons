@@ -4,8 +4,8 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import { layerPropsActions } from './layer-props.slice';
-import { TestCase } from '../../types';
+import { layerPropsActions, setTerrain } from './layer-props.slice';
+import { PopoverId, TestCase } from '../../types';
 import { TEST_CASES } from '../../constants/test-cases';
 import { RootState } from '../store';
 
@@ -21,16 +21,42 @@ export const setTestCase = createAsyncThunk(
   `${TEST_CASES_FEATURE_KEY}/setTestCase`,
   async (testCase: TestCase, { dispatch }) => {
     dispatch(layerPropsActions.setAnimation(testCase.layerProps.animated));
-    dispatch(
-      layerPropsActions.setVehiclesCount(testCase.layerProps.vehiclesCountValue)
-    );
     dispatch(layerPropsActions.setSizeMode(testCase.layerProps.sizeMode));
     dispatch(layerPropsActions.setSize(testCase.layerProps.size));
     dispatch(layerPropsActions.setScale(testCase.layerProps.scale));
     dispatch(
       layerPropsActions.setDimensionMode(testCase.layerProps.dimensionMode)
     );
-
+    dispatch(setTerrain(testCase.layerProps.terrain));
+    dispatch(layerPropsActions.setUseCase(testCase.layerProps.useCase));
+    dispatch(layerPropsActions.setPicking(testCase.layerProps.pickable));
+    dispatch(
+      layerPropsActions.setVehicleColor({
+        popoverId: PopoverId.VEHICLE_LAYER_COMMON_COLOR,
+        color: testCase.layerProps.commonColor,
+      })
+    );
+    dispatch(
+      layerPropsActions.setVehicleColor({
+        popoverId: PopoverId.VEHICLE_LAYER_3D_COLOR,
+        color: testCase.layerProps.color3D,
+      })
+    );
+    dispatch(
+      layerPropsActions.setVehicleColor({
+        popoverId: PopoverId.VEHICLE_LAYER_2D_FOREGROUND,
+        color: testCase.layerProps.foregroundColor2d,
+      })
+    );
+    dispatch(
+      layerPropsActions.setVehicleColor({
+        popoverId: PopoverId.VEHICLE_LAYER_2D_BACKGROUND,
+        color: testCase.layerProps.backgroundColor2d,
+      })
+    );
+    dispatch(
+      layerPropsActions.setVehiclesCount(testCase.layerProps.vehiclesCountValue)
+    );
     return testCase;
   }
 );

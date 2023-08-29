@@ -16,6 +16,8 @@ import MapWrapper from '../../components/map-wrapper/map-wrapper';
 import Fps from '../../components/fps/fps';
 import PickingInfo from '../../components/picking-info/picking-info';
 import Notifications from '../../components/notifications/notifications';
+import { TEST_CASES } from '../../constants/test-cases';
+import { setTestCase } from '../../redux/slices/test-cases.slice';
 
 /* eslint-disable-next-line */
 export interface HomeProps {}
@@ -40,6 +42,10 @@ export function Home(props: HomeProps) {
     if (isMobile) {
       dispatch(appActions.setTestCasesPanelVisibility(false));
       dispatch(appActions.setLayerPropsPanelVisibility(false));
+      const testCaseId = TEST_CASES.find(({ id }) => id === 'animation-500');
+      if (testCaseId) {
+        dispatch(setTestCase(testCaseId));
+      }
     }
   }, [isMobile, dispatch]);
 

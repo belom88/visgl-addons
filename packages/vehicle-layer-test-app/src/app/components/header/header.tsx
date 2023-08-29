@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ChecklistIcon from '@mui/icons-material/Checklist';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -174,6 +175,11 @@ export function Header(props: HeaderProps) {
               </Link>
             ))}
           </Box>
+          <Link to="https://github.com/belom88/visgl-addons" target='_blank'>
+            <IconButton aria-label="github" size="large">
+              <GitHubIcon />
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
       <Box component="nav">
