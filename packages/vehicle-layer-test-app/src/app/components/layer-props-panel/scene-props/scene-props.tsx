@@ -72,25 +72,29 @@ export function SceneProps({
           label="Terrain"
         />
       </Stack>
-      <Typography variant="subtitle1" component="span">
-        Number of Vehicles ({vehiclesCount})
-      </Typography>
-      <Stack spacing={2} direction="row" alignItems={'center'}>
-        <Typography variant="body2" component="span">
-          {vehiclesCountMin}
-        </Typography>
-        <Slider
-          aria-label="Number of Vehicles"
-          min={vehiclesCountMin}
-          max={vehiclesCountMax}
-          step={1}
-          value={vehiclesCount}
-          onChange={onVehiclesCountChange}
-        />
-        <Typography variant="body2" component="span">
-          {vehiclesCountMax}
-        </Typography>
-      </Stack>
+      {useCase === UseCaseId.SF_TRANSIT && (
+        <>
+          <Typography variant="subtitle1" component="span">
+            Number of Vehicles ({vehiclesCount})
+          </Typography>
+          <Stack spacing={2} direction="row" alignItems={'center'}>
+            <Typography variant="body2" component="span">
+              {vehiclesCountMin}
+            </Typography>
+            <Slider
+              aria-label="Number of Vehicles"
+              min={vehiclesCountMin}
+              max={vehiclesCountMax}
+              step={1}
+              value={vehiclesCount}
+              onChange={onVehiclesCountChange}
+            />
+            <Typography variant="body2" component="span">
+              {vehiclesCountMax}
+            </Typography>
+          </Stack>
+        </>
+      )}
     </>
   );
 }

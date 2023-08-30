@@ -82,7 +82,7 @@ export function TestCasesPanel(props: TestCasesPanelProps) {
                   <ChecklistIcon />
                 </Avatar>{' '}
                 <StyledHeaderTypography variant="h6">
-                  Properties builds
+                  Presets
                 </StyledHeaderTypography>
                 <IconButton
                   aria-label="close"
