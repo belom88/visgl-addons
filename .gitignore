@@ -49,3 +49,7 @@ Thumbs.db
 
 # dotenv
 .env.local
+
+# Generated Docusaurus files
+.docusaurus/
+.cache-loader/

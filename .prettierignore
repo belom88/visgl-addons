@@ -2,3 +2,6 @@
 /dist
 /coverage
 /**/*.geojson
+
+.prettierignore
+.docusaurus/
