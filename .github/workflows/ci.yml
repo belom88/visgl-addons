@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '16'
       - uses: nrwl/nx-set-shas@v3
-      - run: npm install
+      - run: npm install --legacy-peer-deps
 
       - name: Check code format
         run: npx nx format:check
