@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Nx commands
 
 The repository is monorepo built on [Nx](https://nx.dev/getting-started/intro). It contains a list of packages for developing and testing libraries.
