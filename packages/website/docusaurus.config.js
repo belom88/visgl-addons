@@ -27,8 +27,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/belom88/visgl-addons',
+          editUrl: 'https://github.com/belom88/visgl-addons',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -82,7 +81,7 @@ const config = {
               },
               {
                 html: 'viktor.o.belomestnov@gmail.com',
-              }
+              },
             ],
           },
           {
