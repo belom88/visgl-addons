@@ -17,7 +17,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
-            target='_blank'
+            target="_blank"
             to="https://vehicle.deetaa.org"
           >
             Demo
