@@ -16,8 +16,9 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
-            to="/docs/get-started"
+            className="button button--primary button--lg"
+            target='_blank'
+            to="https://vehicle.deetaa.org"
           >
             Demo
           </Link>
