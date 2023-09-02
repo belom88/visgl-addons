@@ -28,7 +28,7 @@
 html[data-theme='dark'] {
   --ifm-background-color: #08233c;
   --ifm-background-surface-color: #083354;
-  --ifm-button-color: #FFF;
+  --ifm-button-color: #fff;
 
   --ifm-color-primary: #04918f;
   --ifm-color-primary-dark: #04807e;
