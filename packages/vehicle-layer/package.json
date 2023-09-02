@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/belom88/visgl-addons"
   },
+  "homepage": "https://deetaa.org",
   "peerDependencies": {
     "@deck.gl/core": "^8.9.21",
     "@deck.gl/layers": "^8.9.21",
