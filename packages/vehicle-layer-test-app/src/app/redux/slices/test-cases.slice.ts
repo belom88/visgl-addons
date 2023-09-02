@@ -15,7 +15,7 @@ export interface TestCasesState {
   selectedTestCase: TestCase | null;
 }
 
-const initialState: TestCasesState = { selectedTestCase: TEST_CASES[0] };
+const initialState: TestCasesState = { selectedTestCase: TEST_CASES[2] };
 
 export const setTestCase = createAsyncThunk(
   `${TEST_CASES_FEATURE_KEY}/setTestCase`,
