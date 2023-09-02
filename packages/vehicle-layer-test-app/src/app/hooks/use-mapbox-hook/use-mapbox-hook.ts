@@ -69,7 +69,11 @@ export const useMapbox = (
 
     let newMap: MapboxMap | MaplibreMap;
     if (baseMapProviderId === BaseMapProviderId.mapbox2) {
-      newMap = new MapboxMap(mapOptions);
+      newMap = new MapboxMap({
+        ...mapOptions,
+        // @ts-expect-error `useWebGL2` property is not typed
+        useWebGL2: true,
+      });
     } else {
       newMap = new MaplibreMap(mapOptions);
     }

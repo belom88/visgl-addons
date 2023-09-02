@@ -27,7 +27,7 @@ vi.mock('react-map-gl/maplibre', () => {
 describe('testCases reducer', () => {
   it('should handle initial state', () => {
     expect(testCasesReducer(undefined, { type: '' })).toEqual({
-      selectedTestCase: TEST_CASES[0],
+      selectedTestCase: TEST_CASES[2],
     });
   });
 

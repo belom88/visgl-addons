@@ -48,6 +48,24 @@ nx run vehicle-layer:test
 
 TBD
 
+## Website
+
+Docusaurus documentation application.
+
+### Serve Website App
+
+Run application in a web browser for debug
+
+```bash
+nx run website:serve
+```
+
+### Build Website App
+
+```bash
+nx run website:build
+```
+
 ## Testing app
 
 The Testing App (packages/vehicle-layer-test-app) is developed to do manual testing of `VehicleLayer`. At this moment it is not intended to publish in production.

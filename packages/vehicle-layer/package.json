@@ -1,6 +1,6 @@
 {
   "name": "@belom88/vehicle-layer",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "keywords": [
     "webgl",
@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/belom88/visgl-addons"
   },
+  "homepage": "https://deetaa.org",
   "peerDependencies": {
     "@deck.gl/core": "^8.9.21",
     "@deck.gl/layers": "^8.9.21",
