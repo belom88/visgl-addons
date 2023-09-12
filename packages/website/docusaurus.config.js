@@ -8,13 +8,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Vehicle Layer',
   tagline: 'Mapping everything',
-  url: 'https://some-url.com',
+  url: 'https://deetaa.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'belom88', // Usually your GitHub org/user name.
-  projectName: 'vehicle-layer', // Usually your repo name.
 
   presets: [
     [
@@ -54,7 +52,7 @@ const config = {
             type: 'doc',
             docId: 'get-started',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
@@ -68,10 +66,10 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Docs',
                 to: '/docs/get-started',
               },
             ],
