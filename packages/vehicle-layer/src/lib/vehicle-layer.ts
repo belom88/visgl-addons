@@ -166,7 +166,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     viewportBearing: number
   ): IconLayer {
     const sizeScale =
-      this.props.sizeMode === VehicleSizeMode.Original ? this.props.sizeScale : 1;
+      this.props.sizeMode === VehicleSizeMode.Original
+        ? this.props.sizeScale
+        : 1;
 
     return new IconLayer({
       ...this.props,
@@ -207,7 +209,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
 
   private get2DArrowLayers(): IconLayer[] {
     const sizeScale =
-      this.props.sizeMode === VehicleSizeMode.Original ? this.props.sizeScale : 1;
+      this.props.sizeMode === VehicleSizeMode.Original
+        ? this.props.sizeScale
+        : 1;
     return [
       new IconLayer({
         ...this.props,
@@ -220,7 +224,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
             : this.props.size,
         sizeScale,
         sizeUnits:
-          this.props.sizeMode === VehicleSizeMode.Original ? 'meters' : 'pixels',
+          this.props.sizeMode === VehicleSizeMode.Original
+            ? 'meters'
+            : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-background.svg',
         getIcon: () => 'arrow',
@@ -257,7 +263,9 @@ export class VehicleLayer<TProps> extends CompositeLayer<
             : this.props.size,
         sizeScale,
         sizeUnits:
-          this.props.sizeMode === VehicleSizeMode.Original ? 'meters' : 'pixels',
+          this.props.sizeMode === VehicleSizeMode.Original
+            ? 'meters'
+            : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',
         getIcon: () => 'arrow',
