@@ -8,7 +8,7 @@ import {
 } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { LayerPropsEdited, PopoverId, UseCaseId } from '../../types';
-import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
+import { DimensionMode, VehicleSizeMode } from '@belom88/vehicle-layer';
 import { setAnimation } from './utils/layer-props-slice-utils';
 import { getNotification } from './utils/state-notificatons-utils';
 import {
@@ -27,7 +27,7 @@ export const initialLayerPropsState: LayerPropsState = {
   animated: true,
   pickable: false,
   terrain: false,
-  sizeMode: SizeMode.Original,
+  sizeMode: VehicleSizeMode.Original,
   size: 20,
   scale: 1,
   dimensionMode: '3D',
@@ -100,7 +100,10 @@ export const layerPropsSlice = createSlice({
     setPicking: (state: LayerPropsState, action: PayloadAction<boolean>) => {
       state.pickable = action.payload;
     },
-    setSizeMode: (state: LayerPropsState, action: PayloadAction<SizeMode>) => {
+    setSizeMode: (
+      state: LayerPropsState,
+      action: PayloadAction<VehicleSizeMode>
+    ) => {
       state.sizeMode = action.payload;
     },
     setSize: (state: LayerPropsState, action: PayloadAction<number>) => {

@@ -1,4 +1,4 @@
-import { SizeMode } from '@belom88/vehicle-layer';
+import { VehicleSizeMode } from '@belom88/vehicle-layer';
 import { UseCaseId } from '../../../types';
 import { LayerPropsState } from '../layer-props.slice';
 import { setAnimation } from './layer-props-slice-utils';
@@ -28,7 +28,7 @@ describe('layer-props reduces / utils', () => {
       pickable: false,
       terrain: false,
       size: 20,
-      sizeMode: SizeMode.Pixel,
+      sizeMode: VehicleSizeMode.Pixel,
       scale: 10,
       dimensionMode: '3D',
     };

@@ -13,7 +13,7 @@ import {
   ScenegraphLayerProps,
 } from '@deck.gl/mesh-layers/typed';
 import { IconLayer, IconLayerProps } from '@deck.gl/layers/typed';
-import { DimensionMode, SizeMode, VehicleType } from '../types';
+import { DimensionMode, VehicleSizeMode, VehicleType } from '../types';
 
 const VEHILCE_TYPE_URLS = {
   [VehicleType.TransitBus]: {
@@ -40,7 +40,7 @@ type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
     /** In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehicles are shown as 3D models. */
     dimensionMode: DimensionMode;
     /** A way to define vehicles size */
-    sizeMode: SizeMode;
+    sizeMode: VehicleSizeMode;
     /** Size in pixels for pixel size mode */
     size: number;
     /** For 3D - scale multiplier for all dimensions. For 2D - icon size (in meters) multiplied.  */
@@ -67,7 +67,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     ...ScenegraphLayer.defaultProps,
     data: [],
     dimentionalMode: '3D',
-    sizeMode: SizeMode.Original,
+    sizeMode: VehicleSizeMode.Original,
     size: 20,
     sizeScale: 1,
     getColor: undefined,
@@ -99,7 +99,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     data: TProps[]
   ): ScenegraphLayer | null {
     let sizeScale = this.props.sizeScale;
-    if (this.props.sizeMode === SizeMode.Pixel) {
+    if (this.props.sizeMode === VehicleSizeMode.Pixel) {
       const viewport = this.context.viewport as WebMercatorViewport;
       const centralPixel = viewport.project([
         viewport.longitude,
@@ -166,7 +166,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
     viewportBearing: number
   ): IconLayer {
     const sizeScale =
-      this.props.sizeMode === SizeMode.Original ? this.props.sizeScale : 1;
+      this.props.sizeMode === VehicleSizeMode.Original ? this.props.sizeScale : 1;
 
     return new IconLayer({
       ...this.props,
@@ -174,12 +174,12 @@ export class VehicleLayer<TProps> extends CompositeLayer<
       data,
       getPosition: this.props.getPosition,
       getSize:
-        this.props.sizeMode === SizeMode.Original
+        this.props.sizeMode === VehicleSizeMode.Original
           ? VEHICLE_WIDTH
           : this.props.size,
       sizeScale: 0.4 * sizeScale,
       sizeUnits:
-        this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
+        this.props.sizeMode === VehicleSizeMode.Original ? 'meters' : 'pixels',
       iconAtlas: VEHILCE_TYPE_URLS[vehicleType].icon,
       getIcon: () => 'arrow',
       getColor: this.props.get2dBackgroundColor || [255, 255, 255, 255],
@@ -207,7 +207,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
 
   private get2DArrowLayers(): IconLayer[] {
     const sizeScale =
-      this.props.sizeMode === SizeMode.Original ? this.props.sizeScale : 1;
+      this.props.sizeMode === VehicleSizeMode.Original ? this.props.sizeScale : 1;
     return [
       new IconLayer({
         ...this.props,
@@ -215,12 +215,12 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         data: this.props.data,
         getPosition: this.props.getPosition,
         getSize:
-          this.props.sizeMode === SizeMode.Original
+          this.props.sizeMode === VehicleSizeMode.Original
             ? VEHICLE_WIDTH
             : this.props.size,
         sizeScale,
         sizeUnits:
-          this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
+          this.props.sizeMode === VehicleSizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-background.svg',
         getIcon: () => 'arrow',
@@ -252,12 +252,12 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         data: this.props.data,
         getPosition: this.props.getPosition,
         getSize:
-          this.props.sizeMode === SizeMode.Original
+          this.props.sizeMode === VehicleSizeMode.Original
             ? VEHICLE_WIDTH
             : this.props.size,
         sizeScale,
         sizeUnits:
-          this.props.sizeMode === SizeMode.Original ? 'meters' : 'pixels',
+          this.props.sizeMode === VehicleSizeMode.Original ? 'meters' : 'pixels',
         iconAtlas:
           'https://raw.githubusercontent.com/belom88/visgl/main/packages/vehicle-layer/icons/arrow-front.svg',
         getIcon: () => 'arrow',

@@ -28,7 +28,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import SceneProps from './scene-props/scene-props';
 import VehicleLayerProps from './vehicle-layer-props/vehicle-layer-props';
 import { PopoverId, UseCaseId } from '../../types';
-import { SizeMode } from '@belom88/vehicle-layer';
+import { VehicleSizeMode } from '@belom88/vehicle-layer';
 import {
   StyledGridContainer,
   StyledGridItem,
@@ -207,7 +207,7 @@ export function LayerPropsPanel(props: LayerPropsPanelProps) {
                   vehicle3dColor={vehicle3dColor}
                   vehicle2dForegroundColor={vehicle2dForegroundColor}
                   vehicle2dBackgroundColor={vehicle2dBackgroundColor}
-                  onSizeModeChange={(result: SizeMode) =>
+                  onSizeModeChange={(result: VehicleSizeMode) =>
                     dispatch(layerPropsActions.setSizeMode(result))
                   }
                   onSizeChange={(value: number) =>
