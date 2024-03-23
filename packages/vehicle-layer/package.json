@@ -17,8 +17,8 @@
   },
   "homepage": "https://deetaa.org",
   "peerDependencies": {
-    "@deck.gl/core": "^8.9.21",
-    "@deck.gl/layers": "^8.9.21",
-    "@deck.gl/mesh-layers": "^8.9.21"
+    "@deck.gl/core": "^8.9.28",
+    "@deck.gl/layers": "^8.9.28",
+    "@deck.gl/mesh-layers": "^8.9.28"
   }
 }
