@@ -3,6 +3,7 @@ import {
   AccessorContext,
   Color,
   CompositeLayer,
+  DefaultProps,
   Layer,
   LayersList,
   UpdateParameters,
@@ -33,7 +34,8 @@ const VEHICLE_WIDTH = 5;
 /** TransitBus volume size in meters */
 const TRANSIT_BUS_VOLUME_SIZE = 10.5;
 
-type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type VehicleLayerProps<TProps = any> = ScenegraphLayerProps<TProps> &
   IconLayerProps<TProps> & {
     /** Array of vehicles objects. Vehicle object must containt position information. */
     data: TProps[];
@@ -62,11 +64,11 @@ type VehicleLayerProps<TProps> = ScenegraphLayerProps<TProps> &
 export class VehicleLayer<TProps> extends CompositeLayer<
   VehicleLayerProps<TProps>
 > {
-  static override defaultProps = {
+  static override defaultProps: DefaultProps<VehicleLayerProps> = {
     ...IconLayer.defaultProps,
     ...ScenegraphLayer.defaultProps,
     data: [],
-    dimentionalMode: '3D',
+    dimensionMode: '3D',
     sizeMode: VehicleSizeMode.Original,
     size: 20,
     sizeScale: 1,
