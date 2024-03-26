@@ -1,7 +1,7 @@
 import { MapboxLayer } from '@deck.gl/mapbox/typed';
 import { DimensionMode, VehicleLayer } from '@belom88/vehicle-layer';
 import { Vehicle } from './vehicles-utils';
-import { SizeMode, VehicleType } from 'packages/vehicle-layer/src/types';
+import { VehicleSizeMode, VehicleType } from 'packages/vehicle-layer/src/types';
 import { PickingInfo } from '@deck.gl/core/typed';
 
 /**
@@ -13,7 +13,7 @@ import { PickingInfo } from '@deck.gl/core/typed';
  */
 export const renderVehicleLayer = (
   vehicles: Vehicle[],
-  sizeMode: SizeMode,
+  sizeMode: VehicleSizeMode,
   size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,
@@ -55,7 +55,7 @@ export const renderVehicleLayer = (
 
 export const getMapboxLayer = (
   vehicles: Vehicle[],
-  sizeMode: SizeMode,
+  sizeMode: VehicleSizeMode,
   size: number,
   vehicleScale: number,
   dimensionMode: DimensionMode,

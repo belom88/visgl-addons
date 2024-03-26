@@ -81,7 +81,7 @@ Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can 
 
 ## Size modes
 
-Size mode is a number that encodes a way to set size of vehicles. `SizeMode` enum can be imported to define size mode in a human readable way.
+Size mode is a number that encodes a way to set size of vehicles. `VehicleSizeMode` enum can be imported to define size mode in a human readable way.
 
 | SizeMode   | Code | Description                                                                                                                                                   |
 | ---------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -109,9 +109,9 @@ _description_: In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehi
 
 ### sizeMode
 
-_type_: SizeMode
+_type_: VehicleSizeMode
 
-_default_: SizeMode.Original
+_default_: VehicleSizeMode.Original
 
 _description_: Change the way to set size of vehicles.
 

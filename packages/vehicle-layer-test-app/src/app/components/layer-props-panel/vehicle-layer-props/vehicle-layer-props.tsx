@@ -13,7 +13,7 @@ import OpacityIcon from '@mui/icons-material/Opacity';
 import { ColorResult } from '@uiw/color-convert';
 import ColorPicker from '../../color-picker/color-picker';
 import { PopoverId } from '../../../types';
-import { SizeMode } from '@belom88/vehicle-layer';
+import { VehicleSizeMode } from '@belom88/vehicle-layer';
 
 const calculateScale = (value: number): number => {
   if (value < 50) {
@@ -32,7 +32,7 @@ const calculateUnscale = (value: number): number => {
 
 /* eslint-disable-next-line */
 export interface VehicleLayerPropsProps {
-  sizeMode: SizeMode;
+  sizeMode: VehicleSizeMode;
   size: number;
   vehicleScale: number;
   dimensionMode: '2D' | '3D';
@@ -40,7 +40,7 @@ export interface VehicleLayerPropsProps {
   vehicle3dColor?: [number, number, number];
   vehicle2dForegroundColor?: [number, number, number];
   vehicle2dBackgroundColor?: [number, number, number];
-  onSizeModeChange: (value: SizeMode) => void;
+  onSizeModeChange: (value: VehicleSizeMode) => void;
   onSizeChange: (value: number) => void;
   onScaleChange: (value: number) => void;
   onDimensionModeChange: () => void;
@@ -78,7 +78,7 @@ export function VehicleLayerProps({
     event: React.ChangeEvent<HTMLInputElement>
   ) =>
     onSizeModeChange(
-      parseInt((event.target as HTMLInputElement).value) as SizeMode
+      parseInt((event.target as HTMLInputElement).value) as VehicleSizeMode
     );
 
   const onSizeChangeHandler = (e: Event, newValue: number | number[]) => {
@@ -105,25 +105,25 @@ export function VehicleLayerProps({
             onChange={onSizeModeChangeHandler}
           >
             <FormControlLabel
-              value={SizeMode.Original}
+              value={VehicleSizeMode.Original}
               control={<Radio />}
               label="Original"
             />
             <FormControlLabel
-              value={SizeMode.Pixel}
+              value={VehicleSizeMode.Pixel}
               control={<Radio />}
               label="Pixel"
             />
             <FormControlLabel
-              value={SizeMode.Combined}
+              value={VehicleSizeMode.Combined}
               control={<Radio />}
               label="Combined"
             />
           </RadioGroup>
         </FormControl>
       </Stack>
-      {((sizeMode !== SizeMode.Original && dimensionMode === '2D') ||
-        sizeMode === SizeMode.Pixel) && (
+      {((sizeMode !== VehicleSizeMode.Original && dimensionMode === '2D') ||
+        sizeMode === VehicleSizeMode.Pixel) && (
         <>
           <Typography variant="subtitle1" component="span">
             Pixel Size ({size})
@@ -146,8 +146,8 @@ export function VehicleLayerProps({
           </Stack>{' '}
         </>
       )}
-      {((dimensionMode === '3D' && sizeMode !== SizeMode.Pixel) ||
-        (dimensionMode === '2D' && sizeMode === SizeMode.Original)) && (
+      {((dimensionMode === '3D' && sizeMode !== VehicleSizeMode.Pixel) ||
+        (dimensionMode === '2D' && sizeMode === VehicleSizeMode.Original)) && (
         <>
           <Typography variant="subtitle1" component="span">
             Scale ({vehicleScale.toFixed(3)})
