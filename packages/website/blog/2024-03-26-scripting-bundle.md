@@ -12,4 +12,4 @@ Added support for [scripting API](https://deck.gl/docs/get-started/using-standal
 ```
 
 to use it.
-Read more in [docs](../docs/scripting-bundle).
+Read more in [docs](/docs/scripting-bundle).
