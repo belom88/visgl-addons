@@ -1,4 +1,4 @@
-import { VehicleSizeMode } from '@belom88/vehicle-layer';
+import { SizeMode } from '@belom88/vehicle-layer';
 import { TEST_CASES } from '../../constants/test-cases';
 import { createStoreWith } from '../../utils/test-utils';
 import { setTestCase, testCasesReducer } from './test-cases.slice';
@@ -61,7 +61,7 @@ describe('testCases reducer', () => {
         animated: false,
         pickable: false,
         terrain: true,
-        sizeMode: VehicleSizeMode.Original,
+        sizeMode: SizeMode.Original,
         size: 20,
         scale: 1,
         dimensionMode: '3D',
@@ -90,7 +90,7 @@ describe('testCases reducer', () => {
         animated: true,
         pickable: false,
         terrain: false,
-        sizeMode: VehicleSizeMode.Original,
+        sizeMode: SizeMode.Original,
         size: 20,
         scale: 1,
         dimensionMode: '3D',

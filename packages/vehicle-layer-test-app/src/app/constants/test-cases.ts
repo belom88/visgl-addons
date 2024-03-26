@@ -1,4 +1,4 @@
-import { VehicleSizeMode } from '@belom88/vehicle-layer';
+import { SizeMode } from '@belom88/vehicle-layer';
 import { TestCase, UseCaseId } from '../types';
 
 export const TEST_CASES: TestCase[] = [
@@ -13,7 +13,7 @@ export const TEST_CASES: TestCase[] = [
       animated: true,
       pickable: true,
       terrain: false,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 1,
       dimensionMode: '3D',
@@ -31,7 +31,7 @@ export const TEST_CASES: TestCase[] = [
       animated: false,
       pickable: false,
       terrain: true,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 1,
       dimensionMode: '3D',
@@ -48,7 +48,7 @@ export const TEST_CASES: TestCase[] = [
       animated: true,
       pickable: false,
       terrain: false,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 1,
       dimensionMode: '3D',
@@ -65,7 +65,7 @@ export const TEST_CASES: TestCase[] = [
       animated: true,
       pickable: false,
       terrain: false,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 1,
       dimensionMode: '3D',
@@ -83,7 +83,7 @@ export const TEST_CASES: TestCase[] = [
       animated: true,
       pickable: false,
       terrain: false,
-      sizeMode: VehicleSizeMode.Combined,
+      sizeMode: SizeMode.Combined,
       size: 70,
       scale: 1,
       dimensionMode: '2D',
@@ -100,7 +100,7 @@ export const TEST_CASES: TestCase[] = [
       animated: false,
       pickable: false,
       terrain: false,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 0.25,
       dimensionMode: '3D',
@@ -117,7 +117,7 @@ export const TEST_CASES: TestCase[] = [
       animated: false,
       pickable: false,
       terrain: false,
-      sizeMode: VehicleSizeMode.Original,
+      sizeMode: SizeMode.Original,
       size: 20,
       scale: 0.15,
       dimensionMode: '2D',
