@@ -6,7 +6,7 @@ import {
 } from './layer-props.slice';
 import { createStoreWith } from '../../utils/test-utils';
 import { UseCaseId } from '../../types';
-import { SizeMode } from '@belom88/vehicle-layer';
+import { VehicleSizeMode } from '@belom88/vehicle-layer';
 
 vi.mock('@deck.gl/core', () => {
   const CompositeLayer = vi.fn();
@@ -72,7 +72,7 @@ describe('layerProps reducer', () => {
         animated: true,
         pickable: false,
         terrain: false,
-        sizeMode: SizeMode.Original,
+        sizeMode: VehicleSizeMode.Original,
         size: 20,
         scale: 1,
         dimensionMode: '3D',
