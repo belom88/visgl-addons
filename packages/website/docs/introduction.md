@@ -21,10 +21,6 @@ VehicleLayer creates instances of those built-in layers under the hood to achiev
 
 ![2D rotation](/img/2d-rotation.gif)
 
-### Scripting bundle
-
-VehicleLayer supports [scripting API](https://deck.gl/docs/get-started/using-standalone#using-the-scripting-api) offered by deck.gl . See [Scripting Bundle](./scripting-bundle) page.
-
 ## Vehicle types
 
 When somebody creates data visualizations, performance limitations come. In WebGL, performance is related to amount of vertices needed to render. That means that it is not possible to use high-quality 3D models to visualize thousands objects on a map. The lower quality, the better performance.

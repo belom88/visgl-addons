@@ -1,6 +1,6 @@
 import { type Map as MaplibreMap } from 'react-map-gl/maplibre';
 import { type Map as MapboxMap } from 'react-map-gl';
-import { DimensionMode, VehicleSizeMode } from '@belom88/vehicle-layer';
+import { DimensionMode, SizeMode } from '@belom88/vehicle-layer';
 
 export enum RequestStatus {
   IDLE,
@@ -66,7 +66,7 @@ export interface LayerPropsEdited {
 
   // Vehicle properties
   /** A way to define vehicles size */
-  sizeMode: VehicleSizeMode;
+  sizeMode: SizeMode;
   /** Size in pixels for pixel size mode */
   size: number;
   /** Vehicle model scale */

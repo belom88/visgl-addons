@@ -77,13 +77,13 @@ Vehicle type is a number that encodes a type of vehicle. `VehicleType` enum can 
 
 ## Size modes
 
-Size mode is a number that encodes a way to set size of vehicles. `VehicleSizeMode` enum can be imported to define size mode in a human readable way.
+Size mode is a number that encodes a way to set size of vehicles. `SizeMode` enum can be imported to define size mode in a human readable way.
 
-| VehicleSizeMode | Code | Description                                                                                                                                                   |
-| --------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Original`      | `0`  | `3D` - get original size of 3D model. `2D` - icon size is set in meters and multiplied by 5. The size might be scaled with `sizeScale` property.              |
-| `Pixel`         | `1`  | `3D` - size of vehicle is rescaled to be approximately equal to the `size` in pixels. `2D` - icon size is set in pixels. The size is set with `size` property |
-| `Combined`      | `2`  | `3D` - `Original` size mode behavior, `2D` - `Pixel` size mode behavior                                                                                       |
+| SizeMode   | Code | Description                                                                                                                                                   |
+| ---------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Original` | `0`  | `3D` - get original size of 3D model. `2D` - icon size is set in meters and multiplied by 5. The size might be scaled with `sizeScale` property.              |
+| `Pixel`    | `1`  | `3D` - size of vehicle is rescaled to be approximately equal to the `size` in pixels. `2D` - icon size is set in pixels. The size is set with `size` property |
+| `Combined` | `2`  | `3D` - `Original` size mode behavior, `2D` - `Pixel` size mode behavior                                                                                       |
 
 ## Properties
 
@@ -105,9 +105,9 @@ _description_: In `2D` mode vehicles are shown as arrow icons. In `3D` mode vehi
 
 ### sizeMode
 
-_type_: VehicleSizeMode
+_type_: SizeMode
 
-_default_: VehicleSizeMode.Original
+_default_: SizeMode.Original
 
 _description_: Change the way to set size of vehicles.
 
