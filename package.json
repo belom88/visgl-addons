@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build:vehicle": "nx run vehicle-layer:build --configuration=production & node ./scripting-bundle.esbuild.js"
+  },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.4.1",
     "@nx-plus/docusaurus": "^15.0.0-rc.0",
@@ -34,6 +37,7 @@
     "babel-plugin-styled-components": "1.10.7",
     "cypress": "^12.11.0",
     "esbuild": "^0.17.17",
+    "esbuild-plugin-external-global": "^1.0.1",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
@@ -63,13 +67,13 @@
   },
   "dependencies": {
     "@arcgis/core": "4.27.6",
-    "@deck.gl/arcgis": "8.9.21",
-    "@deck.gl/core": "8.9.21",
-    "@deck.gl/google-maps": "8.9.21",
-    "@deck.gl/layers": "8.9.21",
-    "@deck.gl/mapbox": "8.9.21",
-    "@deck.gl/mesh-layers": "8.9.21",
-    "@deck.gl/react": "8.9.21",
+    "@deck.gl/arcgis": "^8.9.28",
+    "@deck.gl/core": "^8.9.28",
+    "@deck.gl/google-maps": "^8.9.28",
+    "@deck.gl/layers": "^8.9.28",
+    "@deck.gl/mapbox": "^8.9.28",
+    "@deck.gl/mesh-layers": "^8.9.28",
+    "@deck.gl/react": "^8.9.28",
     "@docusaurus/core": "^2.4.1",
     "@docusaurus/preset-classic": "^2.4.1",
     "@emotion/react": "^11.11.1",
