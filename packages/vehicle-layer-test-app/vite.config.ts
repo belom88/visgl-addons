@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
@@ -12,6 +12,7 @@ const getManualChunks = (id: string) => {
 };
 
 export default defineConfig({
+  root: __dirname,
   cacheDir: '../../node_modules/.vite/vehicle-layer-test-app',
 
   server: {
@@ -49,9 +50,11 @@ export default defineConfig({
   // },
 
   test: {
+    reporters: ['default'],
+    maxWorkers: 4,
     globals: true,
-    cache: {
-      dir: '../../node_modules/.vitest',
+    coverage: {
+      provider: 'v8',
     },
     environment: 'jsdom',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

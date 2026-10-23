@@ -3,7 +3,7 @@ import {
   MapRef as MaplibreMapRef,
 } from 'react-map-gl/maplibre';
 import { Source as MapboxSource, MapRef as MapboxMapRef } from 'react-map-gl';
-import { DeckGL } from '@deck.gl/react/typed';
+import { DeckGL } from '@deck.gl/react';
 
 import { Vehicle } from '../../utils/vehicles-utils';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -20,7 +20,11 @@ import {
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
-import { ViewStateChangeParameters } from '@deck.gl/core/typed/controllers/controller';
+import {
+  MapViewState,
+  MapView,
+  ViewStateChangeParameters,
+} from '@deck.gl/core';
 import { useRef, useMemo } from 'react';
 import {
   BaseMapProviderId,
@@ -131,7 +135,7 @@ export function DeckglWrapper({
 
   const onViewStateChangeHandler = ({
     viewState,
-  }: ViewStateChangeParameters) => {
+  }: ViewStateChangeParameters<MapViewState>) => {
     const { latitude, longitude, zoom, bearing, pitch } = viewState;
     const extraElevation = getTerrainElevation(
       baseMapProviderId,
@@ -153,7 +157,7 @@ export function DeckglWrapper({
 
   return (
     <StyledMapContainer>
-      <DeckGL
+      <DeckGL<MapView>
         viewState={{ ...viewState }}
         onViewStateChange={onViewStateChangeHandler}
         controller

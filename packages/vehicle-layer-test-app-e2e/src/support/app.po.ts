@@ -9,10 +9,12 @@ export enum BaseMapsProviders {
 
 export const getMaplibreButton = () =>
   button().contains(BaseMapsProviders.maplibre);
-export const getMapbox2Button = () => button().contains(BaseMapsProviders.mapbox2);
+export const getMapbox2Button = () =>
+  button().contains(BaseMapsProviders.mapbox2);
 export const getGoogleMapsButton = () =>
   button().contains(BaseMapsProviders.googleMaps);
-export const getArcGisButton = () => button().contains(BaseMapsProviders.arcgis);
+export const getArcGisButton = () =>
+  button().contains(BaseMapsProviders.arcgis);
 
 export const headerButtonShouldBeActive = (
   button: Cypress.Chainable<JQuery<HTMLButtonElement>>

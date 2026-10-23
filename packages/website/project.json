@@ -5,15 +5,16 @@
   "sourceRoot": "packages/website/src",
   "targets": {
     "build": {
-      "executor": "@nx-plus/docusaurus:browser",
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/website"],
       "options": {
-        "outputPath": "dist/packages/website"
+        "command": "docusaurus build packages/website --out-dir ../../dist/packages/website"
       }
     },
     "serve": {
-      "executor": "@nx-plus/docusaurus:dev-server",
+      "executor": "nx:run-commands",
       "options": {
-        "port": 3000
+        "command": "docusaurus start packages/website --port 3000"
       }
     }
   },

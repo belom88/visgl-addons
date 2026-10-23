@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
-import { GoogleMapsOverlay as DeckOverlay } from '@deck.gl/google-maps/typed';
+import { GoogleMapsOverlay as DeckOverlay } from '@deck.gl/google-maps';
 import { Vehicle } from '../../utils/vehicles-utils';
 import { StyledMapContainer } from '../common-styled';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';

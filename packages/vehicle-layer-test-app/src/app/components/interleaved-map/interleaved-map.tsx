@@ -1,4 +1,5 @@
 import { Map as MapboxMap } from 'mapbox-gl';
+import { MapboxOverlay } from '@deck.gl/mapbox';
 import { useEffect, useRef, useMemo } from 'react';
 import { Vehicle } from '../../utils/vehicles-utils';
 import { useMapbox } from '../../hooks/use-mapbox-hook/use-mapbox-hook';
@@ -17,10 +18,8 @@ import {
   selectSizeMode,
   selectTerrainState,
 } from '../../redux/slices/layer-props.slice';
-import { getMapboxLayer } from '../../utils/deckgl-layers-utils';
+import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
-
-const VEHICLE_LAYER_ID = 'transit-model-vehicle-layer';
 
 export interface InterleavedMapInternalProps {
   vehicles: Vehicle[];
@@ -46,6 +45,7 @@ export function InterleavedMap({
   const dispatch = useAppDispatch();
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useMapbox(mapContainer, baseMapProviderId);
+  const overlayRef = useRef<MapboxOverlay | null>(null);
   const sizeMode = useAppSelector(selectSizeMode);
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
@@ -58,6 +58,17 @@ export function InterleavedMap({
     () => MAP_PROVIDER_PROPERTIES[baseMapProviderId],
     [baseMapProviderId]
   );
+
+  useEffect(() => {
+    if (!map) return;
+    const overlay = new MapboxOverlay({ interleaved: true, layers: [] });
+    map.addControl(overlay);
+    overlayRef.current = overlay;
+    return () => {
+      overlayRef.current = null;
+      map.removeControl(overlay);
+    };
+  }, [map]);
 
   useEffect(() => {
     if (!map) {
@@ -80,10 +91,6 @@ export function InterleavedMap({
       return;
     }
 
-    if (map.getLayer(VEHICLE_LAYER_ID) != null) {
-      map.removeLayer(VEHICLE_LAYER_ID);
-    }
-
     let firstLabelLayerId: undefined | string;
     if (map instanceof MapboxMap) {
       firstLabelLayerId = getLabelLayerId(map);
@@ -102,7 +109,7 @@ export function InterleavedMap({
       }
     }
 
-    const mapboxLayer = getMapboxLayer(
+    const vehicleLayer = renderVehicleLayer(
       vehicles,
       sizeMode,
       size,
@@ -117,10 +124,10 @@ export function InterleavedMap({
       commonColor,
       foregroundColor2d,
       backgroundColor2d,
-      color3D
+      color3D,
+      firstLabelLayerId
     );
-    // @ts-expect-error maplibre and mapbox types are not compatible
-    map.addLayer(mapboxLayer, firstLabelLayerId);
+    overlayRef.current?.setProps({ layers: [vehicleLayer] });
   }, [
     vehicles,
     map,
