@@ -7,9 +7,9 @@ esbuild.build({
   outfile: 'dist/packages/vehicle-layer/scripting-bundle.js',
   plugins: [
     externalGlobalPlugin({
-      '@deck.gl/core/typed': 'deck',
-      '@deck.gl/mesh-layers/typed': 'deck',
-      '@deck.gl/layers/typed': 'deck',
+      '@deck.gl/core': 'deck',
+      '@deck.gl/mesh-layers': 'deck',
+      '@deck.gl/layers': 'deck',
     }),
   ],
 });

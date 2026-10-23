@@ -8,12 +8,12 @@ import {
   LayersList,
   UpdateParameters,
   WebMercatorViewport,
-} from '@deck.gl/core/typed';
+} from '@deck.gl/core';
 import {
   ScenegraphLayer,
   ScenegraphLayerProps,
-} from '@deck.gl/mesh-layers/typed';
-import { IconLayer, IconLayerProps } from '@deck.gl/layers/typed';
+} from '@deck.gl/mesh-layers';
+import { IconLayer, IconLayerProps } from '@deck.gl/layers';
 import { DimensionMode, VehicleSizeMode, VehicleType } from '../types';
 
 const VEHILCE_TYPE_URLS = {
@@ -204,7 +204,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         ...this.props.updateTriggers,
       },
       parameters: {
-        depthTest: false,
+        depthCompare: 'always', depthWriteEnabled: false,
       },
     });
   }
@@ -251,7 +251,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           ...this.props.updateTriggers,
         },
         parameters: {
-          depthTest: false,
+          depthCompare: 'always', depthWriteEnabled: false,
         },
       }),
       new IconLayer({
@@ -291,7 +291,7 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           ...this.props.updateTriggers,
         },
         parameters: {
-          depthTest: false,
+          depthCompare: 'always', depthWriteEnabled: false,
         },
       }),
     ];

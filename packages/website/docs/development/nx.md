@@ -14,8 +14,12 @@ git clone git@github.com:belom88/visgl.git
 
 ## Install dependencies
 
+Install [Volta](https://volta.sh) first. The repository pins Node.js 26.12.1
+and Yarn 4.18.1 in `package.json`; Volta selects them automatically.
+Run the commands below from the repository root. Use `yarn nx` to run the locally installed Nx version without installing Nx globally.
+
 ```bash
-yarn
+yarn install --immutable
 ```
 
 ## VehicleLayer library
@@ -25,7 +29,7 @@ The VehicleLayer library (packages/vehicle-layer) is npm library. Is is possible
 ### Build VehicleLayer
 
 ```bash
-nx run vehicle-layer:build
+yarn nx run vehicle-layer:build
 ```
 
 ### Lint VehicleLayer
@@ -33,7 +37,7 @@ nx run vehicle-layer:build
 Check code quality with linter
 
 ```bash
-nx run vehicle-layer:lint
+yarn nx run vehicle-layer:lint
 ```
 
 ### Test VehicleLayer
@@ -41,7 +45,7 @@ nx run vehicle-layer:lint
 Run unit tests
 
 ```bash
-nx run vehicle-layer:test
+yarn nx run vehicle-layer:test
 ```
 
 ### Publish VehicleLayer
@@ -57,13 +61,13 @@ Docusaurus documentation application.
 Run application in a web browser for debug
 
 ```bash
-nx run website:serve
+yarn nx run website:serve
 ```
 
 ### Build Website App
 
 ```bash
-nx run website:build
+yarn nx run website:build
 ```
 
 ## Testing app
@@ -75,7 +79,7 @@ The Testing App (packages/vehicle-layer-test-app) is developed to do manual test
 Run application in a web browser for debug
 
 ```bash
-nx run vehicle-layer-test-app:serve:development
+yarn nx run vehicle-layer-test-app:serve:development
 ```
 
 ### Lint Testing App
@@ -83,7 +87,7 @@ nx run vehicle-layer-test-app:serve:development
 Check code quality with linter
 
 ```bash
-nx run vehicle-layer-test-app:lint
+yarn nx run vehicle-layer-test-app:lint
 ```
 
 ### Test Testing App
@@ -91,7 +95,7 @@ nx run vehicle-layer-test-app:lint
 Run unit tests
 
 ```bash
-nx run vehicle-layer-test-app:test
+yarn nx run vehicle-layer-test-app:test
 ```
 
 ### Testing App E2E
@@ -101,7 +105,7 @@ The "Testing App E2E" is a [cypress](https://www.cypress.io) testing app with e2
 ### Run Tesing APP e2e tests
 
 ```bash
-nx run vehicle-layer-test-app-e2e:e2e
+yarn nx run vehicle-layer-test-app-e2e:e2e
 ```
 
 ### Lint Testing App E2E
@@ -109,7 +113,7 @@ nx run vehicle-layer-test-app-e2e:e2e
 Check code quality with linter
 
 ```bash
-nx run vehicle-layer-test-app-e2e:lint
+yarn nx run vehicle-layer-test-app-e2e:lint
 ```
 
 ## Global commands
@@ -117,5 +121,5 @@ nx run vehicle-layer-test-app-e2e:lint
 ### Check code format
 
 ```bash
-nx format:check
+yarn nx format:check
 ```

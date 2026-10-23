@@ -33,8 +33,8 @@ vi.mock('react-map-gl/maplibre', () => {
 describe('utils/load-routes', () => {
   it('should load routes from GeoJSON file', async () => {
     const result = await loadRoutes2d();
-    expect(load).to.toHaveBeenCalledOnce();
+    expect(load).toHaveBeenCalledOnce();
     expect(result.length).toBe(1);
-    expect(result[0]).toContain({ id: '10' });
+    expect(result[0]).toEqual(ROUTE_STUB);
   });
 });

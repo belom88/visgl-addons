@@ -22,7 +22,7 @@ export interface ArcgisWrapperProps {
 export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
   const dispatch = useAppDispatch();
   const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map: unknown | null = useArcgis(mapContainer);
+  const map = useArcgis(mapContainer);
   const sizeMode = useAppSelector(selectSizeMode);
   const size = useAppSelector(selectSize);
   const vehicleScale = useAppSelector(selectScale);
@@ -51,7 +51,6 @@ export function ArcgisWrapper({ vehicles }: ArcgisWrapperProps) {
         ...colors
       ),
     ];
-    // @ts-expect-error @deck.gl/arcgis has no types
     map.deck.set({ layers });
   }, [
     vehicles,

@@ -16,16 +16,9 @@ vi.mock('@deck.gl/mesh-layers', () => {
   return { ScenegraphLayer, ScenegraphLayerProps };
 });
 
-vi.mock('@deck.gl/arcgis', () => {
-  const DeckRenderer = vi.fn();
-  const loadArcGISModules = vi.fn().mockReturnValue(
-    Promise.resolve({
-      DeckRenderer,
-      modules: [vi.fn(), vi.fn(), { add: vi.fn() }],
-    })
-  );
-  return { loadArcGISModules };
-});
+vi.mock('../../hooks/use-arcgis-hook/use-arcgis-hook', () => ({
+  useArcgis: vi.fn().mockReturnValue(null),
+}));
 
 vi.mock('react-map-gl/maplibre', () => {
   const Map = vi.fn();

@@ -133,7 +133,7 @@ _description_: For 3D - scale multiplier for all dimensions. For 2D - icon size 
 
 ### getBearing
 
-_type_: Accessor<TProps, number>
+_type_: `Accessor<TProps, number>`
 
 _default_: 0
 
@@ -141,7 +141,7 @@ _description_: deck.gl accessor that transforms vehicle data to the movement dir
 
 ### getColor
 
-_type_: Accessor<TProps, Color>
+_type_: `Accessor<TProps, Color>`
 
 _default_: [255, 255, 255]
 
@@ -149,7 +149,7 @@ _description_: deck.gl accessor that transforms vehicle data to the vehicle colo
 
 ### get3dColor
 
-_type_: Accessor<TProps, Color>
+_type_: `Accessor<TProps, Color>`
 
 _default_: undefined
 
@@ -157,7 +157,7 @@ _description_: deck.gl accessor that transforms vehicle data to the color of 3D 
 
 ### get2dBackgroundColor
 
-_type_: Accessor<TProps, Color>
+_type_: `Accessor<TProps, Color>`
 
 _default_: [255, 255, 255]
 
@@ -165,7 +165,7 @@ _description_: deck.gl accessor that transforms vehicle data to the background c
 
 ### get2dForegroundColor
 
-_type_: Accessor<TProps, Color>
+_type_: `Accessor<TProps, Color>`
 
 _default_: [0, 0, 0]
 
@@ -173,7 +173,7 @@ _description_: deck.gl accessor that transforms vehicle data to the foreground c
 
 ### getVehicleType
 
-_type_: Accessor<TProps, VehicleType>
+_type_: `Accessor<TProps, VehicleType>`
 
 _default_: VehicleType.TransitBus
 

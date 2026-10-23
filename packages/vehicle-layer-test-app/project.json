@@ -54,16 +54,16 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["coverage/packages/vehicle-layer-test-app"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/packages/vehicle-layer-test-app"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/packages/vehicle-layer-test-app",
+        "reportsDirectory": "{workspaceRoot}/coverage/packages/vehicle-layer-test-app",
         "coverage": true
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
