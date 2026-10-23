@@ -9,10 +9,7 @@ import {
   UpdateParameters,
   WebMercatorViewport,
 } from '@deck.gl/core';
-import {
-  ScenegraphLayer,
-  ScenegraphLayerProps,
-} from '@deck.gl/mesh-layers';
+import { ScenegraphLayer, ScenegraphLayerProps } from '@deck.gl/mesh-layers';
 import { IconLayer, IconLayerProps } from '@deck.gl/layers';
 import { DimensionMode, VehicleSizeMode, VehicleType } from '../types';
 
@@ -204,7 +201,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
         ...this.props.updateTriggers,
       },
       parameters: {
-        depthCompare: 'always', depthWriteEnabled: false,
+        depthCompare: 'always',
+        depthWriteEnabled: false,
       },
     });
   }
@@ -251,7 +249,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           ...this.props.updateTriggers,
         },
         parameters: {
-          depthCompare: 'always', depthWriteEnabled: false,
+          depthCompare: 'always',
+          depthWriteEnabled: false,
         },
       }),
       new IconLayer({
@@ -291,7 +290,8 @@ export class VehicleLayer<TProps> extends CompositeLayer<
           ...this.props.updateTriggers,
         },
         parameters: {
-          depthCompare: 'always', depthWriteEnabled: false,
+          depthCompare: 'always',
+          depthWriteEnabled: false,
         },
       }),
     ];

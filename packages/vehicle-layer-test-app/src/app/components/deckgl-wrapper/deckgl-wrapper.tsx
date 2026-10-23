@@ -20,7 +20,11 @@ import {
 } from '../../redux/slices/layer-props.slice';
 import { renderVehicleLayer } from '../../utils/deckgl-layers-utils';
 import { appActions } from '../../redux/slices/app.slice';
-import { MapViewState, MapView, ViewStateChangeParameters } from '@deck.gl/core';
+import {
+  MapViewState,
+  MapView,
+  ViewStateChangeParameters,
+} from '@deck.gl/core';
 import { useRef, useMemo } from 'react';
 import {
   BaseMapProviderId,
